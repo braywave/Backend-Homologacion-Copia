@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitudes', function (Blueprint $table) {
-            $table->id('id_solicitud');
-            $table->string('codigo');
+        Schema::create('credenciales', function (Blueprint $table) {
+            $table->tinyIncrements('id_credencial');
+            $table->unsignedTinyInteger('usuario_id')->unique();
+            $table->string('contraseña', 255);
             $table->timestamps();
+
+           $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');
+        
         });
+
     }
 
     /**
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitudes');
+        Schema::dropIfExists('credenciales');
     }
 };

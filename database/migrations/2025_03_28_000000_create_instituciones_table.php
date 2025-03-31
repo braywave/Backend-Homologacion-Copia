@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('instituciones', function (Blueprint $table) {
             $table->tinyIncrements('id_institucion');
-            $table->string('nombre');
+            $table->string('nombre', 255);
+            $table->string('codigo_snies', 20)->unique();
+            $table->unsignedTinyInteger('municipio_id')->nullable();
+            $table->enum('tipo', ['Universidad', 'SENA']);
             $table->timestamps();
+
+           $table->foreign('municipio_id')->references('id_municipio')->on('municipios');
+    
         });
+        
     }
 
     /**

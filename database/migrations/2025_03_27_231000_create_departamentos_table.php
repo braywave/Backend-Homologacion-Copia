@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('departamentos', function (Blueprint $table) {
             $table->tinyIncrements('id_departamento');
-            $table ->unsignedTinyInteger('pais_id');
-            $table ->string('nombre');
+            $table->string('nombre', 255);
+            $table->unsignedTinyInteger('pais_id');
+            $table->integer('codigo')->unique();
             $table->timestamps();
-
+      
             // Foraneas
-            $table->foreign('pais_id')->
-            references('id_pais')
-            ->on('paises');
+            $table->foreign('pais_id')-> references('id_pais')->on('paises');
         });
     }
 

@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('programas', function (Blueprint $table) {
-            $table->tinyIncrements('id_programa');
-            $table->string('nombre');
-           $table->timestamps();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->tinyIncrements('id_rol');
+            $table->enum('nombre', ['Aspirante', 'Coordinador', 'Decano', 'Vicerrector'])->unique();
         });
     }
-        
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('programas');
+        Schema::dropIfExists('roles');
     }
 };
