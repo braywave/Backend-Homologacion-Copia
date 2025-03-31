@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contenidos_programaticos', function (Blueprint $table) {
-            $table->id('id_contenido');
-            $table->text('contenido');
-            $table->timestamps();
+        Schema::create('facultades', function (Blueprint $table) {
+            $table->tinyIncrements('id_facultad');
+           $table->unsignedTinyInteger('institucion_id');
+            $table->string('nombre', 255);
+
+            $table->foreign('institucion_id')->references('id_institucion')->on('instituciones');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contenidos_programaticos');
+        Schema::dropIfExists('facultades');
     }
 };
