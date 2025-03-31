@@ -6,7 +6,7 @@ use App\Models\Documentos;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DocumentosTableSeedar extends Seeder
+class DocumentosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

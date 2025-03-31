@@ -13,6 +13,9 @@ use App\Http\Controllers\DocumentosControllerApi;
 use App\Http\Controllers\FacultadesControllerApi;
 use App\Http\Controllers\RolesControllerApi;
 use App\Http\Controllers\ContenidosProgramaticosControllerApi;
+use App\Http\Controllers\HistorialHomologacionesControllerApi;
+use App\Http\Controllers\SolicitudAsignaturasControllerApi;
+use App\Http\Controllers\HomologacionAsignaturasControllerApi;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -93,4 +96,16 @@ Route::get('/contenidosProgramaticos',[ContenidosProgramaticosControllerApi::cla
 Route::post('/contenidoProgramatico/{id}',[ContenidosProgramaticosControllerApi::class,'llevarcontenidoP'])->name('contenidoprogramatico.set');
 
 
+//Rutas historial_homologaciones
+Route::get('/historialHomologaciones',[HistorialHomologacionesControllerApi::class,'traerhistorialhomologaciones'])->name('historialhomologaciones.get');
+Route::post('/historialHomologacion/{id}',[HistorialHomologacionesControllerApi::class,'llevarhistorialhomologacion'])->name('historialhomologacione.set');
 
+
+//Rutas solicitud_asignaturas
+Route::get('/solicitudasignaturas',[SolicitudAsignaturasControllerApi::class,'traersolicitudasignaturas'])->name('solicitudasignaturas.get');
+Route::post('/solicitudasignatura/{id}',[SolicitudAsignaturasControllerApi::class,'llevarsolicitudasignatura'])->name('solicitudasignatura.set');
+
+
+//Rutas homologacion_asignaturas
+Route::get('/homologacionasignaturas',[HomologacionAsignaturasControllerApi::class,'traerhomologacionasignaturas'])->name('homologacionasignaturas.get');
+Route::post('/homologacionasignatura/{id}',[HomologacionAsignaturasControllerApi::class,'llevarhomologacionasignatura'])->name('homologacionasignatura.set');
