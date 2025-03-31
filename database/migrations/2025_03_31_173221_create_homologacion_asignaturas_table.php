@@ -12,10 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('homologacion_asignaturas', function (Blueprint $table) {
-            $table->id('id_homologacion');
+            $table->tinyIncrements('id_homologacion');
             $table->unsignedTinyInteger('solicitud_id');
             $table->unsignedTinyInteger('asignatura_origen_id');
-            $table->timestamps();
+            $table->unsignedTinyInteger('asignatura_destino_id');
+            $table->decimal('nota_origen', 3, 1);
+            $table->decimal('nota_destino', 3, 1)->nullable();
+            $table->timestamp('fecha')->useCurrent();
+            $table->text('comentarios')->nullable();
+
+            $table->foreign('solicitud_id')->references('id_solicitud')->on('solicitudes');
+            $table->foreign('asignatura_origen_id')->references('id_asignatura')->on('asignaturas');
+            $table->foreign('asignatura_destino_id')->references('id_asignatura')->on('asignaturas' );
         });
     }
 

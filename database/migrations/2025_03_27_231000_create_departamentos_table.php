@@ -15,9 +15,10 @@ return new class extends Migration
             $table->tinyIncrements('id_departamento');
             $table->string('nombre', 255);
             $table->unsignedTinyInteger('pais_id');
-            $table->integer('codigo')->unique();
+            $table->integer('codigo')->default(0);  // Establece un valor predeterminado
+
             $table->timestamps();
-      
+
             // Foraneas
             $table->foreign('pais_id')-> references('id_pais')->on('paises');
         });
