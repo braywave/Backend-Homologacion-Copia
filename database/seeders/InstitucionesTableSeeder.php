@@ -14,23 +14,23 @@ class InstitucionesTableSeeder extends Seeder
     public function run(): void
     {
         Institucion::create([
-            'nombre' => 'Corporacion Universitaria Autonoma del Cauca'
+            'nombre' => 'Corporacion Universitaria Autonoma del Cauca',
+            'codigo_snies' => '12345',
+            'municipio_id' => 65,
+            'tipo' => 'Universidad',
+        ]);
+
+        Institucion::create([
+            'nombre' => 'Universidad del Cauca',
+            'codigo_snies' => '6789',
+            'municipio_id' => 79,
+            'tipo' => 'Universidad',
         ]);
         Institucion::create([
-            'nombre' => 'Universidad del Cauca'
+            'nombre' => 'UniConfacauca',
+            'codigo_snies' => '11456',
+            'municipio_id' => 78,
+            'tipo' => 'Universidad',
         ]);
-        Institucion::create([
-            'nombre' => 'UniConfacauca'
-        ]);
-        Institucion::create([
-            'nombre' => 'Institución Educativa Colegio Mayor'
-        ]);
-        Institucion::create([
-            'nombre' => 'Fundación Universitaria de Popayán'
-        ]);
-        Institucion::create([
-            'nombre' => 'Centro Aprendizaje Sena'
-        ]);
-        
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('facultades', function (Blueprint $table) {
             $table->tinyIncrements('id_facultad');
-           $table->unsignedTinyInteger('institucion_id');
+            $table->unsignedTinyInteger('institucion_id');
             $table->string('nombre', 255);
 
             $table->foreign('institucion_id')->references('id_institucion')->on('instituciones');
