@@ -13,29 +13,42 @@ class DocumentosTableSeeder extends Seeder
      */
     public function run(): void
     {
+
+
+
         Documentos::create([
-            'nombre' => 'Certificado_Notas',
-            'url' => 'https://documentos/fawgasfa...'
+            'solicitud_id' => 1,
+            'usuario_id' => 1,
+            'tipo' => 'Certificado de Notas',
+            'ruta' => 'ruta/a/tu/documento1.pdf',
         ]);
 
         Documentos::create([
-            'nombre' => 'Documento_Identidad',
-            'url' => 'https://documentos/fjenaicjabsuiva...'
+            'solicitud_id' => 1,
+            'usuario_id' => 1,
+            'tipo' => 'Carta de Solicitud',
+            'ruta' => 'ruta/a/tu/documento2.pdf',
         ]);
 
         Documentos::create([
-            'nombre' => 'Certificado_Estudios',
-            'url' => 'https://documentos/fanwinauwn...'
+            'solicitud_id' => 2, // ID de la solicitud
+            'usuario_id' => 2, // ID del usuario
+            'tipo' => 'Certificación de Finalización de Estudios',
+            'ruta' => 'ruta/a/tu/documento3.pdf',
         ]);
 
         Documentos::create([
-            'nombre' => 'Carta_Homologacion',
-            'url' => 'https://documentos/cjkansvjnuevna...'
+            'solicitud_id' => 3, // ID de la solicitud
+            'usuario_id' => 3, // ID del usuario
+            'tipo' => 'Copia del Pasaporte',
+            'ruta' => 'ruta/a/tu/documento4.pdf',
         ]);
 
         Documentos::create([
-            'nombre' => 'Certificado_Notas',
-            'url' => 'https://documentos/wriyaubcajsnv...'
+            'solicitud_id' => 1,
+            'usuario_id' => 1,
+            'tipo' => 'Contenido Programático',
+            'ruta' => 'ruta/a/tu/documento5.pdf',
         ]);
     }
 }

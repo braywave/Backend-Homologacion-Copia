@@ -14,20 +14,36 @@ class SolicitudesTableSeeder extends Seeder
     public function run(): void
     {
         Solicitudes::create([
-            "codigo"=> "HOM-2025-1242",
+            'usuario_id' => 1,
+            'programa_destino_id' => 1,
+            'finalizo_estudios' => 'Si',
+            'fecha_finalizacion_estudios' => '2023-06-15',
+            'fecha_ultimo_semestre_cursado' => '2023-05-15',
+            'estado' => 'Aprobado',
+            'numero_radicado' => 'HOM-2025-01',
+            'ruta_pdf_resolucion' => 'ruta/a/tu/documento1.pdf',
         ]);
 
         Solicitudes::create([
-            "codigo"=> "HOM-2025-4632",
+            'usuario_id' => 2,
+            'programa_destino_id' => 2,
+            'finalizo_estudios' => 'No',
+            'fecha_finalizacion_estudios' => null,
+            'fecha_ultimo_semestre_cursado' => '2023-05-15',
+            'estado' => 'En revisión',
+            'numero_radicado' => 'HOM-2025-02',
+            'ruta_pdf_resolucion' => null,
         ]);
+
         Solicitudes::create([
-            "codigo"=> "HOM-2025-4745",
-        ]);
-        Solicitudes::create([
-            "codigo"=> "HOM-2025-3646",
-        ]);
-        Solicitudes::create([
-            "codigo"=> "HOM-2025-9875",
+            'usuario_id' => 3,
+            'programa_destino_id' => 1, 
+            'finalizo_estudios' => 'No',
+            'fecha_finalizacion_estudios' => null,
+            'fecha_ultimo_semestre_cursado' => '2023-04-15',
+            'estado' => 'Radicado',
+            'numero_radicado' => 'HOM-2025-03',
+            'ruta_pdf_resolucion' => null,
         ]);
     }
 }

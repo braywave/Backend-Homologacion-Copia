@@ -13,24 +13,37 @@ class HistorialHomologacionesTableSeeder extends Seeder
      */
     public function run(): void
     {
+
         HistorialHomologaciones::create([
+            'solicitud_id' => 1,
             'usuario_id' => 1,
-            'solicitud_id'=> 2,
+            'estado' => 'Radicado',
+            'observaciones' => 'Solicitud recibida y en espera de revisión.',
+            'ruta_pdf_resolucion' => null,
         ]);
 
         HistorialHomologaciones::create([
+            'solicitud_id' => 1,
+            'usuario_id' => 1,
+            'estado' => 'En revisión',
+            'observaciones' => 'La solicitud está siendo evaluada por el comité.',
+            'ruta_pdf_resolucion' => null,
+        ]);
+
+        HistorialHomologaciones::create([
+            'solicitud_id' => 2,
+            'usuario_id' => 2,
+            'estado' => 'Aprobado',
+            'observaciones' => 'La solicitud ha sido aprobada.',
+            'ruta_pdf_resolucion' => 'ruta/a/tu/resolucion1.pdf',
+        ]);
+
+        HistorialHomologaciones::create([
+            'solicitud_id' => 3, 
             'usuario_id' => 3,
-            'solicitud_id'=> 3,
-        ]);
-
-        HistorialHomologaciones::create([
-            'usuario_id' => 1,
-            'solicitud_id'=> 1,
-        ]);
-
-        HistorialHomologaciones::create([
-            'usuario_id' => 4,
-            'solicitud_id'=> 5,
+            'estado' => 'Rechazado',
+            'observaciones' => 'La solicitud fue rechazada por falta de documentos.',
+            'ruta_pdf_resolucion' => null,
         ]);
     }
 }

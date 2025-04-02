@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('fecha')->useCurrent();
             $table->text('observaciones')->nullable();
             $table->string('ruta_pdf_resolucion', 255)->nullable();
+            $table->timestamps();
 
             $table->foreign('solicitud_id')->references('id_solicitud')->on('solicitudes');
             $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');

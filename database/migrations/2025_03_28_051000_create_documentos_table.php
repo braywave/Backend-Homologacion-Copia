@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,8 +13,8 @@ return new class extends Migration
         Schema::create('documentos', function (Blueprint $table) {
 
             $table->smallIncrements('id_documento');
-           $table->unsignedSmallInteger('solicitud_id');
-           $table->unsignedSmallInteger('usuario_id');
+            $table->unsignedSmallInteger('solicitud_id');
+            $table->unsignedSmallInteger('usuario_id');
             $table->enum('tipo', [
                 'Certificado de Notas',
                 'Carta de Solicitud',
@@ -29,10 +28,12 @@ return new class extends Migration
             $table->string('ruta', 255);
             $table->timestamp('fecha_subida')->useCurrent();
 
+            $table->timestamps();
+
 
             //Foráneas
             $table->foreign('solicitud_id')->references('id_solicitud')->on('solicitudes');
-           $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');
+            $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');
 
         });
     }

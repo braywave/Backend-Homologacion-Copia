@@ -43,11 +43,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AsignaturasTableSeeder::class);
 
+        $this->call(ContenidosProgramaticosTableSeeder::class);
+
         $this->call(SolicitudesTableSeeder::class);
 
         $this->call(DocumentosTableSeeder::class);
-
-        $this->call(ContenidosProgramaticosTableSeeder::class);
 
         $this->call(HistorialHomologacionesTableSeeder::class);
 
