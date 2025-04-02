@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('historial_homologaciones', function (Blueprint $table) {
-            $table->tinyIncrements('id_historial');
-            $table->unsignedTinyInteger('solicitud_id');
-            $table->unsignedTinyInteger('usuario_id');
+            $table->smallIncrements('id_historial');
+            $table->unsignedSmallInteger('solicitud_id');
+            $table->unsignedSmallInteger('usuario_id');
             $table->enum('estado', ['Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Apelación']);
             $table->timestamp('fecha')->useCurrent();
             $table->text('observaciones')->nullable();

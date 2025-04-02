@@ -12,28 +12,21 @@ class CredencialesTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
         Credenciales::create([
-            'correo'=> 'deibyalejandro12@gmail.com',
-            'contraseña'=> '124125236',
+            'usuario_id' => 1,
+            'contraseña' => bcrypt('contraseña123'),
         ]);
 
         Credenciales::create([
-            'correo'=> 'Thcheiviz@gmail.com',
-            'contraseña'=> '3463463453',
+            'usuario_id' => 2,
+            'contraseña' => bcrypt('contraseña456'),
         ]);
+
         Credenciales::create([
-            'correo'=> 'maicolAndres@gmail.com',
-            'contraseña'=> '12362323',
-        ]);
-        Credenciales::create([
-            'correo'=> 'andres_M@gmail.com',
-            'contraseña'=> '346347454',
-        ]);
-        Credenciales::create([
-            'correo'=> 'sofia@gmail.com',
-            'contraseña'=> '56857457',
+            'usuario_id' => 3,
+            'contraseña' => bcrypt('contraseña789'),
         ]);
     }
 }

@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('credenciales', function (Blueprint $table) {
-            $table->tinyIncrements('id_credencial');
-            $table->unsignedTinyInteger('usuario_id')->unique();
+            $table->smallIncrements('id_credencial');
+            $table->unsignedSmallInteger('usuario_id')->unique();
             $table->string('contraseña', 255);
             $table->timestamps();
 
            $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');
-        
+
         });
 
     }

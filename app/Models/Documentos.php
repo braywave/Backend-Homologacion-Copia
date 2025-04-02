@@ -11,7 +11,25 @@ class Documentos extends Model
 
     protected $table = 'documentos';
 
+
     protected $primaryKey = 'id_documento';
 
-    protected $fillable = ['nombre', 'url'];
+    protected $fillable = [
+        'solicitud_id',
+        'usuario_id',
+        'tipo',
+        'ruta',
+        'fecha_subida',
+    ];
+
+    // Definir las relaciones
+    public function solicitud()
+    {
+        return $this->belongsTo(Solicitudes::class, 'solicitud_id', 'id_solicitud');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id', 'id_usuario');
+    }
 }

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paises', function (Blueprint $table) {
-            $table->tinyIncrements('id_pais');
-            $table->string('nombre');
+            $table->smallIncrements('id_pais');
+            $table->string(column: 'nombre', length:100);
             $table->timestamps();
         });
     }

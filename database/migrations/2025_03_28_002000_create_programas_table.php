@@ -12,21 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('programas', function (Blueprint $table) {
-            $table->tinyIncrements('id_programa');
-            $table->unsignedTinyInteger('institucion_id');
-            $table->unsignedTinyInteger('facultad_id')->nullable();
+            $table->smallIncrements('id_programa');
+            $table->unsignedSmallInteger('institucion_id');
+            $table->unsignedSmallInteger('facultad_id')->nullable();
             $table->string('nombre', 255);
-            $table->string('codigo_snies', 20)->unique();
+            $table->string('codigo_snies', 20)->unique()->nullable();
             $table->enum('tipo_formacion', ['Técnico', 'Tecnólogo', 'Profesional']);
             $table->enum('metodologia', ['Presencial', 'Virtual', 'Híbrido']);
             $table->timestamps();
 
+            //Foráneas
             $table->foreign('institucion_id')->references('id_institucion')->on('instituciones');
             $table->foreign('facultad_id')->references('id_facultad')->on('facultades');
-        
+
             });
     }
-        
+
     /**
      * Reverse the migrations.
      */

@@ -11,23 +11,32 @@ class FacultadesTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
+
         Facultades::create([
-            'nombre' => 'Facultad de Ciencias Administrativas Contables y Económicas'
+            'institucion_id' => 3,
+            'nombre' => 'Facultad de Ciencias de la Salud',
         ]);
 
         Facultades::create([
-            'nombre' => 'Facultad de Derecho, Ciencias Sociales y Politicas'
+            'institucion_id' => 1,
+            'nombre' => 'Facultad de Ingeniería',
         ]);
+
         Facultades::create([
-            'nombre' => 'Facultad de Ingeniería'
+            'institucion_id' => 1,
+            'nombre' => 'Facultad de Ciencias Sociales',
         ]);
+
         Facultades::create([
-            'nombre' => 'Facultad de Educación'
+            'institucion_id' => 1,
+            'nombre' => 'Facultad de Derecho',
         ]);
+
         Facultades::create([
-            'nombre' => 'Facultad de Cienticas Ambientales y Desarrollo Sostenible'
+            'institucion_id' => 1,
+            'nombre' => 'Facultad de Ciencias Económicas',
         ]);
     }
 }

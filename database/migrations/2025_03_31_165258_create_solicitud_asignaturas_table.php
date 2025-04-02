@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitud_asignaturas', function (Blueprint $table) {
-            $table->tinyIncrements('id_solicitud_asignatura');
-            $table->unsignedTinyInteger('solicitud_id');
-            $table->unsignedTinyInteger('asignatura_id');
+            $table->smallIncrements('id_solicitud_asignatura');
+            $table->unsignedSmallInteger('solicitud_id');
+            $table->unsignedSmallInteger('asignatura_id');
             $table->decimal('nota_origen', 3, 1)->nullable();
             $table->integer('horas')->nullable();
 

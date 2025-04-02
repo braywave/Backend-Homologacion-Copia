@@ -13,5 +13,25 @@ class Asignatura extends Model
 
     protected $primaryKey = 'id_asignatura';
 
-    protected $fillable = ['nombre'];
+
+    protected $fillable = [
+        'programas_id',
+        'nombre',
+        'tipo',
+        'codigo_asignatura',
+        'creditos',
+        'semestre',
+        'horas',
+        'tiempo_presencial',
+        'tiempo_independiente',
+        'horas_totales_semanales',
+        'modalidad',
+        'metodologia',
+    ];
+
+    // Definir las relaciones
+    public function programa()
+    {
+        return $this->belongsTo(Programa::class, 'programas_id', 'id_programa');
+    }
 }

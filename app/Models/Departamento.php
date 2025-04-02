@@ -9,9 +9,18 @@ class Departamento extends Model
 {
     use HasFactory;
 
-    protected $table = "departamentos";
+    protected $table = 'departamentos';
 
-    protected $primaryKey = "id_departamento";
+    protected $primaryKey = 'id_departamento';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'pais_id',
+        'nombre',
+    ];
+
+    // Definir las relaciones
+    public function pais()
+    {
+        return $this->belongsTo(Pais::class, 'pais_id', 'id_pais');
+    }
 }

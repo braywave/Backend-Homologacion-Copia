@@ -13,7 +13,16 @@ class Institucion extends Model
 
     protected $primaryKey = 'id_institucion';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'nombre',
+        'codigo_ies',
+        'municipio_id',
+        'tipo',
+    ];
 
-    
+    // Definir las relaciones
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'municipio_id', 'id_municipio');
+    }
 }

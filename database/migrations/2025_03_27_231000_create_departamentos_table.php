@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('departamentos', function (Blueprint $table) {
-            $table->tinyIncrements('id_departamento');
+            $table->smallIncrements('id_departamento');
+            $table->unsignedSmallInteger('pais_id');
             $table->string('nombre', 255);
-            $table->unsignedTinyInteger('pais_id');
-            $table->integer('codigo')->default(0);  // Establece un valor predeterminado
-
             $table->timestamps();
 
             // Foraneas

@@ -9,9 +9,18 @@ class Credenciales extends Model
 {
     use HasFactory;
 
-    protected $table = "credenciales";
+    protected $table = 'credenciales';
 
-    protected $primaryKey = "id_credencial";
+    protected $primaryKey = 'id_credencial';
 
-    protected $fillable = ['correo', 'contraseña'];
+    protected $fillable = [
+        'usuario_id',
+        'contraseña',
+    ];
+
+    // Definir las relaciones
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id', 'id_usuario');
+    }
 }

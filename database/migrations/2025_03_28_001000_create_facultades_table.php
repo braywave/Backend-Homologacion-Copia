@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('facultades', function (Blueprint $table) {
-            $table->tinyIncrements('id_facultad');
-            $table->unsignedTinyInteger('institucion_id');
+            $table->smallIncrements('id_facultad');
+            $table->unsignedSmallInteger('institucion_id');
             $table->string('nombre', 255);
+            $table->timestamps();
 
             $table->foreign('institucion_id')->references('id_institucion')->on('instituciones');
         });

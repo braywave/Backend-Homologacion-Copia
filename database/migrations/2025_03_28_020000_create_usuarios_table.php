@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,9 +14,9 @@ return new class extends Migration
 
 
             //$table->id('id_credencial');
-           // $table->string('contraseña',255);
+            // $table->string('contraseña',255);
 
-            $table->tinyIncrements('id_usuario');
+            $table->smallIncrements('id_usuario');
             $table->string('primer_nombre', 50);
             $table->string('segundo_nombre', 50)->nullable();
             $table->string('primer_apellido', 50);
@@ -26,16 +25,16 @@ return new class extends Migration
             $table->enum('tipo_identificacion', ['Tarjeta de Identidad', 'Cédula de Ciudadanía', 'Cédula de Extranjería']);
             $table->string('numero_identificacion', 20)->unique();
 
-            $table->unsignedTinyInteger('institucion_origen_id')->nullable();
-            $table->unsignedTinyInteger('facultad_id')->nullable();
+            $table->unsignedSmallInteger('institucion_origen_id')->nullable();
+            $table->unsignedSmallInteger('facultad_id')->nullable();
 
             $table->string('telefono', 20)->nullable();
             $table->string('direccion', 255)->nullable();
-            
-            $table->unsignedTinyInteger('pais_id')->nullable();
-            $table->unsignedTinyInteger('departamento_id')->nullable();
-           $table->unsignedTinyInteger('municipio_id')->nullable();
-          $table->unsignedTinyInteger('rol_id');
+
+            $table->unsignedSmallInteger('pais_id')->nullable();
+            $table->unsignedSmallInteger('departamento_id')->nullable();
+            $table->unsignedSmallInteger('municipio_id')->nullable();
+            $table->unsignedSmallInteger('rol_id');
 
             $table->foreign('pais_id')->references('id_pais')->on('paises');
             $table->foreign('departamento_id')->references('id_departamento')->on('departamentos');

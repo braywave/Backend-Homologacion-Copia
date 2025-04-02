@@ -9,9 +9,25 @@ class SolicitudAsignaturas extends Model
 {
     use HasFactory;
 
-    protected $table = "solicitud_asignaturas";
+    protected $table = 'solicitud_asignaturas';
 
-    protected $primaryKey = "id_solicitud_asignatura";
+    protected $primaryKey = 'id_solicitud_asignatura';
 
-    protected $fillable = ['asignatura_id', 'solicitud_id'];
+    protected $fillable = [
+        'solicitud_id',
+        'asignatura_id',
+        'nota_origen',
+        'horas',
+    ];
+
+    // Definir las relaciones
+    public function solicitud()
+    {
+        return $this->belongsTo(Solicitudes::class, 'solicitud_id', 'id_solicitud');
+    }
+
+    public function asignatura()
+    {
+        return $this->belongsTo(Asignatura::class, 'asignatura_id', 'id_asignatura');
+    }
 }

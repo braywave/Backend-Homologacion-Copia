@@ -13,5 +13,14 @@ class Municipio extends Model
 
     protected $primaryKey = 'id_municipio';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'nombre',
+        'departamento_id',
+    ];
+
+    // Definir las relaciones
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'departamento_id', 'id_departamento');
+    }
 }

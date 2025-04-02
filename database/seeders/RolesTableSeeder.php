@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Roles;
@@ -13,14 +14,12 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Roles::create([
-            'nombre' => 'Aspirante'
-        ]);
-        Roles::create([
-            'nombre' => 'Decano'
-        ]);
-        Roles::create([
-            'nombre' => 'Coordinador'
+        // Inserta múltiples roles
+        Roles::insert([
+            ['nombre' => 'Aspirante'],
+            ['nombre' => 'Coordinador'],
+            ['nombre' => 'Decano'],
+            ['nombre' => 'Vicerrector']
         ]);
     }
 }

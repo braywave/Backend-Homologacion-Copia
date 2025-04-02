@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contenidos_programaticos', function (Blueprint $table) {
-            $table->tinyIncrements('id_contenido');
-            $table->unsignedTinyInteger('asignatura_id');
+            $table->smallIncrements('id_contenido');
+            $table->unsignedSmallInteger('asignatura_id');
             $table->string('tema', 255);
             $table->text('resultados_aprendizaje');
             $table->text('descripcion');

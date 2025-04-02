@@ -9,9 +9,20 @@ class Facultades extends Model
 {
     use HasFactory;
 
+
     protected $table = 'facultades';
+
 
     protected $primaryKey = 'id_facultad';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = [
+        'institucion_id',
+        'nombre',
+    ];
+
+    // Definir las relaciones
+    public function institucion()
+    {
+        return $this->belongsTo(Institucion::class, 'institucion_id', 'id_institucion');
+    }
 }

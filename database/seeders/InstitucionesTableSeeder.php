@@ -2,34 +2,36 @@
 
 namespace Database\Seeders;
 
-use App\Models\Institucion;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Institucion;
 
 class InstitucionesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
         Institucion::create([
-            'nombre' => 'Corporacion Universitaria Autonoma del Cauca',
-            'codigo_snies' => '12345',
-            'municipio_id' => 65,
+            'municipio_id' => 703,
+            'nombre' => 'Corporación Universitaria Autónoma del Cauca',
+            'codigo_ies' => '2849',
             'tipo' => 'Universidad',
         ]);
 
         Institucion::create([
-            'nombre' => 'Universidad del Cauca',
-            'codigo_snies' => '6789',
-            'municipio_id' => 79,
-            'tipo' => 'Universidad',
+            'municipio_id' => 703,
+            'nombre' => 'Servicio Nacional de Aprendizaje (SENA)',
+            'codigo_ies' => null,
+            'tipo' => 'SENA',
         ]);
+
         Institucion::create([
-            'nombre' => 'UniConfacauca',
-            'codigo_snies' => '11456',
-            'municipio_id' => 78,
+            'municipio_id' => 703,
+            'nombre' => 'Universidad del Cauca',
+            'codigo_ies' => '1110',
             'tipo' => 'Universidad',
         ]);
     }
