@@ -2,29 +2,117 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HomologacionAsignaturas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomologacionAsignaturasControllerApi extends Controller
 {
+    // Método para obtener todas las homologaciones de asignaturas
     public function traerhomologacionasignaturas()
     {
-        $homologacionAsignaturas = HomologacionAsignaturas::orderBy("id_homologacion", "desc")->get();
-        return response()->json($homologacionAsignaturas);
+        try {
+            // Llamada al procedimiento almacenado para obtener todas las homologaciones
+            $homologaciones = DB::select('CALL ObtenerHomologacionesAsignaturas()');
+            return response()->json($homologaciones);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al obtener las homologaciones de asignaturas',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function llevarhomologacionasignatura($id){
-        $homologacionAsignatura = HomologacionAsignaturas::find($id);
+    // Método para obtener una homologación de asignatura por ID
+    public function llevarhomologacionasignatura($id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para obtener una homologación por ID
+            $homologacion = DB::select('CALL ObtenerHomologacionAsignaturaPorId(?)', [$id]);
 
-        if ($homologacionAsignatura) {
+            if (!empty($homologacion)) {
+                return response()->json([
+                    'mensaje' => 'Homologación de asignatura encontrada',
+                    'datos' => $homologacion[0] // Accedemos al primer resultado
+                ], 200);
+            } else {
+                return response()->json([
+                    'mensaje' => 'Homologación de asignatura no encontrada',
+                ], 404);
+            }
+        } catch (\Exception $e) {
             return response()->json([
-                'mensaje' => 'Homologacion de Asignatura encontrada',
-                'datos' => $homologacionAsignatura
-            ], 200);
-        } else {
-            return response()->json([
-                'mensaje' => 'Homologacion de Asignatura no encontrada',
-            ], 404);
+                'mensaje' => 'Error al obtener la homologación de asignatura',
+                'error' => $e->getMessage()
+            ], 500);
         }
-    } 
+    }
+
+    // Método para insertar una nueva homologación de asignatura
+    public function insertarhomologacionasignatura(Request $request)
+    {
+        try {
+            // Llamada al procedimiento almacenado para insertar una nueva homologación
+            DB::statement('CALL InsertarHomologacionAsignatura(?, ?, ?, ?, ?, ?)', [
+                $request->solicitud_id,
+                $request->asignatura_origen_id,
+                $request->asignatura_destino_id,
+                $request->nota_origen,
+                $request->nota_destino,
+                $request->comentarios
+            ]);
+
+            return response()->json([
+                'mensaje' => 'Homologación de asignatura insertada correctamente'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al insertar la homologación de asignatura',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para actualizar una homologación de asignatura
+    public function actualizarhomologacionasignatura(Request $request, $id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para actualizar una homologación
+            DB::statement('CALL ActualizarHomologacionAsignatura(?, ?, ?, ?, ?, ?, ?)', [
+                $id,
+                $request->solicitud_id,
+                $request->asignatura_origen_id,
+                $request->asignatura_destino_id,
+                $request->nota_origen,
+                $request->nota_destino,
+                $request->comentarios
+            ]);
+
+            return response()->json([
+                'mensaje' => 'Homologación de asignatura actualizada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al actualizar la homologación de asignatura',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para eliminar una homologación de asignatura
+    public function eliminarhomologacionasignatura($id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para eliminar una homologación
+            DB::statement('CALL EliminarHomologacionAsignatura(?)', [$id]);
+
+            return response()->json([
+                'mensaje' => 'Homologación de asignatura eliminada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al eliminar la homologación de asignatura',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

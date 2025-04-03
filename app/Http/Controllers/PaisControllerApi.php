@@ -2,32 +2,107 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pais;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaisControllerApi extends Controller
 {
-    Public function traerpaises() {
-        $paises = pais::orderBy("nombre","desc")->get();
-        return response()->json($paises);
+    // Método para obtener todos los países
+    public function obtenerPaises()
+    {
+        try {
+            // Llamada al procedimiento almacenado para obtener todos los países
+            $paises = DB::select('CALL ObtenerPaises()');
+            return response()->json($paises);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al obtener los países',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function llevarpais($id) {
-        $pais = pais::find($id);
+    // Método para obtener un país por ID
+    public function obtenerPaisPorId($id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para obtener un país por ID
+            $pais = DB::select('CALL ObtenerPaisPorId(?)', [$id]);
 
-        if($pais){
+            if (!empty($pais)) {
+                return response()->json([
+                    'mensaje' => 'País encontrado',
+                    'datos' => $pais[0] // Accedemos al primer resultado
+                ], 200);
+            } else {
+                return response()->json([
+                    'mensaje' => 'País no encontrado',
+                ], 404);
+            }
+        } catch (\Exception $e) {
             return response()->json([
-                'mensaje' => 'Pais Valido',
-                'datos' => $pais
+                'mensaje' => 'Error al obtener el país',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para insertar un nuevo país
+    public function insertarPais(Request $request)
+    {
+        try {
+            // Llamada al procedimiento almacenado para insertar un nuevo país
+            DB::statement('CALL InsertarPais(?)', [
+                $request->nombre
+            ]);
+
+            return response()->json([
+                'mensaje' => 'País insertado correctamente'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al insertar el país',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para actualizar un país
+    public function actualizarPais(Request $request, $id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para actualizar un país
+            DB::statement('CALL ActualizarPais(?, ?)', [
+                $id,
+                $request->nombre
+            ]);
+
+            return response()->json([
+                'mensaje' => 'País actualizado correctamente'
             ], 200);
-
-        }
-        else{
+        } catch (\Exception $e) {
             return response()->json([
-                'mensaje' => 'Pais no fue Encontrado'
-            ], 404);
+                'mensaje' => 'Error al actualizar el país',
+                'error' => $e->getMessage()
+            ], 500);
         }
-    
     }
 
+    // Método para eliminar un país
+    public function eliminarPais($id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para eliminar un país
+            DB::statement('CALL EliminarPais(?)', [$id]);
+
+            return response()->json([
+                'mensaje' => 'País eliminado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al eliminar el país',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

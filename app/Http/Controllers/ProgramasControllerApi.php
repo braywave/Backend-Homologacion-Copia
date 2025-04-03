@@ -3,29 +3,116 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Programa;
+use Illuminate\Support\Facades\DB;
 
 class ProgramasControllerApi extends Controller
 {
+    // Método para obtener todos los programas
     public function traerprogramas()
     {
-        $programas = Programa::orderBy("nombre", "desc")->paginate(10);
-        return response()->json($programas);
+        try {
+            // Llamada al procedimiento almacenado para obtener todos los programas
+            $programas = DB::select('CALL ObtenerProgramas()');
+            return response()->json($programas);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al obtener los programas',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
+    // Método para obtener un programa por ID
     public function llevarprograma($id)
     {
-        $programa = Programa::find($id);
+        try {
+            // Llamada al procedimiento almacenado para obtener un programa por ID
+            $programa = DB::select('CALL ObtenerProgramaPorId(?)', [$id]);
 
-        if ($programa) {
+            if (!empty($programa)) {
+                return response()->json([
+                    'mensaje' => 'Programa encontrado',
+                    'datos' => $programa[0] // Accedemos al primer resultado
+                ], 200);
+            } else {
+                return response()->json([
+                    'mensaje' => 'Programa no encontrado',
+                ], 404);
+            }
+        } catch (\Exception $e) {
             return response()->json([
-                'mensaje' => 'Programa encontrado',
-                'datos' => $programa
-            ], 200);
-        } else {
-            return response()->json([
-                'mensaje' => 'Programa no encontrado'
-            ], 404);
+                'mensaje' => 'Error al obtener el programa',
+                'error' => $e->getMessage()
+            ], 500);
         }
-}
+    }
+
+    // Método para insertar un nuevo programa
+    public function insertarprograma(Request $request)
+    {
+        try {
+            // Llamada al procedimiento almacenado para insertar un nuevo programa
+            DB::statement('CALL InsertarPrograma(?, ?, ?, ?, ?, ?)', [
+                $request->institucion_id,
+                $request->facultad_id,
+                $request->nombre,
+                $request->codigo_snies,
+                $request->tipo_formacion,
+                $request->metodologia
+            ]);
+
+            return response()->json([
+                'mensaje' => 'Programa insertado correctamente'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al insertar el programa',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para actualizar un programa
+    public function actualizarprograma(Request $request, $id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para actualizar un programa
+            DB::statement('CALL ActualizarPrograma(?, ?, ?, ?, ?, ?, ?)', [
+                $id,
+                $request->institucion_id,
+                $request->facultad_id,
+                $request->nombre,
+                $request->codigo_snies,
+                $request->tipo_formacion,
+                $request->metodologia
+            ]);
+
+            return response()->json([
+                'mensaje' => 'Programa actualizado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al actualizar el programa',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Método para eliminar un programa
+    public function eliminarprograma($id)
+    {
+        try {
+            // Llamada al procedimiento almacenado para eliminar un programa
+            DB::statement('CALL EliminarPrograma(?)', [$id]);
+
+            return response()->json([
+                'mensaje' => 'Programa eliminado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'mensaje' => 'Error al eliminar el programa',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
