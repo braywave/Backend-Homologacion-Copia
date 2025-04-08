@@ -3,7 +3,7 @@
 -- ========================================================
 
 DELIMITER //
-CREATE PROCEDURE   ()
+CREATE PROCEDURE ObtenerPaises()
 BEGIN
     SELECT * FROM paises ORDER BY nombre ASC;
 END;
@@ -74,7 +74,7 @@ DELIMITER ;
 -- Procedimientos para la tabla `municipios`
 -- ========================================================
 
-DELIMITER 
+DELIMITER
 //
 CREATE PROCEDURE ObtenerMunicipios()
 BEGIN

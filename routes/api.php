@@ -41,75 +41,72 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Rutas para países
 Route::get('/paises', [PaisControllerApi::class, 'obtenerPaises'])->name('paises.get');
 Route::get('/paises/{id}', [PaisControllerApi::class, 'obtenerPaisPorId'])->name('paises.getById');
-/* Route::post('/paises', [PaisControllerApi::class, 'insertarPais'])->name('paises.insert');
+Route::post('/paises', [PaisControllerApi::class, 'insertarPais'])->name('paises.insert');
 Route::put('/paises/{id}', [PaisControllerApi::class, 'actualizarPais'])->name('paises.update');
 Route::delete('/paises/{id}', [PaisControllerApi::class, 'eliminarPais'])->name('paises.delete');
 
- */
+
 
 
 // Rutas para departamentos
 Route::get('/departamentos', [DepartamentoControllerApi::class, 'traerDepartamentos'])->name('departamentos.get');
 Route::get('/departamentos/{id}', [DepartamentoControllerApi::class, 'llevarDepartamento'])->name('departamentos.getById');
-/* Route::post('/departamentos', [DepartamentoControllerApi::class, 'insertarDepartamento'])->name('departamentos.insert');
+Route::post('/departamentos', [DepartamentoControllerApi::class, 'insertarDepartamento'])->name('departamentos.insert');
 Route::put('/departamentos/{id}', [DepartamentoControllerApi::class, 'actualizarDepartamento'])->name('departamentos.update');
 Route::delete('/departamentos/{id}', [DepartamentoControllerApi::class, 'eliminarDepartamento'])->name('departamentos.delete');
 
- */
 
 // Rutas para municipios
 Route::get('/municipios', [MunicipiosControllerApi::class, 'obtenerMunicipios'])->name('municipios.get');
 Route::get('/municipios/{id}', [MunicipiosControllerApi::class, 'obtenerMunicipioPorId'])->name('municipios.getById');
-/* Route::post('/municipios', [MunicipiosControllerApi::class, 'insertarMunicipio'])->name('municipios.insert');
+Route::post('/municipios', [MunicipiosControllerApi::class, 'insertarMunicipio'])->name('municipios.insert');
 Route::put('/municipios/{id}', [MunicipiosControllerApi::class, 'actualizarMunicipio'])->name('municipios.update');
 Route::delete('/municipios/{id}', [MunicipiosControllerApi::class, 'eliminarMunicipio'])->name('municipios.delete');
- */
+
 
 
 // Rutas para instituciones
 Route::get('/instituciones', [InstitucionesControllerApi::class, 'traerInstituciones'])->name('instituciones.get');
 Route::get('/instituciones/{id}', [InstitucionesControllerApi::class, 'llevarInstitucion'])->name('instituciones.getById');
-/* Route::post('/instituciones', [InstitucionesControllerApi::class, 'insertarInstitucion'])->name('instituciones.insert');
+Route::post('/instituciones', [InstitucionesControllerApi::class, 'insertarInstitucion'])->name('instituciones.insert');
 Route::put('/instituciones/{id}', [InstitucionesControllerApi::class, 'actualizarInstitucion'])->name('instituciones.update');
 Route::delete('/instituciones/{id}', [InstitucionesControllerApi::class, 'eliminarInstitucion'])->name('instituciones.delete');
- */
+
 
 // Rutas para programas
 Route::get('/programas', [ProgramasControllerApi::class, 'traerprogramas'])->name('programas.get');
 Route::get('/programas/{id}', [ProgramasControllerApi::class, 'llevarprograma'])->name('programas.getById');
-/* Route::post('/programas', [ProgramasControllerApi::class, 'insertarprograma'])->name('programas.insert');
+Route::post('/programas', [ProgramasControllerApi::class, 'insertarprograma'])->name('programas.insert');
 Route::put('/programas/{id}', [ProgramasControllerApi::class, 'actualizarprograma'])->name('programas.update');
 Route::delete('/programas/{id}', [ProgramasControllerApi::class, 'eliminarprograma'])->name('programas.delete');
- */
+
 
 
 // Rutas para asignaturas
 Route::get('/asignaturas', [AsignaturasControllerApi::class, 'traerasignaturas'])->name('asignaturas.get');
 Route::get('/asignaturas/{id}', [AsignaturasControllerApi::class, 'llevarasignatura'])->name('asignaturas.getById');
-/* Route::post('/asignaturas', [AsignaturasControllerApi::class, 'insertarAsignatura'])->name('asignaturas.insert');
+Route::post('/asignaturas', [AsignaturasControllerApi::class, 'insertarAsignatura'])->name('asignaturas.insert');
 Route::put('/asignaturas/{id}', [AsignaturasControllerApi::class, 'actualizarAsignatura'])->name('asignaturas.update');
 Route::delete('/asignaturas/{id}', [AsignaturasControllerApi::class, 'eliminarAsignatura'])->name('asignaturas.delete');
-
- */
 
 
 
 // Rutas para credenciales
 Route::get('/credenciales', [CredencialesControllerApi::class, 'traercredenciales'])->name('credenciales.get');
 Route::get('/credenciales/{id}', [CredencialesControllerApi::class, 'llevarcredencial'])->name('credenciales.getById');
-/* Route::post('/credenciales', [CredencialesControllerApi::class, 'insertarcredencial'])->name('credenciales.insert');
+Route::post('/credenciales', [CredencialesControllerApi::class, 'insertarcredencial'])->name('credenciales.insert');
 Route::put('/credenciales/{id}', [CredencialesControllerApi::class, 'actualizarcredencial'])->name('credenciales.update');
 Route::delete('/credenciales/{id}', [CredencialesControllerApi::class, 'eliminarcredencial'])->name('credenciales.delete');
- */
 
 
- // Rutas para solicitudes
+
+// Rutas para solicitudes
 Route::get('/solicitudes', [SolicitudesControllerApi::class, 'traerSolicitudes'])->name('solicitudes.get');
 Route::get('/solicitudes/{id}', [SolicitudesControllerApi::class, 'llevarSolicitud'])->name('solicitudes.getById');
-/* Route::post('/solicitudes', [SolicitudesControllerApi::class, 'insertarSolicitud'])->name('solicitudes.insert');
+Route::post('/solicitudes', [SolicitudesControllerApi::class, 'insertarSolicitud'])->name('solicitudes.insert');
 Route::put('/solicitudes/{id}', [SolicitudesControllerApi::class, 'actualizarSolicitud'])->name('solicitudes.update');
 Route::delete('/solicitudes/{id}', [SolicitudesControllerApi::class, 'eliminarSolicitud'])->name('solicitudes.delete');
- */
+
 
 // Rutas para usuarios
 Route::get('/usuarios', [UsuariosControllerApi::class, 'traerUsuarios'])->name('usuarios.get');
@@ -144,7 +141,7 @@ Route::get('/roles/{id}', [RolesControllerApi::class, 'llevarRol'])->name('roles
 Route::put('/roles/{id}', [RolesControllerApi::class, 'actualizarRol'])->name('roles.update');
 Route::delete('/roles/{id}', [RolesControllerApi::class, 'eliminarRol'])->name('roles.delete');
  */
- 
+
 // Rutas para contenidos programáticos
 Route::get('/contenidos-programaticos', [ContenidosProgramaticosControllerApi::class, 'traerContenidosProgramaticos'])->name('contenidosProgramaticos.get');
 Route::get('/contenidos-programaticos/{id}', [ContenidosProgramaticosControllerApi::class, 'llevarContenidoProgramatico'])->name('contenidosProgramaticos.getById');

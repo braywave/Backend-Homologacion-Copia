@@ -14,8 +14,6 @@ class DocumentosTableSeeder extends Seeder
     public function run(): void
     {
 
-
-
         Documentos::create([
             'solicitud_id' => 1,
             'usuario_id' => 1,
@@ -31,15 +29,15 @@ class DocumentosTableSeeder extends Seeder
         ]);
 
         Documentos::create([
-            'solicitud_id' => 2, // ID de la solicitud
-            'usuario_id' => 2, // ID del usuario
+            'solicitud_id' => 2,
+            'usuario_id' => 2,
             'tipo' => 'Certificación de Finalización de Estudios',
             'ruta' => 'ruta/a/tu/documento3.pdf',
         ]);
 
         Documentos::create([
-            'solicitud_id' => 3, // ID de la solicitud
-            'usuario_id' => 3, // ID del usuario
+            'solicitud_id' => 3,
+            'usuario_id' => 3,
             'tipo' => 'Copia del Pasaporte',
             'ruta' => 'ruta/a/tu/documento4.pdf',
         ]);
