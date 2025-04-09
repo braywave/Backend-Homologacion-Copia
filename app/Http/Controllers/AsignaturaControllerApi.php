@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AsignaturasControllerApi extends Controller
+class AsignaturaControllerApi extends Controller
 {
     // Método para obtener todas las asignaturas
-    public function traerasignaturas()
+    public function traerAsignaturas()
     {
         try {
             // Llamada al procedimiento almacenado para obtener todas las asignaturas
@@ -23,7 +23,7 @@ class AsignaturasControllerApi extends Controller
     }
 
     // Método para obtener una asignatura por ID
-    public function llevarasignatura($id)
+    public function llevarAsignatura($id)
     {
         try {
             // Llamada al procedimiento almacenado para obtener una asignatura por ID

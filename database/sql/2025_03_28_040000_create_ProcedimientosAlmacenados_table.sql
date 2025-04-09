@@ -1,37 +1,50 @@
--- ========================================================
--- Procedimientos para la tabla `paises`
--- ========================================================
+// actualizar  países
 
-DELIMITER //
-CREATE PROCEDURE ObtenerPaises()
-BEGIN
-    SELECT * FROM paises ORDER BY nombre ASC;
-END;
-//
-
-CREATE PROCEDURE ObtenerPaisPorId(IN paisId INT)
-BEGIN
-    SELECT * FROM paises WHERE id_pais = paisId;
-END;
-//
-
-CREATE PROCEDURE InsertarPais(IN nombrePais VARCHAR(100))
-BEGIN
-    INSERT INTO paises (nombre) VALUES (nombrePais);
-END;
-//
-
-CREATE PROCEDURE ActualizarPais(IN paisId INT, IN nombrePais VARCHAR(100))
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPais`(IN paisId INT, IN nombrePais VARCHAR(100))
 BEGIN
     UPDATE paises SET nombre = nombrePais WHERE id_pais = paisId;
-END;
-//
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE EliminarPais(IN paisId INT)
+// eliminar país
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPais`(IN paisId INT)
 BEGIN
     DELETE FROM paises WHERE id_pais = paisId;
-END;
-//
+END$$
+DELIMITER ;
+
+// insertar país
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPais`(IN nombrePais VARCHAR(100))
+BEGIN
+    INSERT INTO paises (nombre) VALUES (nombrePais);
+END$$
+DELIMITER ;
+
+
+// obtener país por id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaisPorId`(IN paisId INT)
+BEGIN
+    SELECT * FROM paises WHERE id_pais = paisId;
+END$$
+DELIMITER ;
+
+--
+
+obtener países
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaises`()
+BEGIN
+    SELECT * FROM paises ORDER BY nombre ASC;
+END$$
+DELIMITER ;
 
 -- ========================================================
 -- Procedimientos para la tabla `departamentos`
