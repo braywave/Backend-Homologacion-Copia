@@ -1,0 +1,13 @@
+[33m68bd289[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: commit (merge): actualizacion de las 8 primeros controller con procedimientoas almacenados, funcionales en postman
+[33mafb4088[m HEAD@{1}: commit: actualizacion de las 8 primeros controller con procedimientoas almacenados, funcionales en postman
+[33ma7815f8[m HEAD@{2}: commit: Implementación de controladores con procedimientos almacenados y actualización de rutas API para CRUP, y archivo de base de datos actualizado con procedimientos almacenados database/sql/ProcedimientosAlmacenados
+[33m607c426[m HEAD@{3}: pull: Fast-forward
+[33m51c1757[m HEAD@{4}: reset: moving to origin/master
+[33macb005a[m HEAD@{5}: pull origin master: Fast-forward
+[33md61934a[m HEAD@{6}: commit: Campos y relaciones actualizadas con las ultimas migraciones y apis
+[33m3e11244[m HEAD@{7}: pull origin master: Fast-forward
+[33m1c47c7a[m HEAD@{8}: commit: tablas con sus campos y relacione
+[33m2aea0eb[m HEAD@{9}: pull origin master: Fast-forward
+[33mba462a1[m HEAD@{10}: checkout: moving from master to master
+[33mba462a1[m HEAD@{11}: Branch: renamed refs/heads/master to refs/heads/master
+[33mba462a1[m HEAD@{13}: commit (initial): Envio de correor validado con gmail
