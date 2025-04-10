@@ -15,7 +15,7 @@ return new class extends Migration
             $table->smallIncrements('id_asignatura');
             $table->unsignedSmallInteger('programas_id');
             $table->string('nombre',255);
-            $table->enum('tipo',['Materias','Competencia']);
+            $table->enum('tipo',['Materia','Competencia']);
             $table->string('codigo_asignatura', 30)->unique();
             $table->unsignedInteger('creditos')->nullable();
             $table->unsignedInteger('semestre')->nullable();

@@ -1,78 +1,108 @@
-// actualizar  países
+--------------
+--- PAISES ---
+--------------
 
+-- ACTUALIZAR
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPais`(IN paisId INT, IN nombrePais VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPais`(
+    IN paisId INT,
+    IN nombrePais VARCHAR(100)
+)
 BEGIN
-    UPDATE paises SET nombre = nombrePais WHERE id_pais = paisId;
-END$$
-DELIMITER ;
-
-// eliminar país
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPais`(IN paisId INT)
-BEGIN
-    DELETE FROM paises WHERE id_pais = paisId;
-END$$
-DELIMITER ;
-
-// insertar país
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPais`(IN nombrePais VARCHAR(100))
-BEGIN
-    INSERT INTO paises (nombre) VALUES (nombrePais);
+    UPDATE paises
+       SET nombre = nombrePais
+     WHERE id_pais = paisId;
 END$$
 DELIMITER ;
 
 
-// obtener país por id
+-- ELIMINAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaisPorId`(IN paisId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPais`(
+    IN paisId INT
+)
 BEGIN
-    SELECT * FROM paises WHERE id_pais = paisId;
+    DELETE FROM paises
+     WHERE id_pais = paisId;
 END$$
 DELIMITER ;
 
- //obtener países
+-- insertar
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPais`(
+    IN nombrePais VARCHAR(100)
+)
+BEGIN
+    INSERT INTO paises (nombre)
+         VALUES (nombrePais);
+END$$
+DELIMITER ;
+
+
+-- OBTENER PAIS POR ID
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaisPorId`(
+    IN paisId INT
+)
+BEGIN
+    SELECT p.nombre AS pais
+      FROM paises p
+     WHERE p.id_pais = paisId;
+END$$
+DELIMITER ;
+
+
+ -- OBTENER TODOS LOS PAISES
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaises`()
 BEGIN
-    SELECT * FROM paises ORDER BY nombre ASC;
+    SELECT p.nombre AS pais
+      FROM paises p
+     ORDER BY p.nombre ASC;
 END$$
 DELIMITER ;
 
 
 
+---------------------
+--- DEPARTAMENTOS ---
+---------------------
 
-// Rutas para departamentos
-
-// eliminar departamento
+-- ELIMINAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarDepartamento`(
     IN departamentoId INT
 )
 BEGIN
-    DELETE FROM departamentos WHERE id_departamento = departamentoId;
+    DELETE FROM departamentos
+     WHERE id_departamento = departamentoId;
 END$$
 DELIMITER ;
 
-//actualizar departamentos
+
+-- ACTUALIZAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarDepartamento`(IN `departamentoId` INT, IN `nombreDepartamento` VARCHAR(255), IN `paisId` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarDepartamento`(
+    IN departamentoId INT,
+    IN nombreDepartamento VARCHAR(255),
+    IN paisId INT
+)
 BEGIN
     UPDATE departamentos
-    SET nombre = nombreDepartamento, pais_id = paisId
-    WHERE id_departamento = departamentoId;
+       SET nombre = nombreDepartamento, pais_id = paisId
+     WHERE id_departamento = departamentoId;
 END$$
 DELIMITER ;
 
 
-// insertar departamentos
+
+-- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDepartamento`(
@@ -82,58 +112,76 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDepartamento`(
 )
 BEGIN
     INSERT INTO departamentos (id_departamento, nombre, pais_id)
-    VALUES (departamentoId, nombreDepartamento, paisId);
+         VALUES (departamentoId, nombreDepartamento, paisId);
 END$$
 DELIMITER ;
 
 
-
-
-//obtener departamentos id
+-- OBTENER DEPARTAMENTO POR ID
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDepartamentoPorId`(IN departamentoId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDepartamentoPorId`(
+    IN departamentoId INT
+)
 BEGIN
-    SELECT * FROM departamentos WHERE id_departamento = departamentoId;
+    SELECT d.id_departamento,
+           d.nombre AS departamento,
+           p.nombre AS pais
+      FROM departamentos d
+      JOIN paises p ON d.pais_id = p.id_pais
+     WHERE d.id_departamento = departamentoId;
 END$$
 DELIMITER ;
 
-
-
-//obtener departamentos
+-- OBTENER TODOS LOS DEPARTAMENTOS
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDepartamentos`()
 BEGIN
-    SELECT * FROM departamentos ORDER BY nombre ASC;
+    SELECT d.id_departamento,
+           d.nombre AS departamento,
+           p.nombre AS pais
+      FROM departamentos d
+      JOIN paises p ON d.pais_id = p.id_pais
+     ORDER BY d.nombre ASC;
 END$$
 DELIMITER ;
 
 
+------------------
+--- MUNICIPIOS ---
+------------------
 
-// Rutas para municipios
-
-// actualizar municipios
+-- ACTUALIZAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarMunicipio`(IN `municipioId` INT, IN `nombreMunicipio` VARCHAR(255), IN `departamentoId` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarMunicipio`(
+    IN municipioId INT,
+    IN nombreMunicipio VARCHAR(255),
+    IN departamentoId INT
+)
 BEGIN
     UPDATE municipios
-    SET nombre = nombreMunicipio, departamento_id = departamentoId
-    WHERE id_municipio = municipioId;
+       SET nombre = nombreMunicipio, departamento_id = departamentoId
+     WHERE id_municipio = municipioId;
 END$$
 DELIMITER ;
 
-// elimina un municipio
+
+-- ELIMINAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarMunicipio`(IN municipioId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarMunicipio`(
+    IN municipioId INT
+)
 BEGIN
-    DELETE FROM municipios WHERE id_municipio = municipioId;
+    DELETE FROM municipios
+     WHERE id_municipio = municipioId;
 END$$
 DELIMITER ;
 
-//insertar municipio
+
+-- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarMunicipio`(
@@ -142,34 +190,52 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarMunicipio`(
 )
 BEGIN
     INSERT INTO municipios (nombre, departamento_id)
-    VALUES (nombreMunicipio, departamentoId);
+         VALUES (nombreMunicipio, departamentoId);
 END$$
 DELIMITER ;
 
- // obtener municipio id
+
+-- OBTENER MUNICIPIO POR ID
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMunicipioPorId`(IN municipioId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMunicipioPorId`(
+    IN municipioId INT
+)
 BEGIN
-    SELECT * FROM municipios WHERE id_municipio = municipioId;
+    SELECT m.id_municipio,
+           m.nombre AS municipio,
+           d.nombre AS departamento,
+           p.nombre AS pais
+      FROM municipios m
+      JOIN departamentos d ON m.departamento_id = d.id_departamento
+      JOIN paises p ON d.pais_id = p.id_pais
+     WHERE m.id_municipio = municipioId;
 END$$
 DELIMITER ;
 
-// obtener municipios
+
+-- OBTENER MUNICIPIOS
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMunicipios`()
 BEGIN
-    SELECT * FROM municipios ORDER BY nombre ASC;
+    SELECT m.id_municipio,
+           m.nombre AS municipio,
+           d.nombre AS departamento,
+           p.nombre AS pais
+      FROM municipios m
+      JOIN departamentos d ON m.departamento_id = d.id_departamento
+      JOIN paises p ON d.pais_id = p.id_pais
+     ORDER BY m.nombre ASC;
 END$$
 DELIMITER ;
 
+---------------------
+--- INSTITUCIONES ---
+---------------------
 
 
-
-// Rutas para instituciones
-
-// actualizar instituciones
+-- ACTUALIZAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarInstitucion`(
@@ -181,24 +247,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarInstitucion`(
 )
 BEGIN
     UPDATE instituciones
-    SET nombre = p_nombre,
-        codigo_ies = p_codigo_ies,
-        municipio_id = p_municipio_id,
-        tipo = p_tipo
-    WHERE id_institucion = institucionId;
+       SET nombre = p_nombre,
+           codigo_ies = p_codigo_ies,
+           municipio_id = p_municipio_id,
+           tipo = p_tipo
+     WHERE id_institucion = institucionId;
 END$$
 DELIMITER ;
 
-// eliminar institución
+
+-- ELIMINAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarInstitucion`(IN institucionId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarInstitucion`(
+    IN institucionId INT
+)
 BEGIN
-    DELETE FROM instituciones WHERE id_institucion = institucionId;
+    DELETE FROM instituciones
+     WHERE id_institucion = institucionId;
 END$$
 DELIMITER ;
 
-// insertar institucion
+
+-- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarInstitucion`(
@@ -209,32 +280,56 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarInstitucion`(
 )
 BEGIN
     INSERT INTO instituciones (nombre, codigo_ies, municipio_id, tipo)
-    VALUES (nombreInstitucion, codigoIes, municipioId, tipoInstitucion);
+         VALUES (nombreInstitucion, codigoIes, municipioId, tipoInstitucion);
 END$$
 DELIMITER ;
 
-// obtener institución id
+
+-- OBTENER INSTITUCION POR ID
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerInstitucionPorId`(IN institucionId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerInstitucionPorId`(
+    IN institucionId INT
+)
 BEGIN
-    SELECT * FROM instituciones WHERE id_institucion = institucionId;
+    SELECT i.id_institucion,
+           i.nombre,
+           i.codigo_ies,
+           m.nombre AS municipio,
+           d.nombre AS departamento,
+           i.tipo
+      FROM instituciones i
+      JOIN municipios m ON i.municipio_id = m.id_municipio
+      JOIN departamentos d ON m.departamento_id = d.id_departamento
+     WHERE i.id_institucion = institucionId;
 END$$
 DELIMITER ;
 
-//obtener instituciones
+
+-- OBTENER INSTITUCIONES TODAS
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerInstituciones`()
 BEGIN
-    SELECT * FROM instituciones ORDER BY nombre ASC;
+    SELECT i.id_institucion,
+           i.nombre,
+           i.codigo_ies,
+           m.nombre AS municipio,
+           d.nombre AS departamento,
+           i.tipo
+      FROM instituciones i
+      JOIN municipios m ON i.municipio_id = m.id_municipio
+      JOIN departamentos d ON m.departamento_id = d.id_departamento
+     ORDER BY i.nombre ASC;
 END$$
 DELIMITER ;
 
 
-// Rutas para programas
+-----------------
+--- PROGRAMAS ---
+-----------------
 
-// actualizar programa
+-- ACTUALIZAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPrograma`(
@@ -248,21 +343,31 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPrograma`(
 )
 BEGIN
     UPDATE programas
-    SET institucion_id = p_institucion_id, facultad_id = p_facultad_id, nombre = p_nombre, codigo_snies = p_codigo_snies, tipo_formacion = p_tipo_formacion, metodologia = p_metodologia
-    WHERE id_programa = programaId;
+       SET institucion_id = p_institucion_id,
+           facultad_id = p_facultad_id,
+           nombre = p_nombre,
+           codigo_snies = p_codigo_snies,
+           tipo_formacion = p_tipo_formacion,
+           metodologia = p_metodologia
+     WHERE id_programa = programaId;
 END$$
 DELIMITER ;
 
-// eliminar programa
+
+-- ELIMINAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPrograma`(IN programaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPrograma`(
+    IN programaId INT
+)
 BEGIN
-    DELETE FROM programas WHERE id_programa = programaId;
+    DELETE FROM programas
+     WHERE id_programa = programaId;
 END$$
 DELIMITER ;
 
-//insertar programa
+
+-- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPrograma`(
@@ -275,39 +380,61 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPrograma`(
 )
 BEGIN
     INSERT INTO programas (institucion_id, facultad_id, nombre, codigo_snies, tipo_formacion, metodologia)
-    VALUES (p_institucion_id, p_facultad_id, p_nombre, p_codigo_snies, p_tipo_formacion, p_metodologia);
+         VALUES (p_institucion_id, p_facultad_id, p_nombre, p_codigo_snies, p_tipo_formacion, p_metodologia);
 END$$
 DELIMITER ;
 
-// obtener programa por id
+
+-- OBTENER PROGRAMA POR ID
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProgramaPorId`(IN programaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProgramaPorId`(
+    IN programaId INT
+)
 BEGIN
-    SELECT * FROM programas WHERE id_programa = programaId;
+    SELECT pr.id_programa,
+           pr.nombre AS programa,
+           i.nombre AS institucion,
+           pr.codigo_snies,
+           pr.tipo_formacion,
+           pr.metodologia
+      FROM programas pr
+      JOIN instituciones i ON pr.institucion_id = i.id_institucion
+     WHERE pr.id_programa = programaId;
 END$$
 DELIMITER ;
 
-// obtener programa
+
+-- OBTENER TODOS PROGRAMAS
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProgramas`()
 BEGIN
-    SELECT * FROM programas ORDER BY nombre ASC;
+    SELECT pr.id_programa,
+           pr.nombre AS programa,
+           i.nombre AS institucion,
+           pr.codigo_snies,
+           pr.tipo_formacion,
+           pr.metodologia
+      FROM programas pr
+      JOIN instituciones i ON pr.institucion_id = i.id_institucion
+     ORDER BY pr.nombre ASC;
 END$$
 DELIMITER ;
 
 
-// Rutas para asignaturas
+-------------------
+--- ASIGNATURAS ---
+-------------------
 
-// actualizar asignatura
+-- ACTUALIZAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarAsignatura`(
-    IN p_id_asignatura SMALLINT,
-    IN p_programas_id SMALLINT,
+    IN p_id_asignatura INT,
+    IN p_programa_id INT,
     IN p_nombre VARCHAR(255),
-    IN p_tipo ENUM('Materias', 'Competencia'),
+    IN p_tipo ENUM('Materia', 'Competencia'),
     IN p_codigo_asignatura VARCHAR(30),
     IN p_creditos INT,
     IN p_semestre INT,
@@ -320,40 +447,44 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarAsignatura`(
 )
 BEGIN
     UPDATE asignaturas
-    SET
-        programas_id = p_programas_id,
-        nombre = p_nombre,
-        tipo = p_tipo,
-        codigo_asignatura = p_codigo_asignatura,
-        creditos = p_creditos,
-        semestre = p_semestre,
-        horas = p_horas,
-        tiempo_presencial = p_tiempo_presencial,
-        tiempo_independiente = p_tiempo_independiente,
-        horas_totales_semanales = p_horas_totales_semanales,
-        modalidad = p_modalidad,
-        metodologia = p_metodologia,
-        updated_at = NOW()
-    WHERE id_asignatura = p_id_asignatura;
+       SET programa_id = p_programa_id,
+           nombre = p_nombre,
+           tipo = p_tipo,
+           codigo_asignatura = p_codigo_asignatura,
+           creditos = p_creditos,
+           semestre = p_semestre,
+           horas = p_horas,
+           tiempo_presencial = p_tiempo_presencial,
+           tiempo_independiente = p_tiempo_independiente,
+           horas_totales_semanales = p_horas_totales_semanales,
+           modalidad = p_modalidad,
+           metodologia = p_metodologia,
+           updated_at = NOW()
+     WHERE id_asignatura = p_id_asignatura;
 END$$
 DELIMITER ;
 
-//eliminar asignatura
+
+-- ELIMINAR
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarAsignatura`(IN asignaturaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarAsignatura`(
+    IN asignaturaId INT
+)
 BEGIN
-    DELETE FROM asignaturas WHERE id_asignatura = asignaturaId;
+    DELETE FROM asignaturas
+     WHERE id_asignatura = asignaturaId;
 END$$
 DELIMITER ;
 
-//insertar asignatura
+
+-- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarAsignatura`(
-    IN p_programas_id SMALLINT,
+    IN p_programa_id INT,
     IN p_nombre VARCHAR(255),
-    IN p_tipo ENUM('Materias', 'Competencia'),
+    IN p_tipo ENUM('Materia', 'Competencia'),
     IN p_codigo_asignatura VARCHAR(30),
     IN p_creditos INT,
     IN p_semestre INT,
@@ -366,7 +497,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarAsignatura`(
 )
 BEGIN
     INSERT INTO asignaturas (
-        programas_id,
+        programa_id,
         nombre,
         tipo,
         codigo_asignatura,
@@ -381,7 +512,7 @@ BEGIN
         created_at,
         updated_at
     ) VALUES (
-        p_programas_id,
+        p_programa_id,
         p_nombre,
         p_tipo,
         p_codigo_asignatura,
@@ -399,24 +530,65 @@ BEGIN
 END$$
 DELIMITER ;
 
-// obtener asignaturas
+
+-- OBTENER TODAS ASIGNATURAS
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsignaturas`()
 BEGIN
-    SELECT * FROM asignaturas ORDER BY nombre ASC;
+    SELECT a.id_asignatura,
+           a.nombre,
+           a.tipo,
+           a.codigo_asignatura,
+           a.creditos,
+           a.semestre,
+           a.horas,
+           a.tiempo_presencial,
+           a.tiempo_independiente,
+           a.horas_totales_semanales,
+           a.modalidad,
+           a.metodologia,
+           a.created_at,
+           a.updated_at,
+           p.nombre AS programa
+      FROM asignaturas a
+      JOIN programas p ON a.programas_id = p.id_programa
+     ORDER BY a.nombre ASC;
 END$$
 DELIMITER ;
 
-// obtener asignatura por id
+
+
+-- OBTENER ASIGNATURAS POR ID
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsignaturaPorId`(IN asignaturaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsignaturaPorId`(
+    IN asignaturaId INT
+)
 BEGIN
-    SELECT * FROM asignaturas WHERE id_asignatura = asignaturaId;
+    SELECT a.id_asignatura,
+           a.nombre,
+           a.tipo,
+           a.codigo_asignatura,
+           a.creditos,
+           a.semestre,
+           a.horas,
+           a.tiempo_presencial,
+           a.tiempo_independiente,
+           a.horas_totales_semanales,
+           a.modalidad,
+           a.metodologia,
+           a.created_at,
+           a.updated_at,
+           p.nombre AS programa
+      FROM asignaturas a
+      JOIN programas p ON a.programas_id = p.id_programa
+     WHERE a.id_asignatura = asignaturaId;
 END$$
 DELIMITER ;
 
+
+--FALTA
 // Rutas para credenciales
 
 // actualizar credenciales
@@ -482,10 +654,11 @@ BEGIN
 END$$
 DELIMITER ;
 
+-----------------
+-- SOLICITUDES --
+-----------------
 
- // Rutas para solicitudes
-
-// actualizar solicitud
+-- ACTUALIZAR SOLICITUD
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarSolicitud`(
@@ -515,16 +688,20 @@ BEGIN
 END$$
 DELIMITER ;
 
-//eliminar solicitud
+
+-- ELIMINAR SOLICITUD
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarSolicitud`(IN p_id_solicitud SMALLINT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarSolicitud`(
+    IN p_id_solicitud SMALLINT
+)
 BEGIN
     DELETE FROM solicitudes WHERE id_solicitud = p_id_solicitud;
 END$$
 DELIMITER ;
 
-//insertar solicitud
+
+-- INSERTAR SOLICITUD
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarSolicitud`(
     IN p_usuario_id SMALLINT,
@@ -548,8 +725,7 @@ BEGIN
         ruta_pdf_resolucion,
         created_at,
         updated_at
-    )
-    VALUES (
+    ) VALUES (
         p_usuario_id,
         p_programa_destino_id,
         p_finalizo_estudios,
@@ -564,40 +740,166 @@ BEGIN
 END$$
 DELIMITER ;
 
-//obtener solicitud por id
+
+-- OBTENER SOLICITUD POR ID
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudPorId`(IN p_id_solicitud SMALLINT)
 BEGIN
-    SELECT * FROM solicitudes WHERE id_solicitud = p_id_solicitud;
+    SELECT
+        s.id_solicitud,
+        s.usuario_id,
+        s.programa_destino_id,
+        s.finalizo_estudios,
+        s.fecha_solicitud,
+        s.fecha_solicitud AS fecha_radicado, -- Alias para compatibilidad
+        s.estado,
+        s.numero_radicado,
+        s.ruta_pdf_resolucion AS pdf_resolucion,
+
+        -- Datos del usuario
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+        u.tipo_identificacion,
+        u.numero_identificacion,
+        u.telefono,
+        u.direccion,
+
+        -- Nombres en vez de IDs
+        p.nombre AS pais_nombre,
+        d.nombre AS departamento_nombre,
+        m.nombre AS municipio_nombre,
+        inst.nombre AS institucion_origen_nombre
+
+    FROM solicitudes s
+    INNER JOIN usuarios u ON s.usuario_id = u.id_usuario
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    LEFT JOIN instituciones inst ON u.institucion_origen_id = inst.id_institucion
+    WHERE s.id_solicitud = solicitudId;
 END$$
 DELIMITER ;
 
-// obtener solicitud
-
+-- OBTENER TODAS LAS SOLICITUDES
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudes`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudes`(IN p_id_solicitud SMALLINT)
 BEGIN
-    SELECT * FROM solicitudes;
+    SELECT
+        s.id_solicitud,
+        s.usuario_id,
+        s.programa_destino_id,
+        s.finalizo_estudios,
+        s.fecha_solicitud,
+        s.fecha_solicitud AS fecha_radicado, -- Alias si necesitas ese nombre en frontend
+        s.estado,
+        s.numero_radicado,
+        s.ruta_pdf_resolucion AS pdf_resolucion,
+
+        -- Datos del usuario
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+        u.tipo_identificacion,
+        u.numero_identificacion,
+        u.telefono,
+        u.direccion,
+
+        -- Nombres en vez de IDs
+        p.nombre AS pais_nombre,
+        d.nombre AS departamento_nombre,
+        m.nombre AS municipio_nombre,
+        inst.nombre AS institucion_origen_nombre
+
+    FROM solicitudes s
+    INNER JOIN usuarios u ON s.usuario_id = u.id_usuario
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    LEFT JOIN instituciones inst ON u.institucion_origen_id = inst.id_institucion;
 END$$
 DELIMITER ;
 
--- ========================================================
--- Procedimientos para la tabla `usuarios`
--- ========================================================
+
+
+----------------
+--- USUARIOS ---
+----------------
+
+-- OBTENER TODOS LOS USUARIOS
 
 DELIMITER $$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUsuarios`()
 BEGIN
-    SELECT * FROM usuarios ORDER BY primer_nombre ASC;
+    SELECT
+        u.id_usuario,
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+        u.tipo_identificacion,
+        u.numero_identificacion,
+        i.nombre AS institucion_origen,
+        f.nombre AS facultad,
+        u.telefono,
+        u.direccion,
+        p.nombre AS pais,
+        d.nombre AS departamento,
+        m.nombre AS municipio,
+        u.created_at,
+        u.updated_at
+    FROM usuarios u
+    LEFT JOIN instituciones i ON u.institucion_origen_id = i.id_institucion
+    LEFT JOIN facultades f ON u.facultad_id = f.id_facultad
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    ORDER BY u.primer_nombre ASC;
 END$$
+DELIMITER ;
 
+
+-- OBTENER USUARIO POR ID
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUsuarioPorId`(IN usuarioId INT)
 BEGIN
-    SELECT * FROM usuarios WHERE id_usuario = usuarioId;
+    SELECT
+        u.id_usuario,
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+        u.tipo_identificacion,
+        u.numero_identificacion,
+        i.nombre AS institucion_origen,
+        f.nombre AS facultad,
+        u.telefono,
+        u.direccion,
+        p.nombre AS pais,
+        d.nombre AS departamento,
+        m.nombre AS municipio,
+        u.created_at,
+        u.updated_at
+    FROM usuarios u
+    LEFT JOIN instituciones i ON u.institucion_origen_id = i.id_institucion
+    LEFT JOIN facultades f ON u.facultad_id = f.id_facultad
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    WHERE u.id_usuario = usuarioId;
 END$$
+DELIMITER ;
 
+-- INSERTAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario`(
     IN p_primer_nombre VARCHAR(50),
     IN p_segundo_nombre VARCHAR(50),
@@ -631,7 +933,11 @@ BEGIN
         NOW(), NOW()
     );
 END$$
+DELIMITER ;
 
+-- ACTUALIZAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarUsuario`(
     IN usuarioId INT,
     IN p_primer_nombre VARCHAR(50),
@@ -670,30 +976,65 @@ BEGIN
         updated_at = NOW()
     WHERE id_usuario = usuarioId;
 END$$
+DELIMITER ;
 
+-- ELIMINAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario`(IN usuarioId INT)
 BEGIN
     DELETE FROM usuarios WHERE id_usuario = usuarioId;
 END$$
-
 DELIMITER ;
 
--- ========================================================
--- Procedimientos para la tabla `documentos`
--- ========================================================
+------------------
+--- DOCUMENTOS ---
+------------------
+
+-- OBTENER TODOS DOCUMENTOS
 
 DELIMITER $$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDocumentos`()
 BEGIN
-    SELECT * FROM documentos ORDER BY fecha_subida DESC;
+    SELECT
+        d.id_documento,
+        CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
+        s.id_solicitud,
+        d.tipo,
+        d.ruta,
+        d.fecha_subida,
+        d.created_at,
+        d.updated_at
+    FROM documentos d
+    LEFT JOIN usuarios u ON d.usuario_id = u.id_usuario
+    LEFT JOIN solicitudes s ON d.solicitud_id = s.id_solicitud
+    ORDER BY d.fecha_subida DESC;
 END$$
+DELIMITER ;
 
+-- OBTENER DOCUMENTOS POR ID
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDocumentoPorId`(IN documentoId INT)
 BEGIN
-    SELECT * FROM documentos WHERE id_documento = documentoId;
+    SELECT
+        d.id_documento,
+        CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
+        s.id_solicitud,
+        d.tipo,
+        d.ruta,
+        d.fecha_subida,
+        d.created_at,
+        d.updated_at
+    FROM documentos d
+    LEFT JOIN usuarios u ON d.usuario_id = u.id_usuario
+    LEFT JOIN solicitudes s ON d.solicitud_id = s.id_solicitud
+    WHERE d.id_documento = documentoId;
 END$$
+DELIMITER ;
 
+-- INSERTAR DOCUEMTNOS
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDocumento`(
     IN p_solicitud_id INT,
     IN p_usuario_id INT,
@@ -710,7 +1051,10 @@ BEGIN
         NOW(), NOW()
     );
 END$$
+DELIMITER ;
 
+-- ACTUALIZAR
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarDocumento`(
     IN documentoId INT,
     IN p_solicitud_id INT,
@@ -727,31 +1071,57 @@ BEGIN
         updated_at = NOW()
     WHERE id_documento = documentoId;
 END$$
+DELIMITER ;
 
+-- BORRAR
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarDocumento`(IN documentoId INT)
 BEGIN
     DELETE FROM documentos WHERE id_documento = documentoId;
 END$$
-
 DELIMITER ;
 
 
--- ========================================================
--- Procedimientos para la tabla `facultades`
--- ========================================================
+------------------
+--- FACULTADES ---
+------------------
 
+-- OBTENER TODAS FACULTADES
 DELIMITER $$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFacultades`()
 BEGIN
-    SELECT * FROM facultades ORDER BY nombre ASC;
+    SELECT
+        f.id_facultad,
+        i.nombre AS institucion,
+        f.nombre,
+        f.created_at,
+        f.updated_at
+    FROM facultades f
+    LEFT JOIN instituciones i ON f.institucion_id = i.id_institucion
+    ORDER BY f.nombre ASC;
 END$$
+DELIMITER ;
 
+-- OBTENER FACULTAD POR ID
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFacultadPorId`(IN facultadId INT)
 BEGIN
-    SELECT * FROM facultades WHERE id_facultad = facultadId;
+    SELECT
+        f.id_facultad,
+        i.nombre AS institucion,
+        f.nombre,
+        f.created_at,
+        f.updated_at
+    FROM facultades f
+    LEFT JOIN instituciones i ON f.institucion_id = i.id_institucion
+    WHERE f.id_facultad = facultadId;
 END$$
+DELIMITER ;
 
+-- INSERTAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarFacultad`(
     IN p_institucion_id INT,
     IN p_nombre VARCHAR(255)
@@ -760,7 +1130,11 @@ BEGIN
     INSERT INTO facultades (institucion_id, nombre, created_at, updated_at)
     VALUES (p_institucion_id, p_nombre, NOW(), NOW());
 END$$
+DELIMITER ;
 
+-- ACTUALIZAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarFacultad`(
     IN facultadId INT,
     IN p_institucion_id INT,
@@ -773,12 +1147,16 @@ BEGIN
         updated_at = NOW()
     WHERE id_facultad = facultadId;
 END$$
+DELIMITER ;
 
+
+-- ELIMAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarFacultad`(IN facultadId INT)
 BEGIN
     DELETE FROM facultades WHERE id_facultad = facultadId;
 END$$
-
 DELIMITER ;
 
 
@@ -786,26 +1164,39 @@ DELIMITER ;
 -- Procedimientos para la tabla `roles`
 -- ========================================================
 
-DELIMITER $$
 
+-- OBTENER TODOS ROLES
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerRoles`()
 BEGIN
     SELECT * FROM roles ORDER BY id_rol ASC;
 END$$
+DELIMITER ;
 
+-- OBTENER ROL POR ID
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerRolPorId`(IN rolId INT)
 BEGIN
     SELECT * FROM roles WHERE id_rol = rolId;
 END$$
+DELIMITER ;
 
+-- INSERTAR ROL
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarRol`(
-    IN p_nombre VARCHAR(50) -- Cambio de ENUM a VARCHAR
+    IN p_nombre VARCHAR(50)
 )
 BEGIN
     INSERT INTO roles (nombre, created_at, updated_at)
     VALUES (p_nombre, NOW(), NOW());
 END$$
+DELIMITER ;
 
+--- ACTUALIZAR ROL
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarRol`(
     IN rolId INT,
     IN p_nombre VARCHAR(50)
@@ -816,31 +1207,67 @@ BEGIN
         updated_at = NOW()
     WHERE id_rol = rolId;
 END$$
+DELIMITER ;
 
+
+-- ELIMINAR ROL
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarRol`(IN rolId INT)
 BEGIN
     DELETE FROM roles WHERE id_rol = rolId;
 END$$
-
 DELIMITER ;
 
 
--- ========================================================
--- Procedimientos para la tabla `contenidos_programaticos`
--- ========================================================
+--------------------------------
+--- CONTENIDOS PROGRAMATICOS ---
+--------------------------------
+
+
+-- OBTENER TODOS
 
 DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerContenidosProgramaticos`()
 BEGIN
-    SELECT * FROM contenidos_programaticos ORDER BY tema ASC;
+    SELECT
+        cp.id_contenido,
+        cp.tema,
+        cp.resultados_aprendizaje,
+        cp.descripcion,
+        a.nombre AS nombre_asignatura,
+        cp.created_at,
+        cp.updated_at
+    FROM contenidos_programaticos cp
+    INNER JOIN asignaturas a ON cp.asignatura_id = a.id_asignatura
+    ORDER BY cp.tema ASC;
 END$$
+
+DELIMITER ;
+
+-- OBTENER POR ID
+
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerContenidoProgramaticoPorId`(IN contenidoId INT)
 BEGIN
-    SELECT * FROM contenidos_programaticos WHERE id_contenido = contenidoId;
+    SELECT
+        cp.id_contenido,
+        cp.tema,
+        cp.resultados_aprendizaje,
+        cp.descripcion,
+        a.nombre AS nombre_asignatura,
+        cp.created_at,
+        cp.updated_at
+    FROM contenidos_programaticos cp
+    INNER JOIN asignaturas a ON cp.asignatura_id = a.id_asignatura
+    WHERE cp.id_contenido = contenidoId;
 END$$
 
+DELIMITER ;
+
+-- INSERTAR
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarContenidoProgramatico`(
     IN p_asignatura_id INT,
     IN p_tema VARCHAR(255),
@@ -855,7 +1282,11 @@ BEGIN
         p_asignatura_id, p_tema, p_resultados_aprendizaje, p_descripcion, NOW(), NOW()
     );
 END$$
+DELIMITER ;
 
+-- ACTUALIZAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarContenidoProgramatico`(
     IN contenidoId INT,
     IN p_asignatura_id INT,
@@ -872,35 +1303,134 @@ BEGIN
         updated_at = NOW()
     WHERE id_contenido = contenidoId;
 END$$
+DELIMITER ;
 
+-- BORRAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarContenidoProgramatico`(IN contenidoId INT)
 BEGIN
     DELETE FROM contenidos_programaticos WHERE id_contenido = contenidoId;
 END$$
+DELIMITER ;
+
+
+--------------------------------
+--- HISTORIAL HOMOLOGACIONES ---
+--------------------------------
+
+-- OBTENER TODO EL HISTORIAL
+
+DELIMITER $$
+
+CREATE PROCEDURE ObtenerHistorialHomologaciones()
+BEGIN
+    SELECT
+        hh.id_historial,
+        hh.estado,
+        hh.fecha,
+        hh.observaciones,
+        hh.ruta_pdf_resolucion,
+
+        -- Datos del usuario
+        u.id_usuario,
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+
+        -- Ubicación y origen
+        p.nombre AS pais_nombre,
+        d.nombre AS departamento_nombre,
+        m.nombre AS municipio_nombre,
+        i.nombre AS institucion_origen_nombre,
+
+        -- Datos de la solicitud
+        s.id_solicitud,
+        s.numero_radicado,
+        s.estado AS estado_solicitud,
+        s.fecha_solicitud,
+        s.finalizo_estudios,
+        prog.nombre AS nombre_programa_destino
+
+    FROM historial_homologaciones hh
+    INNER JOIN usuarios u ON hh.usuario_id = u.id_usuario
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    LEFT JOIN instituciones i ON u.institucion_origen_id = i.id_institucion
+
+    INNER JOIN solicitudes s ON hh.solicitud_id = s.id_solicitud
+    INNER JOIN programas prog ON s.programa_destino_id = prog.id_programa;
+END $$
 
 DELIMITER ;
 
 
--- ========================================================
--- Procedimientos para la tabla `historial_homologaciones`
--- ========================================================
-
+-- OBTENER HISTORIAL POR ID
 DELIMITER $$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHistorialHomologaciones`()
+CREATE PROCEDURE ObtenerHistorialHomologacionPorId(IN p_id INT)
 BEGIN
-    SELECT * FROM historial_homologaciones ORDER BY fecha DESC;
-END$$
+    SELECT
+        hh.id_historial,
+        hh.estado,
+        hh.fecha,
+        hh.observaciones,
+        hh.ruta_pdf_resolucion,
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHistorialHomologacionPorId`(IN historialId INT)
-BEGIN
-    SELECT * FROM historial_homologaciones WHERE id_historial = historialId;
-END$$
+        -- Datos del usuario que hizo el cambio
+        u.id_usuario,
+        u.primer_nombre,
+        u.segundo_nombre,
+        u.primer_apellido,
+        u.segundo_apellido,
+        u.correo,
+        u.tipo_identificacion,
+        u.numero_identificacion,
+        u.telefono,
+        u.direccion,
+
+        p.nombre AS pais_nombre,
+        d.nombre AS departamento_nombre,
+        m.nombre AS municipio_nombre,
+        i.nombre AS institucion_origen_nombre,
+
+        -- Datos de la solicitud
+        s.id_solicitud,
+        s.programa_destino_id,
+        prog.nombre AS nombre_programa_destino,
+        s.finalizo_estudios,
+        s.fecha_finalizacion_estudios,
+        s.fecha_ultimo_semestre_cursado,
+        s.estado AS estado_solicitud,
+        s.numero_radicado,
+        s.fecha_solicitud,
+        s.ruta_pdf_resolucion AS resolucion_solicitud
+
+    FROM historial_homologaciones hh
+    INNER JOIN usuarios u ON hh.usuario_id = u.id_usuario
+    LEFT JOIN paises p ON u.pais_id = p.id_pais
+    LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
+    LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
+    LEFT JOIN instituciones i ON u.institucion_origen_id = i.id_institucion
+
+    INNER JOIN solicitudes s ON hh.solicitud_id = s.id_solicitud
+    INNER JOIN programas prog ON s.programa_destino_id = prog.id_programa
+
+    WHERE hh.id_historial = p_id;
+END $$
+
+DELIMITER ;
+
+-- INSERTAR
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarHistorialHomologacion`(
     IN p_solicitud_id INT,
     IN p_usuario_id INT,
-    IN p_estado ENUM('Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Apelación'),
+      IN p_estado VARCHAR(20),
     IN p_observaciones TEXT,
     IN p_ruta_pdf_resolucion VARCHAR(255)
 )
@@ -912,12 +1442,16 @@ BEGIN
         p_solicitud_id, p_usuario_id, p_estado, NOW(), p_observaciones, p_ruta_pdf_resolucion, NOW(), NOW()
     );
 END$$
+DELIMITER ;
+
+-- ACTUALIZAR
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarHistorialHomologacion`(
     IN historialId INT,
     IN p_solicitud_id INT,
     IN p_usuario_id INT,
-    IN p_estado ENUM('Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Apelación'),
+    IN p_estado VARCHAR(20),
     IN p_observaciones TEXT,
     IN p_ruta_pdf_resolucion VARCHAR(255)
 )
@@ -931,7 +1465,11 @@ BEGIN
         updated_at = NOW()
     WHERE id_historial = historialId;
 END$$
+DELIMITER ;
 
+-- ELIMINAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarHistorialHomologacion`(IN historialId INT)
 BEGIN
     DELETE FROM historial_homologaciones WHERE id_historial = historialId;
@@ -939,23 +1477,60 @@ END$$
 
 DELIMITER ;
 
+-----------------------------
+--- SOLICITUD ASIGNATURAS ---
+-----------------------------
 
--- ========================================================
--- Procedimientos para la tabla `solicitud_asignaturas`
--- ========================================================
 
+-- OBTENER TODAS SOLICITUDES
 DELIMITER $$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudAsignaturas`()
 BEGIN
-    SELECT * FROM solicitud_asignaturas ORDER BY id_solicitud_asignatura ASC;
+    SELECT
+        sa.id_solicitud_asignatura,
+        s.id_solicitud,
+        CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
+        a.nombre AS asignatura,
+        a.codigo_asignatura,
+        sa.nota_origen,
+        sa.horas,
+        sa.created_at,
+        sa.updated_at
+    FROM solicitud_asignaturas sa
+    LEFT JOIN solicitudes s ON sa.solicitud_id = s.id_solicitud
+    LEFT JOIN usuarios u ON s.usuario_id = u.id_usuario
+    LEFT JOIN asignaturas a ON sa.asignatura_id = a.id_asignatura
+    ORDER BY sa.id_solicitud_asignatura ASC;
 END$$
+DELIMITER ;
 
+
+-- OBTENER POR ID
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudAsignaturaPorId`(IN solicitudAsignaturaId INT)
 BEGIN
-    SELECT * FROM solicitud_asignaturas WHERE id_solicitud_asignatura = solicitudAsignaturaId;
+    SELECT
+        sa.id_solicitud_asignatura,
+        s.id_solicitud,
+        CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
+        a.nombre AS asignatura,
+        a.codigo_asignatura,
+        sa.nota_origen,
+        sa.horas,
+        sa.created_at,
+        sa.updated_at
+    FROM solicitud_asignaturas sa
+    LEFT JOIN solicitudes s ON sa.solicitud_id = s.id_solicitud
+    LEFT JOIN usuarios u ON s.usuario_id = u.id_usuario
+    LEFT JOIN asignaturas a ON sa.asignatura_id = a.id_asignatura
+    WHERE sa.id_solicitud_asignatura = solicitudAsignaturaId;
 END$$
+DELIMITER ;
 
+-- INSERTAR SOLICITUD ASIGNATURA
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarSolicitudAsignatura`(
     IN p_solicitud_id INT,
     IN p_asignatura_id INT,
@@ -970,7 +1545,11 @@ BEGIN
         p_solicitud_id, p_asignatura_id, p_nota_origen, p_horas, NOW(), NOW()
     );
 END$$
+DELIMITER ;
 
+-- ACTUALIZAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarSolicitudAsignatura`(
     IN solicitudAsignaturaId INT,
     IN p_solicitud_id INT,
@@ -987,68 +1566,165 @@ BEGIN
         updated_at = NOW()
     WHERE id_solicitud_asignatura = solicitudAsignaturaId;
 END$$
+DELIMITER ;
 
+
+-- ELIMINAR
+
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarSolicitudAsignatura`(IN solicitudAsignaturaId INT)
 BEGIN
     DELETE FROM solicitud_asignaturas WHERE id_solicitud_asignatura = solicitudAsignaturaId;
+END$$
+DELIMITER ;
+
+
+
+------------
+-- VERSUS --
+------------
+
+-- OBTENER TODAS HOMOLOGACIONASIGANTURAS
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHomologacionesAsignaturas`()
+BEGIN
+    SELECT
+        ha.id_homologacion,
+        ha.solicitud_id,
+
+        -- Asignatura origen
+        ao.id_asignatura AS asignatura_origen_id,
+        ao.nombre AS asignatura_origen,
+
+        -- Asignatura destino
+        ad.id_asignatura AS asignatura_destino_id,
+        ad.nombre AS asignatura_destino,
+
+        -- Nota y horas desde solicitud_asignaturas
+        sa.nota AS nota_origen,
+        sa.horas AS hora_origen,
+
+        -- Nota destino
+        ha.nota_destino,
+
+        -- Datos adicionales
+        ha.fecha,
+        ha.comentarios,
+        ha.created_at,
+        ha.updated_at,
+
+        -- Estudiante
+        CONCAT(u.nombre, ' ', u.apellido) AS estudiante
+
+    FROM homologacion_asignaturas ha
+    JOIN asignaturas ao ON ha.asignatura_origen_id = ao.id_asignatura
+    JOIN asignaturas ad ON ha.asignatura_destino_id = ad.id_asignatura
+    JOIN solicitudes s ON ha.solicitud_id = s.id_solicitud
+    JOIN usuarios u ON s.usuario_id = u.id_usuario
+    JOIN solicitud_asignaturas sa ON sa.solicitud_id = ha.solicitud_id AND sa.asignatura_id = ha.asignatura_origen_id
+
+    ORDER BY ha.id_homologacion ASC;
 END$$
 
 DELIMITER ;
 
 
--- ========================================================
--- Procedimientos para la tabla `homologacion_asignaturas`
--- ========================================================
 
+-- OBTENER HOMOLOGACION ASIGNATURAS POR ID
 DELIMITER $$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHomologacionesAsignaturas`()
-BEGIN
-    SELECT * FROM homologacion_asignaturas ORDER BY id_homologacion ASC;
-END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHomologacionAsignaturaPorId`(IN homologacionId INT)
 BEGIN
-    SELECT * FROM homologacion_asignaturas WHERE id_homologacion = homologacionId;
+    SELECT
+        ha.id_homologacion,
+        ha.solicitud_id,
+        ao.nombre AS asignatura_origen,
+        ad.nombre AS asignatura_destino,
+        sa.nota_origen,
+        sa.horas AS hora_origen,
+        ha.nota_destino,
+        ha.fecha,
+        ha.comentarios,
+        ha.created_at,
+        ha.updated_at,
+        CONCAT(
+            u.primer_nombre, ' ',
+            IFNULL(u.segundo_nombre, ''), ' ',
+            u.primer_apellido, ' ',
+            IFNULL(u.segundo_apellido, '')
+        ) AS estudiante
+
+    FROM homologacion_asignaturas ha
+    JOIN asignaturas ao ON ha.asignatura_origen_id = ao.id_asignatura
+    JOIN asignaturas ad ON ha.asignatura_destino_id = ad.id_asignatura
+    JOIN solicitudes s ON ha.solicitud_id = s.id_solicitud
+    JOIN usuarios u ON s.usuario_id = u.id_usuario
+    JOIN solicitud_asignaturas sa
+        ON sa.solicitud_id = ha.solicitud_id
+        AND sa.asignatura_id = ha.asignatura_origen_id
+
+    WHERE ha.id_homologacion = homologacionId;
 END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarHomologacionAsignatura`(
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
     IN p_asignatura_destino_id INT,
-    IN p_nota_origen DECIMAL(3,1),
     IN p_nota_destino DECIMAL(3,1),
     IN p_comentarios TEXT
 )
 BEGIN
     INSERT INTO homologacion_asignaturas (
-        solicitud_id, asignatura_origen_id, asignatura_destino_id, nota_origen, nota_destino, comentarios, created_at, updated_at
+        solicitud_id, asignatura_origen_id, asignatura_destino_id,
+        nota_destino, comentarios, created_at, updated_at
     )
     VALUES (
-        p_solicitud_id, p_asignatura_origen_id, p_asignatura_destino_id, p_nota_origen, p_nota_destino, p_comentarios, NOW(), NOW()
+        p_solicitud_id, p_asignatura_origen_id, p_asignatura_destino_id,
+        p_nota_destino, p_comentarios, NOW(), NOW()
     );
 END$$
 
+DELIMITER ;
+
+
+
+
+-- ACTUALIZAR
+DDELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarHomologacionAsignatura`(
-    IN homologacionId INT,
+    IN p_id_homologacion INT,
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
     IN p_asignatura_destino_id INT,
-    IN p_nota_origen DECIMAL(3,1),
     IN p_nota_destino DECIMAL(3,1),
     IN p_comentarios TEXT
 )
 BEGIN
     UPDATE homologacion_asignaturas
-    SET solicitud_id = p_solicitud_id,
+    SET
+        solicitud_id = p_solicitud_id,
         asignatura_origen_id = p_asignatura_origen_id,
         asignatura_destino_id = p_asignatura_destino_id,
-        nota_origen = p_nota_origen,
         nota_destino = p_nota_destino,
         comentarios = p_comentarios,
         updated_at = NOW()
-    WHERE id_homologacion = homologacionId;
+    WHERE id_homologacion = p_id_homologacion;
 END$$
+
+DELIMITER ;
+
+
+
+-- BORRAR
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarHomologacionAsignatura`(IN homologacionId INT)
 BEGIN
@@ -1056,4 +1732,6 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
 

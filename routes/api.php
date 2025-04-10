@@ -16,7 +16,6 @@ use App\Http\Controllers\RolControllerApi;
 use App\Http\Controllers\SolicitudAsignaturaControllerApi;
 use App\Http\Controllers\SolicitudControllerApi;
 use App\Http\Controllers\UsuarioControllerApi;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +45,6 @@ Route::put('/paises/{id}', [PaisControllerApi::class, 'actualizarPais'])->name('
 Route::delete('/paises/{id}', [PaisControllerApi::class, 'eliminarPais'])->name('paises.delete');
 
 
-
-
 // Rutas para departamentos
 Route::get('/departamentos', [DepartamentoControllerApi::class, 'traerDepartamentos'])->name('departamentos.get');
 Route::get('/departamentos/{id}', [DepartamentoControllerApi::class, 'llevarDepartamento'])->name('departamentos.getById');
@@ -62,7 +59,6 @@ Route::get('/municipios/{id}', [MunicipioControllerApi::class, 'llevarMunicipio'
 Route::post('/municipios', [MunicipioControllerApi::class, 'insertarMunicipio'])->name('municipios.insert');
 Route::put('/municipios/{id}', [MunicipioControllerApi::class, 'actualizarMunicipio'])->name('municipios.update');
 Route::delete('/municipios/{id}', [MunicipioControllerApi::class, 'eliminarMunicipio'])->name('municipios.delete');
-
 
 
 // Rutas para instituciones
@@ -81,7 +77,6 @@ Route::put('/programas/{id}', [ProgramaControllerApi::class, 'actualizarPrograma
 Route::delete('/programas/{id}', [ProgramaControllerApi::class, 'eliminarPrograma'])->name('programas.delete');
 
 
-
 // Rutas para asignaturas
 Route::get('/asignaturas', [AsignaturaControllerApi::class, 'traerAsignaturas'])->name('asignaturas.get');
 Route::get('/asignaturas/{id}', [AsignaturaControllerApi::class, 'llevarAsignatura'])->name('asignaturas.getById');
@@ -90,14 +85,12 @@ Route::put('/asignaturas/{id}', [AsignaturaControllerApi::class, 'actualizarAsig
 Route::delete('/asignaturas/{id}', [AsignaturaControllerApi::class, 'eliminarAsignatura'])->name('asignaturas.delete');
 
 
-
 // Rutas para credenciales
 Route::get('/credenciales', [CredencialControllerApi::class, 'traerCredenciales'])->name('credenciales.get');
 Route::get('/credenciales/{id}', [CredencialControllerApi::class, 'llevarCredencial'])->name('credenciales.getById');
 Route::post('/credenciales', [CredencialControllerApi::class, 'insertarCredencial'])->name('credenciales.insert');
 Route::put('/credenciales/{id}', action: [CredencialControllerApi::class, 'actualizarCredencial'])->name('credenciales.update');
 Route::delete('/credenciales/{id}', [CredencialControllerApi::class, 'eliminarCredencial'])->name('credenciales.delete');
-
 
 
 // Rutas para solicitudes
@@ -114,8 +107,6 @@ Route::get('/usuarios/{id}', [UsuarioControllerApi::class, 'llevarUsuario'])->na
 Route::post('/usuarios', [UsuarioControllerApi::class, 'insertarUsuario'])->name('usuarios.insert');
 Route::put('/usuarios/{id}', [UsuarioControllerApi::class, 'actualizarUsuario'])->name('usuarios.update');
 Route::delete('/usuarios/{id}', [UsuarioControllerApi::class, 'eliminarUsuario'])->name('usuarios.delete');
-
-
 
 
 // Rutas para documentos

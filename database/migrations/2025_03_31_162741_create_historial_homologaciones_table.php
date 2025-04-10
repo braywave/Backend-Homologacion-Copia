@@ -15,7 +15,7 @@ return new class extends Migration
             $table->smallIncrements('id_historial');
             $table->unsignedSmallInteger('solicitud_id');
             $table->unsignedSmallInteger('usuario_id');
-            $table->enum('estado', ['Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Apelación']);
+            $table->enum('estado', ['Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Cerrado']);
             $table->timestamp('fecha')->useCurrent();
             $table->text('observaciones')->nullable();
             $table->string('ruta_pdf_resolucion', 255)->nullable();

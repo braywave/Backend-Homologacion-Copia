@@ -14,9 +14,9 @@ class ContenidoProgramaticoSeeder extends Seeder
      */
     public function run(): void
     {
-        // Asegúrate de que las asignaturas con id_asignatura 1, 2, 3, 4, 5 y 6 existan
+        
         ContenidoProgramatico::create([
-            'asignatura_id' => 1, // ID de la asignatura
+            'asignatura_id' => 1,
             'tema' => 'Introducción a las Matemáticas',
             'resultados_aprendizaje' => 'Comprender los conceptos básicos de matemáticas.',
             'descripcion' => 'Este tema cubre los fundamentos de las matemáticas, incluyendo operaciones básicas y propiedades de los números.',

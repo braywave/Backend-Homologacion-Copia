@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Asignatura;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AsignaturaSeeder extends Seeder
@@ -13,28 +12,45 @@ class AsignaturaSeeder extends Seeder
      */
     public function run(): void
     {
+        // Medicina
         Asignatura::create([
-            'programas_id' => 3,
-            'nombre' => 'Diseño Gráfico Digital',
-            'tipo' => 'Competencia',
-            'codigo_asignatura' => 'SENA102',
-            'creditos' => 3,
+            'programas_id' => 1,
+            'nombre' => 'Anatomía Humana',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'MED101',
+            'creditos' => 5,
             'semestre' => 1,
-            'horas' => 48,
-            'tiempo_presencial' => 32,
-            'tiempo_independiente' => 16,
-            'horas_totales_semanales' => 4,
-            'modalidad' => 'Teórico',
-            'metodologia' => 'Virtual',
+            'horas' => 80,
+            'tiempo_presencial' => 56,
+            'tiempo_independiente' => 24,
+            'horas_totales_semanales' => 6,
+            'modalidad' => 'Teórico-Práctico',
+            'metodologia' => 'Presencial',
         ]);
 
         Asignatura::create([
-            'programas_id' => 2,
-            'nombre' => 'Mantenimiento de Equipos de Cómputo',
-            'tipo' => 'Materias',
-            'codigo_asignatura' => 'SENA103',
-            'creditos' => 3,
+            'programas_id' => 1,
+            'nombre' => 'Fisiología',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'MED102',
+            'creditos' => 4,
             'semestre' => 2,
+            'horas' => 64,
+            'tiempo_presencial' => 40,
+            'tiempo_independiente' => 24,
+            'horas_totales_semanales' => 5,
+            'modalidad' => 'Teórico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // Enfermería
+        Asignatura::create([
+            'programas_id' => 2,
+            'nombre' => 'Fundamentos de Enfermería',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'ENF101',
+            'creditos' => 3,
+            'semestre' => 1,
             'horas' => 48,
             'tiempo_presencial' => 32,
             'tiempo_independiente' => 16,
@@ -43,13 +59,14 @@ class AsignaturaSeeder extends Seeder
             'metodologia' => 'Presencial',
         ]);
 
+        // Derecho
         Asignatura::create([
-            'programas_id' => 3,
-            'nombre' => 'Estructuras de Datos',
-            'tipo' => 'Materias',
-            'codigo_asignatura' => 'UNI101',
+            'programas_id' => 4,
+            'nombre' => 'Derecho Constitucional',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'DER101',
             'creditos' => 4,
-            'semestre' => 2,
+            'semestre' => 1,
             'horas' => 64,
             'tiempo_presencial' => 40,
             'tiempo_independiente' => 24,
@@ -58,28 +75,14 @@ class AsignaturaSeeder extends Seeder
             'metodologia' => 'Presencial',
         ]);
 
+        // Psicología
         Asignatura::create([
-            'programas_id' => 2,
-            'nombre' => 'Bases de Datos',
-            'tipo' => 'Materias',
-            'codigo_asignatura' => 'UNI102',
-            'creditos' => 4,
-            'semestre' => 2,
-            'horas' => 64,
-            'tiempo_presencial' => 40,
-            'tiempo_independiente' => 24,
-            'horas_totales_semanales' => 5,
-            'modalidad' => 'Teórico-Práctico',
-            'metodologia' => 'Virtual',
-        ]);
-
-        Asignatura::create([
-            'programas_id' => 3,
-            'nombre' => 'Redes de Computadoras',
-            'tipo' => 'Materias',
-            'codigo_asignatura' => 'UNI103',
+            'programas_id' => 9,
+            'nombre' => 'Psicología del Desarrollo',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'PSI101',
             'creditos' => 3,
-            'semestre' => 3,
+            'semestre' => 1,
             'horas' => 48,
             'tiempo_presencial' => 32,
             'tiempo_independiente' => 16,
@@ -87,5 +90,70 @@ class AsignaturaSeeder extends Seeder
             'modalidad' => 'Teórico',
             'metodologia' => 'Presencial',
         ]);
+
+        // Contaduría Pública
+        Asignatura::create([
+            'programas_id' => 5,
+            'nombre' => 'Contabilidad Básica',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'CON101',
+            'creditos' => 3,
+            'semestre' => 1,
+            'horas' => 48,
+            'tiempo_presencial' => 32,
+            'tiempo_independiente' => 16,
+            'horas_totales_semanales' => 4,
+            'modalidad' => 'Teórico-Práctico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // Comunicación Social y Periodismo
+        Asignatura::create([
+            'programas_id' => 11,
+            'nombre' => 'Teoría de la Comunicación',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'COM101',
+            'creditos' => 4,
+            'semestre' => 1,
+            'horas' => 64,
+            'tiempo_presencial' => 40,
+            'tiempo_independiente' => 24,
+            'horas_totales_semanales' => 5,
+            'modalidad' => 'Teórico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // Administración de Empresas (Autónoma)
+        Asignatura::create([
+            'programas_id' => 6,
+            'nombre' => 'Introducción a la Administración',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'ADM101',
+            'creditos' => 3,
+            'semestre' => 1,
+            'horas' => 48,
+            'tiempo_presencial' => 32,
+            'tiempo_independiente' => 16,
+            'horas_totales_semanales' => 4,
+            'modalidad' => 'Teórico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // Producción Agropecuaria (SENA)
+        Asignatura::create([
+            'programas_id' => 18,
+            'nombre' => 'Manejo de Cultivos',
+            'tipo' => 'Competencia',
+            'codigo_asignatura' => 'AGRO101',
+            'creditos' => 2,
+            'semestre' => null,
+            'horas' => 40,
+            'tiempo_presencial' => 28,
+            'tiempo_independiente' => 12,
+            'horas_totales_semanales' => 3,
+            'modalidad' => 'Práctico',
+            'metodologia' => 'Presencial',
+        ]);
+
     }
 }
