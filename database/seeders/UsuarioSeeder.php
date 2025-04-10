@@ -22,7 +22,7 @@ class UsuarioSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '1098765432',
             'institucion_origen_id' => 3,
-            'facultad_id' => 4, // Ciencias Económicas
+            'facultad_id' => 4,
             'telefono' => '3181234567',
             'direccion' => 'Cra 10 #20-50, Popayán',
             'pais_id' => 1,
@@ -115,7 +115,7 @@ class UsuarioSeeder extends Seeder
             'facultad_id' => 8, // Ciencias Sociales
             'telefono' => '3198765432',
             'direccion' => 'Carrera 8 #12-10',
-            'pais_id' => 76, // Brasil
+            'pais_id' => 2, // Brasil
             'departamento_id' => 19,
             'municipio_id' => 703,
             'rol_id' => 2,
