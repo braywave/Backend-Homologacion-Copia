@@ -35,9 +35,7 @@ BEGIN
 END$$
 DELIMITER ;
 
---
-
-obtener países
+ //obtener países
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPaises`()
@@ -46,316 +44,200 @@ BEGIN
 END$$
 DELIMITER ;
 
--- ========================================================
--- Procedimientos para la tabla `departamentos`
--- ========================================================
 
-DELIMITER //
-CREATE PROCEDURE ObtenerDepartamentos()
-BEGIN
-    SELECT * FROM departamentos ORDER BY nombre ASC;
-END;
-//
 
-CREATE PROCEDURE ObtenerDepartamentoPorId(IN departamentoId INT)
-BEGIN
-    SELECT * FROM departamentos WHERE id_departamento = departamentoId;
-END;
-//
 
-CREATE PROCEDURE InsertarDepartamento(IN nombreDepartamento VARCHAR(255), IN paisId INT, IN codigo INT)
-BEGIN
-    INSERT INTO departamentos (nombre, pais_id, codigo) VALUES (nombreDepartamento, paisId, codigo);
-END;
-//
+// Rutas para departamentos
 
-CREATE PROCEDURE ActualizarDepartamento(IN departamentoId INT, IN nombreDepartamento VARCHAR(255), IN paisId INT, IN codigo INT)
-BEGIN
-    UPDATE departamentos
-    SET nombre = nombreDepartamento, pais_id = paisId, codigo = codigo
-    WHERE id_departamento = departamentoId;
-END;
-//
+// eliminar departamento
 
-CREATE PROCEDURE EliminarDepartamento(IN departamentoId INT)
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarDepartamento`(
+    IN departamentoId INT
+)
 BEGIN
     DELETE FROM departamentos WHERE id_departamento = departamentoId;
-END;
-//
+END$$
 DELIMITER ;
--- ========================================================
--- Procedimientos para la tabla `municipios`
--- ========================================================
 
-DELIMITER
-//
-CREATE PROCEDURE ObtenerMunicipios()
+//actualizar departamentos
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarDepartamento`(IN `departamentoId` INT, IN `nombreDepartamento` VARCHAR(255), IN `paisId` INT)
 BEGIN
-    SELECT * FROM municipios ORDER BY nombre ASC;
-END;
-//
+    UPDATE departamentos
+    SET nombre = nombreDepartamento, pais_id = paisId
+    WHERE id_departamento = departamentoId;
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE ObtenerMunicipioPorId(IN municipioId INT)
+
+// insertar departamentos
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDepartamento`(
+    IN departamentoId INT,
+    IN nombreDepartamento VARCHAR(255),
+    IN paisId INT
+)
 BEGIN
-    SELECT * FROM municipios WHERE id_municipio = municipioId;
-END;
-//
+    INSERT INTO departamentos (id_departamento, nombre, pais_id)
+    VALUES (departamentoId, nombreDepartamento, paisId);
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE InsertarMunicipio(IN nombreMunicipio VARCHAR(255), IN codigo INT, IN departamentoId INT)
+
+
+
+//obtener departamentos id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDepartamentoPorId`(IN departamentoId INT)
 BEGIN
-    INSERT INTO municipios (nombre, codigo, departamento_id) VALUES (nombreMunicipio, codigo, departamentoId);
-END;
-//
+    SELECT * FROM departamentos WHERE id_departamento = departamentoId;
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE ActualizarMunicipio(IN municipioId INT, IN nombreMunicipio VARCHAR(255), IN codigo INT, IN departamentoId INT)
+
+
+//obtener departamentos
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDepartamentos`()
+BEGIN
+    SELECT * FROM departamentos ORDER BY nombre ASC;
+END$$
+DELIMITER ;
+
+
+
+// Rutas para municipios
+
+// actualizar municipios
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarMunicipio`(IN `municipioId` INT, IN `nombreMunicipio` VARCHAR(255), IN `departamentoId` INT)
 BEGIN
     UPDATE municipios
-    SET nombre = nombreMunicipio, codigo = codigo, departamento_id = departamentoId
+    SET nombre = nombreMunicipio, departamento_id = departamentoId
     WHERE id_municipio = municipioId;
-END;
-//
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE EliminarMunicipio(IN municipioId INT)
+// elimina un municipio
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarMunicipio`(IN municipioId INT)
 BEGIN
     DELETE FROM municipios WHERE id_municipio = municipioId;
-END;
-//
-
-DELIMITER ;
--- ========================================================
--- Procedimientos para la tabla `asignaturas`
--- ========================================================
-
-DELIMITER //
-
-CREATE PROCEDURE ObtenerAsignaturas()
-BEGIN
-    SELECT * FROM asignaturas ORDER BY nombre ASC;
-END //
-
-CREATE PROCEDURE ObtenerAsignaturaPorId(IN asignaturaId INT)
-BEGIN
-    SELECT * FROM asignaturas WHERE id_asignatura = asignaturaId;
-END //
-
-CREATE PROCEDURE InsertarAsignatura(
-    IN programaId INT,
-    IN nombreAsignatura VARCHAR(255),
-    IN tipoAsignatura ENUM('Materia', 'Competencia'),
-    IN codigoMateria VARCHAR(50),
-    IN creditosAsignatura INT,
-    IN semestreAsignatura INT,
-    IN horasAsignatura INT,
-    IN tiempoPresencial INT,
-    IN tiempoIndependiente INT,
-    IN horasTotales INT,
-    IN modalidadAsignatura ENUM('Teórico', 'Práctico', 'Teórico-Práctico'),
-    IN metodologiaAsignatura ENUM('Presencial', 'Virtual', 'Híbrido')
-)
-BEGIN
-    INSERT INTO asignaturas (
-        programa_id,
-        nombre,
-        tipo,
-        codigo_materia,
-        creditos,
-        semestre,
-        horas,
-        tiempo_presencial,
-        tiempo_independiente,
-        horas_totales_semanales,
-        modalidad,
-        metodologia,
-        created_at,
-        updated_at
-    ) VALUES (
-        programaId,
-        nombreAsignatura,
-        tipoAsignatura,
-        codigoMateria,
-        creditosAsignatura,
-        semestreAsignatura,
-        horasAsignatura,
-        tiempoPresencial,
-        tiempoIndependiente,
-        horasTotales,
-        modalidadAsignatura,
-        metodologiaAsignatura,
-        NOW(),
-        NOW()
-    );
-END //
-
-CREATE PROCEDURE ActualizarAsignatura(
-    IN asignaturaId INT,
-    IN programaId INT,
-    IN nombreAsignatura VARCHAR(255),
-    IN tipoAsignatura ENUM('Materia', 'Competencia'),
-    IN codigoMateria VARCHAR(50),
-    IN creditosAsignatura INT,
-    IN semestreAsignatura INT,
-    IN horasAsignatura INT,
-    IN tiempoPresencial INT,
-    IN tiempoIndependiente INT,
-    IN horasTotales INT,
-    IN modalidadAsignatura ENUM('Teórico', 'Práctico', 'Teórico-Práctico'),
-    IN metodologiaAsignatura ENUM('Presencial', 'Virtual', 'Híbrido')
-)
-BEGIN
-    UPDATE asignaturas
-    SET
-        programa_id = programaId,
-        nombre = nombreAsignatura,
-        tipo = tipoAsignatura,
-        codigo_materia = codigoMateria,
-        creditos = creditosAsignatura,
-        semestre = semestreAsignatura,
-        horas = horasAsignatura,
-        tiempo_presencial = tiempoPresencial,
-        tiempo_independiente = tiempoIndependiente,
-        horas_totales_semanales = horasTotales,
-        modalidad = modalidadAsignatura,
-        metodologia = metodologiaAsignatura,
-        updated_at = NOW()
-    WHERE id_asignatura = asignaturaId;
-END //
-
-CREATE PROCEDURE EliminarAsignatura(IN asignaturaId INT)
-BEGIN
-    DELETE FROM asignaturas WHERE id_asignatura = asignaturaId;
-END //
-
+END$$
 DELIMITER ;
 
--- ========================================================
--- Procedimientos para la tabla `instituciones`
--- ========================================================
+//insertar municipio
 
-DELIMITER //
-CREATE PROCEDURE ObtenerInstituciones()
-BEGIN
-    SELECT * FROM instituciones ORDER BY nombre ASC;
-END;
-//
-
-CREATE PROCEDURE ObtenerInstitucionPorId(IN institucionId INT)
-BEGIN
-    SELECT * FROM instituciones WHERE id_institucion = institucionId;
-END;
-//
-
-CREATE PROCEDURE InsertarInstitucion(
-    IN p_nombre VARCHAR(255),
-    IN p_codigo_snies VARCHAR(20),
-    IN p_municipio_id INT,
-    IN p_tipo ENUM('Universidad', 'SENA'),
-    IN p_crup VARCHAR(20)
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarMunicipio`(
+    IN nombreMunicipio VARCHAR(255),
+    IN departamentoId INT
 )
 BEGIN
-    INSERT INTO instituciones (nombre, codigo_snies, municipio_id, tipo, crup)
-    VALUES (p_nombre, p_codigo_snies, p_municipio_id, p_tipo, p_crup);
-END;
-//
+    INSERT INTO municipios (nombre, departamento_id)
+    VALUES (nombreMunicipio, departamentoId);
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE ActualizarInstitucion(
+ // obtener municipio id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMunicipioPorId`(IN municipioId INT)
+BEGIN
+    SELECT * FROM municipios WHERE id_municipio = municipioId;
+END$$
+DELIMITER ;
+
+// obtener municipios
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMunicipios`()
+BEGIN
+    SELECT * FROM municipios ORDER BY nombre ASC;
+END$$
+DELIMITER ;
+
+
+
+
+// Rutas para instituciones
+
+// actualizar instituciones
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarInstitucion`(
     IN institucionId INT,
     IN p_nombre VARCHAR(255),
-    IN p_codigo_snies VARCHAR(20),
+    IN p_codigo_ies VARCHAR(50),
     IN p_municipio_id INT,
-    IN p_tipo ENUM('Universidad', 'SENA'),
-    IN p_crup VARCHAR(20)
+    IN p_tipo VARCHAR(50)
 )
 BEGIN
     UPDATE instituciones
-    SET nombre = p_nombre, codigo_snies = p_codigo_snies, municipio_id = p_municipio_id, tipo = p_tipo, crup = p_crup
+    SET nombre = p_nombre,
+        codigo_ies = p_codigo_ies,
+        municipio_id = p_municipio_id,
+        tipo = p_tipo
     WHERE id_institucion = institucionId;
-END;
-//
-
-CREATE PROCEDURE EliminarInstitucion(IN institucionId INT)
-BEGIN
-    DELETE FROM instituciones WHERE id_institucion = institucionId;
-END;
-//
-
--- ========================================================
--- Procedimientos para la tabla `facultades`
--- ========================================================
-
-DELIMITER //
-CREATE PROCEDURE ObtenerFacultades()
-BEGIN
-    SELECT * FROM facultades ORDER BY nombre ASC;
-END;
-//
-
-CREATE PROCEDURE ObtenerFacultadPorId(IN facultadId INT)
-BEGIN
-    SELECT * FROM facultades WHERE id_facultad = facultadId;
-END;
-//
-
-CREATE PROCEDURE InsertarFacultad(
-    IN p_institucion_id INT,
-    IN p_nombre VARCHAR(255)
-)
-BEGIN
-    INSERT INTO facultades (institucion_id, nombre)
-    VALUES (p_institucion_id, p_nombre);
-END;
-//
-
-CREATE PROCEDURE ActualizarFacultad(
-    IN facultadId INT,
-    IN p_institucion_id INT,
-    IN p_nombre VARCHAR(255)
-)
-BEGIN
-    UPDATE facultades
-    SET institucion_id = p_institucion_id, nombre = p_nombre
-    WHERE id_facultad = facultadId;
-END;
-//
-
-CREATE PROCEDURE EliminarFacultad(IN facultadId INT)
-BEGIN
-    DELETE FROM facultades WHERE id_facultad = facultadId;
-END;
-//
+END$$
 DELIMITER ;
 
--- ========================================================
--- Procedimientos para la tabla `programas`
--- ========================================================
+// eliminar institución
 
-DELIMITER //
-CREATE PROCEDURE ObtenerProgramas()
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarInstitucion`(IN institucionId INT)
 BEGIN
-    SELECT * FROM programas ORDER BY nombre ASC;
-END;
-//
+    DELETE FROM instituciones WHERE id_institucion = institucionId;
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE ObtenerProgramaPorId(IN programaId INT)
-BEGIN
-    SELECT * FROM programas WHERE id_programa = programaId;
-END;
-//
+// insertar institucion
 
-CREATE PROCEDURE InsertarPrograma(
-    IN p_institucion_id INT,
-    IN p_facultad_id INT,
-    IN p_nombre VARCHAR(255),
-    IN p_codigo_snies VARCHAR(20),
-    IN p_tipo_formacion ENUM('Técnico', 'Tecnólogo', 'Profesional'),
-    IN p_metodologia ENUM('Presencial','Virtual','Híbrido')
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarInstitucion`(
+    IN nombreInstitucion VARCHAR(255),
+    IN codigoIes VARCHAR(20),
+    IN municipioId INT,
+    IN tipoInstitucion VARCHAR(100)
 )
 BEGIN
-    INSERT INTO programas (institucion_id, facultad_id, nombre, codigo_snies, tipo_formacion, metodologia)
-    VALUES (p_institucion_id, p_facultad_id, p_nombre, p_codigo_snies, p_tipo_formacion, p_metodologia);
-END;
-//
+    INSERT INTO instituciones (nombre, codigo_ies, municipio_id, tipo)
+    VALUES (nombreInstitucion, codigoIes, municipioId, tipoInstitucion);
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE ActualizarPrograma(
+// obtener institución id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerInstitucionPorId`(IN institucionId INT)
+BEGIN
+    SELECT * FROM instituciones WHERE id_institucion = institucionId;
+END$$
+DELIMITER ;
+
+//obtener instituciones
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerInstituciones`()
+BEGIN
+    SELECT * FROM instituciones ORDER BY nombre ASC;
+END$$
+DELIMITER ;
+
+
+// Rutas para programas
+
+// actualizar programa
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPrograma`(
     IN programaId INT,
     IN p_institucion_id INT,
     IN p_facultad_id INT,
@@ -368,35 +250,355 @@ BEGIN
     UPDATE programas
     SET institucion_id = p_institucion_id, facultad_id = p_facultad_id, nombre = p_nombre, codigo_snies = p_codigo_snies, tipo_formacion = p_tipo_formacion, metodologia = p_metodologia
     WHERE id_programa = programaId;
-END;
-//
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE EliminarPrograma(IN programaId INT)
+// eliminar programa
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPrograma`(IN programaId INT)
 BEGIN
     DELETE FROM programas WHERE id_programa = programaId;
-END;
-//
+END$$
+DELIMITER ;
 
+//insertar programa
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPrograma`(
+    IN p_institucion_id INT,
+    IN p_facultad_id INT,
+    IN p_nombre VARCHAR(255),
+    IN p_codigo_snies VARCHAR(20),
+    IN p_tipo_formacion ENUM('Técnico', 'Tecnólogo', 'Profesional'),
+    IN p_metodologia ENUM('Presencial','Virtual','Híbrido')
+)
+BEGIN
+    INSERT INTO programas (institucion_id, facultad_id, nombre, codigo_snies, tipo_formacion, metodologia)
+    VALUES (p_institucion_id, p_facultad_id, p_nombre, p_codigo_snies, p_tipo_formacion, p_metodologia);
+END$$
+DELIMITER ;
+
+// obtener programa por id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProgramaPorId`(IN programaId INT)
+BEGIN
+    SELECT * FROM programas WHERE id_programa = programaId;
+END$$
+DELIMITER ;
+
+// obtener programa
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerProgramas`()
+BEGIN
+    SELECT * FROM programas ORDER BY nombre ASC;
+END$$
+DELIMITER ;
+
+
+// Rutas para asignaturas
+
+// actualizar asignatura
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarAsignatura`(
+    IN p_id_asignatura SMALLINT,
+    IN p_programas_id SMALLINT,
+    IN p_nombre VARCHAR(255),
+    IN p_tipo ENUM('Materias', 'Competencia'),
+    IN p_codigo_asignatura VARCHAR(30),
+    IN p_creditos INT,
+    IN p_semestre INT,
+    IN p_horas INT,
+    IN p_tiempo_presencial INT,
+    IN p_tiempo_independiente INT,
+    IN p_horas_totales_semanales INT,
+    IN p_modalidad ENUM('Teórico', 'Práctico', 'Teórico-Práctico'),
+    IN p_metodologia ENUM('Presencial', 'Virtual', 'Híbrido')
+)
+BEGIN
+    UPDATE asignaturas
+    SET
+        programas_id = p_programas_id,
+        nombre = p_nombre,
+        tipo = p_tipo,
+        codigo_asignatura = p_codigo_asignatura,
+        creditos = p_creditos,
+        semestre = p_semestre,
+        horas = p_horas,
+        tiempo_presencial = p_tiempo_presencial,
+        tiempo_independiente = p_tiempo_independiente,
+        horas_totales_semanales = p_horas_totales_semanales,
+        modalidad = p_modalidad,
+        metodologia = p_metodologia,
+        updated_at = NOW()
+    WHERE id_asignatura = p_id_asignatura;
+END$$
+DELIMITER ;
+
+//eliminar asignatura
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarAsignatura`(IN asignaturaId INT)
+BEGIN
+    DELETE FROM asignaturas WHERE id_asignatura = asignaturaId;
+END$$
+DELIMITER ;
+
+//insertar asignatura
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarAsignatura`(
+    IN p_programas_id SMALLINT,
+    IN p_nombre VARCHAR(255),
+    IN p_tipo ENUM('Materias', 'Competencia'),
+    IN p_codigo_asignatura VARCHAR(30),
+    IN p_creditos INT,
+    IN p_semestre INT,
+    IN p_horas INT,
+    IN p_tiempo_presencial INT,
+    IN p_tiempo_independiente INT,
+    IN p_horas_totales_semanales INT,
+    IN p_modalidad ENUM('Teórico', 'Práctico', 'Teórico-Práctico'),
+    IN p_metodologia ENUM('Presencial', 'Virtual', 'Híbrido')
+)
+BEGIN
+    INSERT INTO asignaturas (
+        programas_id,
+        nombre,
+        tipo,
+        codigo_asignatura,
+        creditos,
+        semestre,
+        horas,
+        tiempo_presencial,
+        tiempo_independiente,
+        horas_totales_semanales,
+        modalidad,
+        metodologia,
+        created_at,
+        updated_at
+    ) VALUES (
+        p_programas_id,
+        p_nombre,
+        p_tipo,
+        p_codigo_asignatura,
+        p_creditos,
+        p_semestre,
+        p_horas,
+        p_tiempo_presencial,
+        p_tiempo_independiente,
+        p_horas_totales_semanales,
+        p_modalidad,
+        p_metodologia,
+        NOW(),
+        NOW()
+    );
+END$$
+DELIMITER ;
+
+// obtener asignaturas
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsignaturas`()
+BEGIN
+    SELECT * FROM asignaturas ORDER BY nombre ASC;
+END$$
+DELIMITER ;
+
+// obtener asignatura por id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsignaturaPorId`(IN asignaturaId INT)
+BEGIN
+    SELECT * FROM asignaturas WHERE id_asignatura = asignaturaId;
+END$$
+DELIMITER ;
+
+// Rutas para credenciales
+
+// actualizar credenciales
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarCredencial`(
+    IN credencialId INT,
+    IN p_usuario_id INT,
+    IN p_contraseña VARCHAR(255)
+)
+BEGIN
+    UPDATE credenciales
+    SET usuario_id = p_usuario_id, contraseña = p_contraseña
+    WHERE id_credencial = credencialId;
+END$$
+DELIMITER ;
+
+//eliminar credenciales
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarCredencial`(IN credencialId INT)
+BEGIN
+    DELETE FROM credenciales WHERE id_credencial = credencialId;
+END$$
+DELIMITER ;
+
+//insertar credenciales
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarCredencial`(
+    IN p_usuario_id SMALLINT,
+    IN p_contraseña VARCHAR(255)
+)
+BEGIN
+    INSERT INTO credenciales (
+        usuario_id,
+        contraseña,
+        created_at,
+        updated_at
+    ) VALUES (
+        p_usuario_id,
+        p_contraseña,
+        NOW(),
+        NOW()
+    );
+END$$
+DELIMITER ;
+
+//obtener credenciales por id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerCredencialPorId`(IN credencialId INT)
+BEGIN
+    SELECT * FROM credenciales WHERE id_credencial = credencialId;
+END$$
+DELIMITER ;
+
+//obtener credenciales
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerCredenciales`()
+BEGIN
+    SELECT * FROM credenciales ORDER BY id_credencial ASC;
+END$$
+DELIMITER ;
+
+
+ // Rutas para solicitudes
+
+// actualizar solicitud
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarSolicitud`(
+    IN p_id_solicitud SMALLINT,
+    IN p_usuario_id SMALLINT,
+    IN p_programa_destino_id SMALLINT,
+    IN p_finalizo_estudios ENUM('Si', 'No'),
+    IN p_fecha_finalizacion_estudios DATE,
+    IN p_fecha_ultimo_semestre_cursado DATE,
+    IN p_estado ENUM('Radicado', 'En revisión', 'Aprobado', 'Rechazado', 'Cerrado'),
+    IN p_numero_radicado VARCHAR(50),
+    IN p_ruta_pdf_resolucion VARCHAR(255)
+)
+BEGIN
+    UPDATE solicitudes
+    SET
+        usuario_id = p_usuario_id,
+        programa_destino_id = p_programa_destino_id,
+        finalizo_estudios = p_finalizo_estudios,
+        fecha_finalizacion_estudios = p_fecha_finalizacion_estudios,
+        fecha_ultimo_semestre_cursado = p_fecha_ultimo_semestre_cursado,
+        estado = p_estado,
+        numero_radicado = p_numero_radicado,
+        ruta_pdf_resolucion = p_ruta_pdf_resolucion,
+        updated_at = NOW()
+    WHERE id_solicitud = p_id_solicitud;
+END$$
+DELIMITER ;
+
+//eliminar solicitud
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarSolicitud`(IN p_id_solicitud SMALLINT)
+BEGIN
+    DELETE FROM solicitudes WHERE id_solicitud = p_id_solicitud;
+END$$
+DELIMITER ;
+
+//insertar solicitud
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarSolicitud`(
+    IN p_usuario_id SMALLINT,
+    IN p_programa_destino_id SMALLINT,
+    IN p_finalizo_estudios ENUM('Si', 'No'),
+    IN p_fecha_finalizacion_estudios DATE,
+    IN p_fecha_ultimo_semestre_cursado DATE,
+    IN p_estado ENUM('Radicado', 'En revisión', 'Aprobado', 'Rechazado', 'Cerrado'),
+    IN p_numero_radicado VARCHAR(50),
+    IN p_ruta_pdf_resolucion VARCHAR(255)
+)
+BEGIN
+    INSERT INTO solicitudes (
+        usuario_id,
+        programa_destino_id,
+        finalizo_estudios,
+        fecha_finalizacion_estudios,
+        fecha_ultimo_semestre_cursado,
+        estado,
+        numero_radicado,
+        ruta_pdf_resolucion,
+        created_at,
+        updated_at
+    )
+    VALUES (
+        p_usuario_id,
+        p_programa_destino_id,
+        p_finalizo_estudios,
+        p_fecha_finalizacion_estudios,
+        p_fecha_ultimo_semestre_cursado,
+        p_estado,
+        p_numero_radicado,
+        p_ruta_pdf_resolucion,
+        NOW(),
+        NOW()
+    );
+END$$
+DELIMITER ;
+
+//obtener solicitud por id
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudPorId`(IN p_id_solicitud SMALLINT)
+BEGIN
+    SELECT * FROM solicitudes WHERE id_solicitud = p_id_solicitud;
+END$$
+DELIMITER ;
+
+// obtener solicitud
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudes`()
+BEGIN
+    SELECT * FROM solicitudes;
+END$$
 DELIMITER ;
 
 -- ========================================================
 -- Procedimientos para la tabla `usuarios`
 -- ========================================================
 
-DELIMITER //
-CREATE PROCEDURE ObtenerUsuarios()
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUsuarios`()
 BEGIN
     SELECT * FROM usuarios ORDER BY primer_nombre ASC;
-END;
-//
+END$$
 
-CREATE PROCEDURE ObtenerUsuarioPorId(IN usuarioId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUsuarioPorId`(IN usuarioId INT)
 BEGIN
     SELECT * FROM usuarios WHERE id_usuario = usuarioId;
-END;
-//
+END$$
 
-CREATE PROCEDURE InsertarUsuario(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario`(
     IN p_primer_nombre VARCHAR(50),
     IN p_segundo_nombre VARCHAR(50),
     IN p_primer_apellido VARCHAR(50),
@@ -414,12 +616,23 @@ CREATE PROCEDURE InsertarUsuario(
     IN p_rol_id INT
 )
 BEGIN
-    INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, correo, tipo_identificacion, numero_identificacion, institucion_origen_id, facultad_id, telefono, direccion, pais_id, departamento_id, municipio_id, rol_id)
-    VALUES (p_primer_nombre, p_segundo_nombre, p_primer_apellido, p_segundo_apellido, p_correo, p_tipo_identificacion, p_numero_identificacion, p_institucion_origen_id, p_facultad_id, p_telefono, p_direccion, p_pais_id, p_departamento_id, p_municipio_id, p_rol_id);
-END;
-//
+    INSERT INTO usuarios (
+        primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+        correo, tipo_identificacion, numero_identificacion,
+        institucion_origen_id, facultad_id, telefono, direccion,
+        pais_id, departamento_id, municipio_id, rol_id,
+        created_at, updated_at
+    )
+    VALUES (
+        p_primer_nombre, p_segundo_nombre, p_primer_apellido, p_segundo_apellido,
+        p_correo, p_tipo_identificacion, p_numero_identificacion,
+        p_institucion_origen_id, p_facultad_id, p_telefono, p_direccion,
+        p_pais_id, p_departamento_id, p_municipio_id, p_rol_id,
+        NOW(), NOW()
+    );
+END$$
 
-CREATE PROCEDURE ActualizarUsuario(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarUsuario`(
     IN usuarioId INT,
     IN p_primer_nombre VARCHAR(50),
     IN p_segundo_nombre VARCHAR(50),
@@ -439,47 +652,211 @@ CREATE PROCEDURE ActualizarUsuario(
 )
 BEGIN
     UPDATE usuarios
-    SET primer_nombre = p_primer_nombre, segundo_nombre = p_segundo_nombre, primer_apellido = p_primer_apellido, segundo_apellido = p_segundo_apellido, correo = p_correo, tipo_identificacion = p_tipo_identificacion, numero_identificacion = p_numero_identificacion, institucion_origen_id = p_institucion_origen_id, facultad_id = p_facultad_id, telefono = p_telefono, direccion = p_direccion, pais_id = p_pais_id, departamento_id = p_departamento_id, municipio_id = p_municipio_id, rol_id = p_rol_id
+    SET primer_nombre = p_primer_nombre,
+        segundo_nombre = p_segundo_nombre,
+        primer_apellido = p_primer_apellido,
+        segundo_apellido = p_segundo_apellido,
+        correo = p_correo,
+        tipo_identificacion = p_tipo_identificacion,
+        numero_identificacion = p_numero_identificacion,
+        institucion_origen_id = p_institucion_origen_id,
+        facultad_id = p_facultad_id,
+        telefono = p_telefono,
+        direccion = p_direccion,
+        pais_id = p_pais_id,
+        departamento_id = p_departamento_id,
+        municipio_id = p_municipio_id,
+        rol_id = p_rol_id,
+        updated_at = NOW()
     WHERE id_usuario = usuarioId;
-END;
-//
+END$$
 
-CREATE PROCEDURE EliminarUsuario(IN usuarioId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario`(IN usuarioId INT)
 BEGIN
     DELETE FROM usuarios WHERE id_usuario = usuarioId;
-END;
-//
+END$$
+
 DELIMITER ;
+
+-- ========================================================
+-- Procedimientos para la tabla `documentos`
+-- ========================================================
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDocumentos`()
+BEGIN
+    SELECT * FROM documentos ORDER BY fecha_subida DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDocumentoPorId`(IN documentoId INT)
+BEGIN
+    SELECT * FROM documentos WHERE id_documento = documentoId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDocumento`(
+    IN p_solicitud_id INT,
+    IN p_usuario_id INT,
+    IN p_tipo VARCHAR(255),
+    IN p_ruta VARCHAR(255)
+)
+BEGIN
+    INSERT INTO documentos (
+        solicitud_id, usuario_id, tipo, ruta, fecha_subida,
+        created_at, updated_at
+    )
+    VALUES (
+        p_solicitud_id, p_usuario_id, p_tipo, p_ruta, NOW(),
+        NOW(), NOW()
+    );
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarDocumento`(
+    IN documentoId INT,
+    IN p_solicitud_id INT,
+    IN p_usuario_id INT,
+    IN p_tipo VARCHAR(255),
+    IN p_ruta VARCHAR(255)
+)
+BEGIN
+    UPDATE documentos
+    SET solicitud_id = p_solicitud_id,
+        usuario_id = p_usuario_id,
+        tipo = p_tipo,
+        ruta = p_ruta,
+        updated_at = NOW()
+    WHERE id_documento = documentoId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarDocumento`(IN documentoId INT)
+BEGIN
+    DELETE FROM documentos WHERE id_documento = documentoId;
+END$$
+
+DELIMITER ;
+
+
+-- ========================================================
+-- Procedimientos para la tabla `facultades`
+-- ========================================================
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFacultades`()
+BEGIN
+    SELECT * FROM facultades ORDER BY nombre ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFacultadPorId`(IN facultadId INT)
+BEGIN
+    SELECT * FROM facultades WHERE id_facultad = facultadId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarFacultad`(
+    IN p_institucion_id INT,
+    IN p_nombre VARCHAR(255)
+)
+BEGIN
+    INSERT INTO facultades (institucion_id, nombre, created_at, updated_at)
+    VALUES (p_institucion_id, p_nombre, NOW(), NOW());
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarFacultad`(
+    IN facultadId INT,
+    IN p_institucion_id INT,
+    IN p_nombre VARCHAR(255)
+)
+BEGIN
+    UPDATE facultades
+    SET institucion_id = p_institucion_id,
+        nombre = p_nombre,
+        updated_at = NOW()
+    WHERE id_facultad = facultadId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarFacultad`(IN facultadId INT)
+BEGIN
+    DELETE FROM facultades WHERE id_facultad = facultadId;
+END$$
+
+DELIMITER ;
+
+
+-- ========================================================
+-- Procedimientos para la tabla `roles`
+-- ========================================================
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerRoles`()
+BEGIN
+    SELECT * FROM roles ORDER BY id_rol ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerRolPorId`(IN rolId INT)
+BEGIN
+    SELECT * FROM roles WHERE id_rol = rolId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarRol`(
+    IN p_nombre VARCHAR(50) -- Cambio de ENUM a VARCHAR
+)
+BEGIN
+    INSERT INTO roles (nombre, created_at, updated_at)
+    VALUES (p_nombre, NOW(), NOW());
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarRol`(
+    IN rolId INT,
+    IN p_nombre VARCHAR(50)
+)
+BEGIN
+    UPDATE roles
+    SET nombre = p_nombre,
+        updated_at = NOW()
+    WHERE id_rol = rolId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarRol`(IN rolId INT)
+BEGIN
+    DELETE FROM roles WHERE id_rol = rolId;
+END$$
+
+DELIMITER ;
+
 
 -- ========================================================
 -- Procedimientos para la tabla `contenidos_programaticos`
 -- ========================================================
 
-CREATE PROCEDURE ObtenerContenidosProgramaticos()
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerContenidosProgramaticos`()
 BEGIN
     SELECT * FROM contenidos_programaticos ORDER BY tema ASC;
-END;
-//
+END$$
 
-CREATE PROCEDURE ObtenerContenidoProgramaticoPorId(IN contenidoId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerContenidoProgramaticoPorId`(IN contenidoId INT)
 BEGIN
     SELECT * FROM contenidos_programaticos WHERE id_contenido = contenidoId;
-END;
-//
+END$$
 
-CREATE PROCEDURE InsertarContenidoProgramatico(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarContenidoProgramatico`(
     IN p_asignatura_id INT,
     IN p_tema VARCHAR(255),
     IN p_resultados_aprendizaje TEXT,
     IN p_descripcion TEXT
 )
 BEGIN
-    INSERT INTO contenidos_programaticos (asignatura_id, tema, resultados_aprendizaje, descripcion)
-    VALUES (p_asignatura_id, p_tema, p_resultados_aprendizaje, p_descripcion);
-END;
-//
+    INSERT INTO contenidos_programaticos (
+        asignatura_id, tema, resultados_aprendizaje, descripcion, created_at, updated_at
+    )
+    VALUES (
+        p_asignatura_id, p_tema, p_resultados_aprendizaje, p_descripcion, NOW(), NOW()
+    );
+END$$
 
-CREATE PROCEDURE ActualizarContenidoProgramatico(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarContenidoProgramatico`(
     IN contenidoId INT,
     IN p_asignatura_id INT,
     IN p_tema VARCHAR(255),
@@ -488,149 +865,39 @@ CREATE PROCEDURE ActualizarContenidoProgramatico(
 )
 BEGIN
     UPDATE contenidos_programaticos
-    SET asignatura_id = p_asignatura_id, tema = p_tema, resultados_aprendizaje = p_resultados_aprendizaje, descripcion = p_descripcion
+    SET asignatura_id = p_asignatura_id,
+        tema = p_tema,
+        resultados_aprendizaje = p_resultados_aprendizaje,
+        descripcion = p_descripcion,
+        updated_at = NOW()
     WHERE id_contenido = contenidoId;
-END;
-//
+END$$
 
-CREATE PROCEDURE EliminarContenidoProgramatico(IN contenidoId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarContenidoProgramatico`(IN contenidoId INT)
 BEGIN
     DELETE FROM contenidos_programaticos WHERE id_contenido = contenidoId;
-END;
-//
-DELIMITER ;
-
--- ========================================================
--- Procedimientos para la tabla `solicitudes`
--- ========================================================
-
-DELIMITER //
-CREATE PROCEDURE ObtenerSolicitudes()
-BEGIN
-    SELECT * FROM solicitudes ORDER BY fecha_solicitud DESC;
-END;
-//
-
-CREATE PROCEDURE ObtenerSolicitudPorId(IN solicitudId INT)
-BEGIN
-    SELECT * FROM solicitudes WHERE id_solicitud = solicitudId;
-END;
-//
-
-CREATE PROCEDURE InsertarSolicitud(
-    IN p_usuario_id INT,
-    IN p_programa_destino_id INT,
-    IN p_finalizo_estudios ENUM('Si','No'),
-    IN p_fecha_finalizacion_estudios DATE,
-    IN p_fecha_ultimo_semestre_cursado DATE,
-    IN p_estado ENUM('Radicado', 'En revisión', 'Aprobado', 'Rechazado', 'Cerrado'),
-    IN p_numero_radicado VARCHAR(50),
-    IN p_ruta_pdf_resolucion VARCHAR(255)
-)
-BEGIN
-    INSERT INTO solicitudes (usuario_id, programa_destino_id, finalizo_estudios, fecha_finalizacion_estudios, fecha_ultimo_semestre_cursado, estado, numero_radicado, fecha_solicitud, ruta_pdf_resolucion)
-    VALUES (p_usuario_id, p_programa_destino_id, p_finalizo_estudios, p_fecha_finalizacion_estudios, p_fecha_ultimo_semestre_cursado, p_estado, p_numero_radicado, CURRENT_TIMESTAMP, p_ruta_pdf_resolucion);
-END;
-//
-
-CREATE PROCEDURE ActualizarSolicitud(
-    IN solicitudId INT,
-    IN p_usuario_id INT,
-    IN p_programa_destino_id INT,
-    IN p_finalizo_estudios ENUM('Si','No'),
-    IN p_fecha_finalizacion_estudios DATE,
-    IN p_fecha_ultimo_semestre_cursado DATE,
-    IN p_estado ENUM('Radicado', 'En revisión', 'Aprobado', 'Rechazado', 'Cerrado'),
-    IN p_numero_radicado VARCHAR(50),
-    IN p_ruta_pdf_resolucion VARCHAR(255)
-)
-BEGIN
-    UPDATE solicitudes
-    SET usuario_id = p_usuario_id, programa_destino_id = p_programa_destino_id, finalizo_estudios = p_finalizo_estudios, fecha_finalizacion_estudios = p_fecha_finalizacion_estudios, fecha_ultimo_semestre_cursado = p_fecha_ultimo_semestre_cursado, estado = p_estado, numero_radicado = p_numero_radicado, ruta_pdf_resolucion = p_ruta_pdf_resolucion
-    WHERE id_solicitud = solicitudId;
-END;
-//
-
-CREATE PROCEDURE EliminarSolicitud(IN solicitudId INT)
-BEGIN
-    DELETE FROM solicitudes WHERE id_solicitud = solicitudId;
-END;
-//
+END$$
 
 DELIMITER ;
-
-
--- ========================================================
--- Procedimientos para la tabla `documentos'
--- ========================================================
-DELIMITER //
-
-CREATE PROCEDURE ObtenerDocumentos()
-BEGIN
-    SELECT * FROM documentos ORDER BY fecha_subida DESC;
-END;
-//
-
-CREATE PROCEDURE ObtenerDocumentoPorId(IN documentoId INT)
-BEGIN
-    SELECT * FROM documentos WHERE id_documento = documentoId;
-END;
-//
-
-CREATE PROCEDURE InsertarDocumento(
-    IN p_solicitud_id INT,
-    IN p_usuario_id INT,
-    IN p_tipo VARCHAR(255), -- Cambié ENUM a VARCHAR(255)
-    IN p_ruta VARCHAR(255)
-)
-BEGIN
-    INSERT INTO documentos (solicitud_id, usuario_id, tipo, ruta, fecha_subida)
-    VALUES (p_solicitud_id, p_usuario_id, p_tipo, p_ruta, NOW());
-END;
-//
-
-CREATE PROCEDURE ActualizarDocumento(
-    IN documentoId INT,
-    IN p_solicitud_id INT,
-    IN p_usuario_id INT,
-    IN p_tipo VARCHAR(255), -- Cambié ENUM a VARCHAR(255)
-    IN p_ruta VARCHAR(255)
-)
-BEGIN
-    UPDATE documentos
-    SET solicitud_id = p_solicitud_id, usuario_id = p_usuario_id, tipo = p_tipo, ruta = p_ruta
-    WHERE id_documento = documentoId;
-END;
-//
-
-CREATE PROCEDURE EliminarDocumento(IN documentoId INT)
-BEGIN
-    DELETE FROM documentos WHERE id_documento = documentoId;
-END;
-//
-
-DELIMITER ;
-
 
 
 -- ========================================================
 -- Procedimientos para la tabla `historial_homologaciones`
 -- ========================================================
 
-DELIMITER //
-CREATE PROCEDURE ObtenerHistorialHomologaciones()
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHistorialHomologaciones`()
 BEGIN
     SELECT * FROM historial_homologaciones ORDER BY fecha DESC;
-END;
-//
+END$$
 
-//
-CREATE PROCEDURE ObtenerHistorialHomologacionPorId(IN historialId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHistorialHomologacionPorId`(IN historialId INT)
 BEGIN
     SELECT * FROM historial_homologaciones WHERE id_historial = historialId;
-END;
-//
-CREATE PROCEDURE InsertarHistorialHomologacion(
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarHistorialHomologacion`(
     IN p_solicitud_id INT,
     IN p_usuario_id INT,
     IN p_estado ENUM('Radicado', 'En revisión', 'Evaluado', 'Aprobado', 'Rechazado', 'Apelación'),
@@ -638,11 +905,15 @@ CREATE PROCEDURE InsertarHistorialHomologacion(
     IN p_ruta_pdf_resolucion VARCHAR(255)
 )
 BEGIN
-    INSERT INTO historial_homologaciones (solicitud_id, usuario_id, estado, fecha, observaciones, ruta_pdf_resolucion)
-    VALUES (p_solicitud_id, p_usuario_id, p_estado, NOW(), p_observaciones, p_ruta_pdf_resolucion);
-END;
-//
-CREATE PROCEDURE ActualizarHistorialHomologacion(
+    INSERT INTO historial_homologaciones (
+        solicitud_id, usuario_id, estado, fecha, observaciones, ruta_pdf_resolucion, created_at, updated_at
+    )
+    VALUES (
+        p_solicitud_id, p_usuario_id, p_estado, NOW(), p_observaciones, p_ruta_pdf_resolucion, NOW(), NOW()
+    );
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarHistorialHomologacion`(
     IN historialId INT,
     IN p_solicitud_id INT,
     IN p_usuario_id INT,
@@ -652,17 +923,19 @@ CREATE PROCEDURE ActualizarHistorialHomologacion(
 )
 BEGIN
     UPDATE historial_homologaciones
-    SET solicitud_id = p_solicitud_id, usuario_id = p_usuario_id, estado = p_estado, observaciones = p_observaciones, ruta_pdf_resolucion = p_ruta_pdf_resolucion
+    SET solicitud_id = p_solicitud_id,
+        usuario_id = p_usuario_id,
+        estado = p_estado,
+        observaciones = p_observaciones,
+        ruta_pdf_resolucion = p_ruta_pdf_resolucion,
+        updated_at = NOW()
     WHERE id_historial = historialId;
-END;
+END$$
 
-//
-CREATE PROCEDURE EliminarHistorialHomologacion(IN historialId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarHistorialHomologacion`(IN historialId INT)
 BEGIN
     DELETE FROM historial_homologaciones WHERE id_historial = historialId;
-END;
-//
-
+END$$
 
 DELIMITER ;
 
@@ -671,32 +944,34 @@ DELIMITER ;
 -- Procedimientos para la tabla `solicitud_asignaturas`
 -- ========================================================
 
-DELIMITER //
-CREATE PROCEDURE ObtenerSolicitudAsignaturas()
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudAsignaturas`()
 BEGIN
     SELECT * FROM solicitud_asignaturas ORDER BY id_solicitud_asignatura ASC;
-END;
-//
+END$$
 
-CREATE PROCEDURE ObtenerSolicitudAsignaturaPorId(IN solicitudAsignaturaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudAsignaturaPorId`(IN solicitudAsignaturaId INT)
 BEGIN
     SELECT * FROM solicitud_asignaturas WHERE id_solicitud_asignatura = solicitudAsignaturaId;
-END;
-//
+END$$
 
-CREATE PROCEDURE InsertarSolicitudAsignatura(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarSolicitudAsignatura`(
     IN p_solicitud_id INT,
     IN p_asignatura_id INT,
     IN p_nota_origen DECIMAL(3,1),
     IN p_horas INT
 )
 BEGIN
-    INSERT INTO solicitud_asignaturas (solicitud_id, asignatura_id, nota_origen, horas)
-    VALUES (p_solicitud_id, p_asignatura_id, p_nota_origen, p_horas);
-END;
-//
+    INSERT INTO solicitud_asignaturas (
+        solicitud_id, asignatura_id, nota_origen, horas, created_at, updated_at
+    )
+    VALUES (
+        p_solicitud_id, p_asignatura_id, p_nota_origen, p_horas, NOW(), NOW()
+    );
+END$$
 
-CREATE PROCEDURE ActualizarSolicitudAsignatura(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarSolicitudAsignatura`(
     IN solicitudAsignaturaId INT,
     IN p_solicitud_id INT,
     IN p_asignatura_id INT,
@@ -705,16 +980,19 @@ CREATE PROCEDURE ActualizarSolicitudAsignatura(
 )
 BEGIN
     UPDATE solicitud_asignaturas
-    SET solicitud_id = p_solicitud_id, asignatura_id = p_asignatura_id, nota_origen = p_nota_origen, horas = p_horas
+    SET solicitud_id = p_solicitud_id,
+        asignatura_id = p_asignatura_id,
+        nota_origen = p_nota_origen,
+        horas = p_horas,
+        updated_at = NOW()
     WHERE id_solicitud_asignatura = solicitudAsignaturaId;
-END;
-//
+END$$
 
-CREATE PROCEDURE EliminarSolicitudAsignatura(IN solicitudAsignaturaId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarSolicitudAsignatura`(IN solicitudAsignaturaId INT)
 BEGIN
     DELETE FROM solicitud_asignaturas WHERE id_solicitud_asignatura = solicitudAsignaturaId;
-END;
-//
+END$$
+
 DELIMITER ;
 
 
@@ -722,20 +1000,19 @@ DELIMITER ;
 -- Procedimientos para la tabla `homologacion_asignaturas`
 -- ========================================================
 
-DELIMITER //
-CREATE PROCEDURE ObtenerHomologacionesAsignaturas()
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHomologacionesAsignaturas`()
 BEGIN
     SELECT * FROM homologacion_asignaturas ORDER BY id_homologacion ASC;
-END;
-//
+END$$
 
-CREATE PROCEDURE ObtenerHomologacionAsignaturaPorId(IN homologacionId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerHomologacionAsignaturaPorId`(IN homologacionId INT)
 BEGIN
     SELECT * FROM homologacion_asignaturas WHERE id_homologacion = homologacionId;
-END;
-//
+END$$
 
-CREATE PROCEDURE InsertarHomologacionAsignatura(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarHomologacionAsignatura`(
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
     IN p_asignatura_destino_id INT,
@@ -744,12 +1021,15 @@ CREATE PROCEDURE InsertarHomologacionAsignatura(
     IN p_comentarios TEXT
 )
 BEGIN
-    INSERT INTO homologacion_asignaturas (solicitud_id, asignatura_origen_id, asignatura_destino_id, nota_origen, nota_destino, comentarios)
-    VALUES (p_solicitud_id, p_asignatura_origen_id, p_asignatura_destino_id, p_nota_origen, p_nota_destino, p_comentarios);
-END;
-//
+    INSERT INTO homologacion_asignaturas (
+        solicitud_id, asignatura_origen_id, asignatura_destino_id, nota_origen, nota_destino, comentarios, created_at, updated_at
+    )
+    VALUES (
+        p_solicitud_id, p_asignatura_origen_id, p_asignatura_destino_id, p_nota_origen, p_nota_destino, p_comentarios, NOW(), NOW()
+    );
+END$$
 
-CREATE PROCEDURE ActualizarHomologacionAsignatura(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarHomologacionAsignatura`(
     IN homologacionId INT,
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
@@ -760,98 +1040,20 @@ CREATE PROCEDURE ActualizarHomologacionAsignatura(
 )
 BEGIN
     UPDATE homologacion_asignaturas
-    SET solicitud_id = p_solicitud_id, asignatura_origen_id = p_asignatura_origen_id, asignatura_destino_id = p_asignatura_destino_id,
-        nota_origen = p_nota_origen, nota_destino = p_nota_destino, comentarios = p_comentarios
+    SET solicitud_id = p_solicitud_id,
+        asignatura_origen_id = p_asignatura_origen_id,
+        asignatura_destino_id = p_asignatura_destino_id,
+        nota_origen = p_nota_origen,
+        nota_destino = p_nota_destino,
+        comentarios = p_comentarios,
+        updated_at = NOW()
     WHERE id_homologacion = homologacionId;
-END;
-//
+END$$
 
-CREATE PROCEDURE EliminarHomologacionAsignatura(IN homologacionId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarHomologacionAsignatura`(IN homologacionId INT)
 BEGIN
     DELETE FROM homologacion_asignaturas WHERE id_homologacion = homologacionId;
-END;
-//
+END$$
+
 DELIMITER ;
 
-
--- ========================================================
--- Procedimientos para la tabla `credenciales`
--- ========================================================
-
-DELIMITER //
-CREATE PROCEDURE ObtenerCredenciales()
-BEGIN
-    SELECT * FROM credenciales ORDER BY id_credencial ASC;
-END;
-//
-CREATE PROCEDURE ObtenerCredencialPorId(IN credencialId INT)
-BEGIN
-    SELECT * FROM credenciales WHERE id_credencial = credencialId;
-END;
-//
-CREATE PROCEDURE InsertarCredencial(
-    IN p_usuario_id INT,
-    IN p_contraseña VARCHAR(255)
-)
-BEGIN
-    INSERT INTO credenciales (usuario_id, contraseña)
-    VALUES (p_usuario_id, p_contraseña);
-END;
-//
-CREATE PROCEDURE ActualizarCredencial(
-    IN credencialId INT,
-    IN p_usuario_id INT,
-    IN p_contraseña VARCHAR(255)
-)
-BEGIN
-    UPDATE credenciales
-    SET usuario_id = p_usuario_id, contraseña = p_contraseña
-    WHERE id_credencial = credencialId;
-END;
-//
-CREATE PROCEDURE EliminarCredencial(IN credencialId INT)
-BEGIN
-    DELETE FROM credenciales WHERE id_credencial = credencialId;
-END;
-//
-DELIMITER ;
-
--- ========================================================
--- Procedimientos para la tabla `roles`
--- ========================================================
-
-DELIMITER //
-CREATE PROCEDURE ObtenerRoles()
-BEGIN
-    SELECT * FROM roles ORDER BY id_rol ASC;
-END;
-//
-CREATE PROCEDURE ObtenerRolPorId(IN rolId INT)
-BEGIN
-    SELECT * FROM roles WHERE id_rol = rolId;
-END;
-//
-CREATE PROCEDURE InsertarRol(
-    IN p_nombre ENUM('Aspirante', 'Coordinador', 'Decano', 'Vicerrector')
-)
-BEGIN
-    INSERT INTO roles (nombre)
-    VALUES (p_nombre);
-END;
-//
-CREATE PROCEDURE ActualizarRol(
-    IN rolId INT,
-    IN p_nombre ENUM('Aspirante', 'Coordinador', 'Decano', 'Vicerrector')
-)
-BEGIN
-    UPDATE roles
-    SET nombre = p_nombre
-    WHERE id_rol = rolId;
-END;
-//
-CREATE PROCEDURE EliminarRol(IN rolId INT)
-BEGIN
-    DELETE FROM roles WHERE id_rol = rolId;
-END;
-//
-DELIMITER ;

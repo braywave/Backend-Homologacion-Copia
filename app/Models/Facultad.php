@@ -5,31 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Programa extends Model
+class Facultad extends Model
 {
     use HasFactory;
 
-    protected $table = 'programas';
 
-    protected $primaryKey = 'id_programa';
+    protected $table = 'facultades';
+
+
+    protected $primaryKey = 'id_facultad';
 
     protected $fillable = [
-        'nombre',
-        'codigo_snies',
         'institucion_id',
-        'facultad_id',
-        'tipo_formacion',
-        'metodologia',
+        'nombre',
     ];
 
     // Definir las relaciones
     public function institucion()
     {
         return $this->belongsTo(Institucion::class, 'institucion_id', 'id_institucion');
-    }
-
-    public function facultad()
-    {
-        return $this->belongsTo(Facultad::class, 'facultad_id', 'id_facultad');
     }
 }

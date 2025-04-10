@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class PaisControllerApi extends Controller
 {
     // Método para obtener todos los países
-    public function obtenerPaises()
+    public function traerPaises()
     {
         try {
             // Llamada al procedimiento almacenado para obtener todos los países
@@ -23,7 +23,7 @@ class PaisControllerApi extends Controller
     }
 
     // Método para obtener un país por ID
-    public function obtenerPaisPorId($id)
+    public function llevarPais($id)
     {
         try {
             // Llamada al procedimiento almacenado para obtener un país por ID

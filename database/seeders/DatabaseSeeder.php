@@ -23,36 +23,36 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $this->call(PaisesTableSeeder::class);
+        $this->call(PaisSeeder::class);
 
-        $this->call(DepartamentosTableSeeder::class);
+        $this->call(DepartamentoSeeder::class);
 
-        $this->call(MunicipiosTableSeeder::class);
+        $this->call(MunicipioSeeder::class);
 
-        $this->call(InstitucionesTableSeeder::class);
+        $this->call(InstitucionSeeder::class);
 
-        $this->call(FacultadesTableSeeder::class);
+        $this->call(FacultadSeeder::class);
 
-        $this->call(ProgramasTableSeeder::class);
+        $this->call(ProgramaSeeder::class);
 
-        $this->call(RolesTableSeeder::class);
+        $this->call(RolSeeder::class);
 
-        $this->call(UsuariosTableSeeder::class);
+        $this->call(UsuarioSeeder::class);
 
-        $this->call(CredencialesTableSeeder::class);
+        $this->call(CredencialSeeder::class);
 
-        $this->call(AsignaturasTableSeeder::class);
+        $this->call(AsignaturaSeeder::class);
 
-        $this->call(ContenidosProgramaticosTableSeeder::class);
+        $this->call(ContenidoProgramaticoSeeder::class);
 
-        $this->call(SolicitudesTableSeeder::class);
+        $this->call(SolicitudSeeder::class);
 
-        $this->call(DocumentosTableSeeder::class);
+        $this->call(DocumentoSeeder::class);
 
-        $this->call(HistorialHomologacionesTableSeeder::class);
+        $this->call(HistorialHomologacionSeeder::class);
 
-        $this->call(SolicitudAsignaturasTableSeeder::class);
+        $this->call(SolicitudAsignaturaSeeder::class);
 
-        $this->call(HomologacionAsignaturasTableSeeder::class);
+        $this->call(HomologacionAsignaturaSeeder::class);
     }
 }
