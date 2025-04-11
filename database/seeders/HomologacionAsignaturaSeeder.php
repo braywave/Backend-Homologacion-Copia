@@ -15,7 +15,7 @@ class HomologacionAsignaturaSeeder extends Seeder
     public function run()
     {
 
-     /*    HomologacionAsignatura::create([
+       /*  HomologacionAsignatura::create([
             'solicitud_id' => 1,
             'asignatura_origen_id' => 1,
             'asignatura_destino_id' => 2,

@@ -52,12 +52,11 @@ class InstitucionControllerApi extends Controller
     {
         try {
             // Llamada al procedimiento almacenado para insertar una nueva institución
-            DB::statement('CALL InsertarInstitucion(?, ?, ?, ?, ?)', [
+            DB::statement('CALL InsertarInstitucion(?, ?, ?, ?)', [
                 $request->nombre,
-                $request->codigo_snies,
+                $request->codigo_nies,
                 $request->municipio_id,
                 $request->tipo,
-                $request->crup
             ]);
 
             return response()->json([
@@ -76,13 +75,12 @@ class InstitucionControllerApi extends Controller
     {
         try {
             // Llamada al procedimiento almacenado para actualizar una institución
-            DB::statement('CALL ActualizarInstitucion(?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL ActualizarInstitucion(?, ?, ?, ?, ?)', [
                 $id,
                 $request->nombre,
-                $request->codigo_snies,
+                $request->codigo_ies,
                 $request->municipio_id,
                 $request->tipo,
-                $request->crup
             ]);
 
             return response()->json([

@@ -29,13 +29,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MunicipioSeeder::class);
 
-
         $this->call(InstitucionSeeder::class);
 
         $this->call(FacultadSeeder::class);
 
         $this->call(ProgramaSeeder::class);
-
 
         $this->call(RolSeeder::class);
 
@@ -43,18 +41,17 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CredencialSeeder::class);
 
-
         $this->call(AsignaturaSeeder::class);
-
-        $this->call(ContenidoProgramaticoSeeder::class);
-
 
         $this->call(SolicitudSeeder::class);
 
         $this->call(DocumentoSeeder::class);
 
-        $this->call(HistorialHomologacionSeeder::class);
+        $this->call(ContenidoProgramaticoSeeder::class);
 
+        $this->call(SolicitudSeeder::class);
+
+        $this->call(HistorialHomologacionSeeder::class);
 
         $this->call(SolicitudAsignaturaSeeder::class);
 

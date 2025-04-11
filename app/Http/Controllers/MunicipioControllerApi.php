@@ -31,9 +31,8 @@ class MunicipioControllerApi extends Controller
 
     public function insertarMunicipio(Request $request)
     {
-        DB::statement('CALL InsertarMunicipio(?, ?, ?)', [
+        DB::statement('CALL InsertarMunicipio(?, ?)', [
             $request->nombre,
-            $request->codigo,
             $request->departamento_id
         ]);
 
@@ -42,10 +41,9 @@ class MunicipioControllerApi extends Controller
 
     public function actualizarMunicipio(Request $request, $id)
     {
-        DB::statement('CALL ActualizarMunicipio(?, ?, ?, ?)', [
+        DB::statement('CALL ActualizarMunicipio(?, ?, ?)', [
             $id,
             $request->nombre,
-            $request->codigo,
             $request->departamento_id
         ]);
 

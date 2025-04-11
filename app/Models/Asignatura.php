@@ -15,7 +15,7 @@ class Asignatura extends Model
 
 
     protected $fillable = [
-        'programas_id',
+        'programa_id',
         'nombre',
         'tipo',
         'codigo_asignatura',
@@ -32,6 +32,6 @@ class Asignatura extends Model
     // Definir las relaciones
     public function programa()
     {
-        return $this->belongsTo(Programa::class, 'programas_id', 'id_programa');
+        return $this->belongsTo(Programa::class, 'programa_id', 'id_programa');
     }
 }

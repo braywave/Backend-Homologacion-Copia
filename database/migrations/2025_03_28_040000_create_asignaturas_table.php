@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('asignaturas', function (Blueprint $table) {
             $table->smallIncrements('id_asignatura');
-            $table->unsignedSmallInteger('programas_id');
+            $table->unsignedSmallInteger('programa_id');
             $table->string('nombre',255);
             $table->enum('tipo',['Materia','Competencia']);
             $table->string('codigo_asignatura', 30)->unique();
@@ -29,7 +29,7 @@ return new class extends Migration
 
 
             //Foráneas
-            $table->foreign('programas_id')->references('id_programa')->on('programas');
+            $table->foreign('programa_id')->references('id_programa')->on('programas');
 
         });
     }

@@ -52,7 +52,7 @@ class HomologacionAsignaturaControllerApi extends Controller
     {
         try {
             // Llamada al procedimiento almacenado para insertar una nueva homologación
-            DB::statement('CALL InsertarHomologacionAsignatura(?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL InsertarHomologacionAsignatura(?, ?, ?, ?, ?, ?,?)', [
                 $request->solicitud_id,
                 $request->asignatura_origen_id,
                 $request->asignatura_destino_id,
@@ -78,7 +78,7 @@ class HomologacionAsignaturaControllerApi extends Controller
     {
         try {
             // Llamada al procedimiento almacenado para actualizar una homologación
-            DB::statement('CALL ActualizarHomologacionAsignatura(?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL ActualizarHomologacionAsignatura(?, ?, ?, ?, ?, ?, ?,?)', [
                 $id,
                 $request->solicitud_id,
                 $request->asignatura_origen_id,

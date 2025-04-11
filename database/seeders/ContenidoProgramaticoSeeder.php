@@ -172,7 +172,7 @@ class ContenidoProgramaticoSeeder extends Seeder
 
         foreach ($contenidos as $nombre => $data) {
             $asignatura = \App\Models\Asignatura::where('nombre', $nombre)
-                ->where('programas_id', 12)
+                ->where('programa_id', 12)
                 ->first();
 
             if ($asignatura) {

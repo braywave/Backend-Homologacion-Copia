@@ -19,7 +19,8 @@ return new class extends Migration
             $table->text('descripcion');
             $table->timestamps();
 
-            $table->foreign('asignatura_id')->references('id_asignatura')->on('asignaturas');
+            $table->foreign('asignatura_id')->references('id_asignatura')->on('asignaturas')->onDelete('cascade');
+
         });
     }
 

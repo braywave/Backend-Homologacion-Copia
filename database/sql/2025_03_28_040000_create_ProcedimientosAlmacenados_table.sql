@@ -103,21 +103,19 @@ BEGIN
 END$$
 DELIMITER ;
 
-
-
 -- INSERTAR
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDepartamento`(
-    IN departamentoId INT,
     IN nombreDepartamento VARCHAR(255),
     IN paisId INT
 )
 BEGIN
-    INSERT INTO departamentos (id_departamento, nombre, pais_id)
-         VALUES (departamentoId, nombreDepartamento, paisId);
+    INSERT INTO departamentos (nombre, pais_id)
+         VALUES (nombreDepartamento, paisId);
 END$$
 DELIMITER ;
+
 
 
 -- OBTENER DEPARTAMENTO POR ID
@@ -555,7 +553,7 @@ BEGIN
            a.updated_at,
            p.nombre AS programa
       FROM asignaturas a
-      JOIN programas p ON a.programas_id = p.id_programa
+      JOIN programas p ON a.programa_id = p.id_programa
      ORDER BY a.nombre ASC;
 END$$
 DELIMITER ;
@@ -585,7 +583,7 @@ BEGIN
            a.updated_at,
            p.nombre AS programa
       FROM asignaturas a
-      JOIN programas p ON a.programas_id = p.id_programa
+      JOIN programas p ON a.programa_id = p.id_programa
      WHERE a.id_asignatura = asignaturaId;
 END$$
 DELIMITER ;
@@ -747,16 +745,22 @@ DELIMITER ;
 -- OBTENER SOLICITUD POR ID
 
 DELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudPorId`(IN p_id_solicitud SMALLINT)
 BEGIN
     SELECT
         s.id_solicitud,
+        s.usuario_id,
         s.finalizo_estudios,
+        s.fecha_finalizacion_estudios,
+        s.fecha_ultimo_semestre_cursado,
         s.fecha_solicitud,
-        s.fecha_solicitud AS fecha_radicado, -- Alias para compatibilidad
         s.estado,
         s.numero_radicado,
         s.ruta_pdf_resolucion AS pdf_resolucion,
+
+        -- Datos del programa destino
+        prog.nombre AS programa_destino_nombre,
 
         -- Datos del usuario
         u.primer_nombre,
@@ -777,28 +781,36 @@ BEGIN
 
     FROM solicitudes s
     INNER JOIN usuarios u ON s.usuario_id = u.id_usuario
+    INNER JOIN programas prog ON s.programa_destino_id = prog.id_programa
     LEFT JOIN paises p ON u.pais_id = p.id_pais
     LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
     LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
     LEFT JOIN instituciones inst ON u.institucion_origen_id = inst.id_institucion
-    WHERE s.id_solicitud = solicitudId;
+    WHERE s.id_solicitud = p_id_solicitud;
 END$$
+
 DELIMITER ;
+
+
 
 -- OBTENER TODAS LAS SOLICITUDES
 DELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSolicitudes`()
 BEGIN
     SELECT
         s.id_solicitud,
         s.usuario_id,
-        s.programa_destino_id,
         s.finalizo_estudios,
+        s.fecha_finalizacion_estudios,
+        s.fecha_ultimo_semestre_cursado,
         s.fecha_solicitud,
-        s.fecha_solicitud AS fecha_radicado, -- Alias si necesitas ese nombre en frontend
         s.estado,
         s.numero_radicado,
         s.ruta_pdf_resolucion AS pdf_resolucion,
+
+        -- Datos del programa destino
+        prog.nombre AS programa_destino_nombre,
 
         -- Datos del usuario
         u.primer_nombre,
@@ -819,12 +831,16 @@ BEGIN
 
     FROM solicitudes s
     INNER JOIN usuarios u ON s.usuario_id = u.id_usuario
+    INNER JOIN programas prog ON s.programa_destino_id = prog.id_programa
     LEFT JOIN paises p ON u.pais_id = p.id_pais
     LEFT JOIN departamentos d ON u.departamento_id = d.id_departamento
     LEFT JOIN municipios m ON u.municipio_id = m.id_municipio
     LEFT JOIN instituciones inst ON u.institucion_origen_id = inst.id_institucion;
 END$$
+
 DELIMITER ;
+
+
 
 
 
@@ -1629,7 +1645,8 @@ BEGIN
     JOIN asignaturas ad ON ha.asignatura_destino_id = ad.id_asignatura
     JOIN solicitudes s ON ha.solicitud_id = s.id_solicitud
     JOIN usuarios u ON s.usuario_id = u.id_usuario
-    JOIN solicitud_asignaturas sa ON sa.solicitud_id = ha.solicitud_id AND sa.asignatura_id = ha.asignatura_origen_id
+    LEFT JOIN solicitud_asignaturas sa ON sa.solicitud_id = ha.solicitud_id AND sa.asignatura_id = ha.asignatura_origen_id
+
 
     ORDER BY ha.id_homologacion ASC;
 END$$
@@ -1680,21 +1697,36 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarHomologacionAsignatura`(
+CREATE DEFINER=root@localhost PROCEDURE InsertarHomologacionAsignatura(
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
     IN p_asignatura_destino_id INT,
+    IN p_nota_origen DECIMAL(3,1),
+    IN p_horas_sena INT,
     IN p_nota_destino DECIMAL(3,1),
     IN p_comentarios TEXT
 )
 BEGIN
     INSERT INTO homologacion_asignaturas (
-        solicitud_id, asignatura_origen_id, asignatura_destino_id,
-        nota_destino, comentarios, created_at, updated_at
-    )
-    VALUES (
-        p_solicitud_id, p_asignatura_origen_id, p_asignatura_destino_id,
-        p_nota_destino, p_comentarios, NOW(), NOW()
+        solicitud_id,
+        asignatura_origen_id,
+        asignatura_destino_id,
+        nota_origen,
+        horas_sena,
+        nota_destino,
+        comentarios,
+        created_at,
+        updated_at
+    ) VALUES (
+        p_solicitud_id,
+        p_asignatura_origen_id,
+        p_asignatura_destino_id,
+        p_nota_origen,
+        p_horas_sena,
+        p_nota_destino,
+        p_comentarios,
+        NOW(),
+        NOW()
     );
 END$$
 
@@ -1703,14 +1735,17 @@ DELIMITER ;
 
 
 
+
 -- ACTUALIZAR
-DDELIMITER $$
+DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarHomologacionAsignatura`(
     IN p_id_homologacion INT,
     IN p_solicitud_id INT,
     IN p_asignatura_origen_id INT,
     IN p_asignatura_destino_id INT,
+    IN p_nota_origen DECIMAL(3,1),
+    IN p_horas_sena DECIMAL(3,1),
     IN p_nota_destino DECIMAL(3,1),
     IN p_comentarios TEXT
 )
@@ -1720,6 +1755,8 @@ BEGIN
         solicitud_id = p_solicitud_id,
         asignatura_origen_id = p_asignatura_origen_id,
         asignatura_destino_id = p_asignatura_destino_id,
+        nota_origen = p_nota_origen,
+        horas_sena = p_horas_sena,
         nota_destino = p_nota_destino,
         comentarios = p_comentarios,
         updated_at = NOW()
@@ -1727,6 +1764,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 
 
 

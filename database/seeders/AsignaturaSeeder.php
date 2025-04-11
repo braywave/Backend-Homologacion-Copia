@@ -15,7 +15,7 @@ class AsignaturaSeeder extends Seeder
     {
         // FUP
         Asignatura::create([
-            'programas_id' => 5,
+            'programa_id' => 5,
             'nombre' => 'Lógica de Programación',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'FUP001',
@@ -29,7 +29,7 @@ class AsignaturaSeeder extends Seeder
         ]);
 
         Asignatura::create([
-            'programas_id' => 5,
+            'programa_id' => 5,
             'nombre' => 'Fundamentos de Bases de Datos',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'FUP002',
@@ -45,7 +45,7 @@ class AsignaturaSeeder extends Seeder
 
         // COLEGIO MAYOR
         Asignatura::create([
-            'programas_id' => 6,
+            'programa_id' => 6,
             'nombre' => 'Matemáticas Básicas',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'CM001',
@@ -59,7 +59,7 @@ class AsignaturaSeeder extends Seeder
         ]);
 
         Asignatura::create([
-            'programas_id' => 6,
+            'programa_id' => 6,
             'nombre' => 'Contabilidad General',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'CM002',
@@ -76,7 +76,7 @@ class AsignaturaSeeder extends Seeder
 
 
         Asignatura::create([
-            'programas_id' => 4,
+            'programa_id' => 4,
             'nombre' => 'Cálculo Diferencial',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'UC001',
@@ -90,7 +90,7 @@ class AsignaturaSeeder extends Seeder
         ]);
 
         Asignatura::create([
-            'programas_id' => 4,
+            'programa_id' => 4,
             'nombre' => 'Introducción a la Electrónica',
             'tipo' => 'Materia',
             'codigo_asignatura' => 'UC002',
@@ -107,7 +107,7 @@ class AsignaturaSeeder extends Seeder
 
         // SENA
         Asignatura::create([
-            'programas_id' => 3,
+            'programa_id' => 3,
             'nombre' => 'Desarrollar software de acuerdo con los requerimientos',
             'tipo' => 'Competencia',
             'codigo_asignatura' => 'SENA001',
@@ -121,7 +121,7 @@ class AsignaturaSeeder extends Seeder
         ]);
 
         Asignatura::create([
-            'programas_id' => 3,
+            'programa_id' => 3,
             'nombre' => 'Aplicar buenas prácticas de desarrollo',
             'tipo' => 'Competencia',
             'codigo_asignatura' => 'SENA002',
@@ -155,7 +155,7 @@ class AsignaturaSeeder extends Seeder
         foreach ($pensum as $semestre => $asignaturas) {
             foreach ($asignaturas as $index => $nombre) {
                 Asignatura::create([
-                    'programas_id' => $programaId,
+                    'programa_id' => $programaId,
                     'nombre' => $nombre,
                     'tipo' => 'Materia',
                     'codigo_asignatura' => $codigoBase . '_S' . $semestre . '_M' . ($index + 1),

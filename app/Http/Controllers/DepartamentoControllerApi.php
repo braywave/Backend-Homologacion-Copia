@@ -52,10 +52,9 @@ class DepartamentoControllerApi extends Controller
     {
         try {
             // Llamada al procedimiento almacenado para insertar un nuevo departamento
-            DB::statement('CALL InsertarDepartamento(?, ?, ?)', [
+            DB::statement('CALL InsertarDepartamento(?, ?)', [
                 $request->nombre,
-                $request->pais_id,
-                $request->codigo
+                $request->pais_id
             ]);
 
             return response()->json([
@@ -77,8 +76,7 @@ class DepartamentoControllerApi extends Controller
             DB::statement('CALL ActualizarDepartamento(?, ?, ?, ?)', [
                 $id,
                 $request->nombre,
-                $request->pais_id,
-                $request->codigo
+                $request->pais_id
             ]);
 
             return response()->json([
