@@ -19,6 +19,7 @@ class HomologacionAsignatura extends Model
         'asignatura_origen_id',
         'asignatura_destino_id',
         'nota_origen',
+        'horas_sena',
         'nota_destino',
         'fecha',
         'comentarios',

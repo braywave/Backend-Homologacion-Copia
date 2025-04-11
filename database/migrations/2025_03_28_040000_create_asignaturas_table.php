@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('codigo_asignatura', 30)->unique();
             $table->unsignedInteger('creditos')->nullable();
             $table->unsignedInteger('semestre')->nullable();
-            $table->unsignedInteger('horas')->nullable();
+            $table->unsignedInteger('horas_sena')->nullable();
             $table->unsignedInteger('tiempo_presencial')->nullable();
             $table->unsignedInteger('tiempo_independiente')->nullable();
             $table->unsignedInteger('horas_totales_semanales')->nullable();

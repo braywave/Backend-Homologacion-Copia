@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+
 use App\Models\Solicitud;
+use Illuminate\Support\Str;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,77 +16,33 @@ class SolicitudSeeder extends Seeder
      */
     public function run(): void
     {
-        Solicitud::create([
-            'usuario_id' => 5, // Andrea - FUP
-            'programa_destino_id' => 1,
-            'finalizo_estudios' => 'Sí',
-            'fecha_finalizacion_estudios' => '2023-12-15',
-            'estado' => 'En revisión',
-            'numero_radicado' => 'SOL-2025001',
-        ]);
+        $usuarios = [
+            // id_usuario => ['finalizo_estudios', 'fecha_finalizacion_estudios', 'fecha_ultimo_semestre_cursado', 'estado']
+            1 => ['No', null, '2023-12-01', 'Radicado'], // Aspirante nacional
+            2 => ['No', null, '2023-06-15', 'En revisión'], // Aspirante extranjero
+            3 => ['No', null, '2022-12-01', 'Radicado'], // Aspirante SENA
+            4 => ['Si', '2023-05-30', null, 'En revisión'], // Aspirante universidad privada
+            5 => ['Si', '2022-11-15', null, 'Radicado'], // Aspirante pública nacional
+        ];
 
-        Solicitud::create([
-            'usuario_id' => 3, // Daniela - Colegio Mayor
-            'programa_destino_id' => 2,
-            'finalizo_estudios' => 'No',
-            'fecha_ultimo_semestre_cursado' => '2024-11-01',
-            'estado' => 'En revisión',
-            'numero_radicado' => 'SOL-2025002',
-        ]);
+        foreach ($usuarios as $usuarioId => $data) {
+            $radicado = 'SOL-' . Str::upper(Str::random(8));
 
-        Solicitud::create([
-            'usuario_id' => 4, // Esteban - SENA
-            'programa_destino_id' => 3,
-            'finalizo_estudios' => 'No',
-            'fecha_ultimo_semestre_cursado' => '2024-10-30',
-            'estado' => 'Radicado',
-            'numero_radicado' => 'SOL-2025003',
-        ]);
+            Solicitud::create([
+                'usuario_id' => $usuarioId,
+                'programa_destino_id' => 12, // Ingeniería de Software - Autónoma
+                'finalizo_estudios' => $data[0],
+                'fecha_finalizacion_estudios' => $data[1],
+                'fecha_ultimo_semestre_cursado' => $data[2],
+                'estado' => $data[3],
+                'numero_radicado' => $radicado,
+                'ruta_pdf_resolucion' => null,
+            ]);
 
-        Solicitud::create([
-            'usuario_id' => 8, // Felipe - Unicauca
-            'programa_destino_id' => 4,
-            'finalizo_estudios' => 'Sí',
-            'fecha_finalizacion_estudios' => '2022-06-30',
-            'estado' => 'Radicado',
-            'numero_radicado' => 'SOL-2025004',
-        ]);
+        }
 
-        Solicitud::create([
-            'usuario_id' => 2, // Julián - Comfacauca
-            'programa_destino_id' => 5,
-            'finalizo_estudios' => 'No',
-            'fecha_ultimo_semestre_cursado' => '2024-05-15',
-            'estado' => 'Radicado',
-            'numero_radicado' => 'SOL-2025005',
-        ]);
 
-        Solicitud::create([
-            'usuario_id' => 7, // Natalia - Autónoma del Cauca
-            'programa_destino_id' => 6,
-            'finalizo_estudios' => 'No',
-            'fecha_ultimo_semestre_cursado' => '2024-12-20',
-            'estado' => 'Radicado',
-            'numero_radicado' => 'SOL-2025006',
-        ]);
-
-        Solicitud::create([
-            'usuario_id' => 1, // Sofía - Unicauca
-            'programa_destino_id' => 7,
-            'finalizo_estudios' => 'Sí',
-            'fecha_finalizacion_estudios' => '2023-07-01',
-            'estado' => 'Cerrado',
-            'numero_radicado' => 'SOL-2025007',
-        ]);
-
-        Solicitud::create([
-            'usuario_id' => 6, // Thiago - Extranjero
-            'programa_destino_id' => 8,
-            'finalizo_estudios' => 'No',
-            'fecha_ultimo_semestre_cursado' => '2024-11-15',
-            'estado' => 'Radicado',
-            'numero_radicado' => 'SOL-2025008',
-        ]);
 
     }
+
 }

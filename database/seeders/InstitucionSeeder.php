@@ -14,6 +14,8 @@ class InstitucionSeeder extends Seeder
      */
     public function run()
     {
+
+
         Institucion::create([
             'municipio_id' => 703,
             'nombre' => 'Corporación Universitaria Autónoma del Cauca',
@@ -23,9 +25,23 @@ class InstitucionSeeder extends Seeder
 
         Institucion::create([
             'municipio_id' => 703,
-            'nombre' => 'Servicio Nacional de Aprendizaje (SENA) - Regional Cauca',
+            'nombre' => 'Servicio Nacional de Aprendizaje - SENA',
             'codigo_ies' => null,
             'tipo' => 'SENA',
+        ]);
+
+        Institucion::create([
+            'municipio_id' => 703,
+            'nombre' => 'Colegio Mayor del Cauca',
+            'codigo_ies' => '3104',
+            'tipo' => 'Mixta',
+        ]);
+
+        Institucion::create([
+            'municipio_id' => 703,
+            'nombre' => 'Fundación Universitaria de Popayán - FUP',
+            'codigo_ies' => '1055',
+            'tipo' => 'Mixta',
         ]);
 
         Institucion::create([
@@ -35,26 +51,6 @@ class InstitucionSeeder extends Seeder
             'tipo' => 'Universitaria',
         ]);
 
-        Institucion::create([
-            'municipio_id' => 703,
-            'nombre' => 'Institución Universitaria Colegio Mayor del Cauca',
-            'codigo_ies' => '2217',
-            'tipo' => 'Mixta',
-        ]);
-
-        Institucion::create([
-            'municipio_id' => 703,
-            'nombre' => 'Fundación Universitaria de Popayán',
-            'codigo_ies' => '2715',
-            'tipo' => 'Universitaria',
-        ]);
-
-        Institucion::create([
-            'municipio_id' => 703,
-            'nombre' => 'Corporación Universitaria Comfacauca - UNICOMFACAUCA',
-            'codigo_ies' => '2847',
-            'tipo' => 'Universitaria',
-        ]);
 
     }
 }

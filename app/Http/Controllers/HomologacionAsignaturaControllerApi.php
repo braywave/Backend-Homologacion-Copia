@@ -57,6 +57,7 @@ class HomologacionAsignaturaControllerApi extends Controller
                 $request->asignatura_origen_id,
                 $request->asignatura_destino_id,
                 $request->nota_origen,
+                $request->horas_sena,
                 $request->nota_destino,
                 $request->comentarios
             ]);
@@ -83,6 +84,7 @@ class HomologacionAsignaturaControllerApi extends Controller
                 $request->asignatura_origen_id,
                 $request->asignatura_destino_id,
                 $request->nota_origen,
+                $request->horas_sena,
                 $request->nota_destino,
                 $request->comentarios
             ]);

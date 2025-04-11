@@ -59,14 +59,6 @@ class SolicitudAsignaturaControllerApi extends Controller
                 'horas' => 'nullable|integer',
             ]);
 
-            // Llamada al procedimiento almacenado para insertar una nueva solicitud de asignatura
-            DB::statement('CALL InsertarSolicitudAsignatura(?, ?, ?, ?)', [
-                $request->solicitud_id ?? null,
-                $request->asignatura_id ?? null,
-                $request->nota_origen ?? null,
-                $request->horas ?? null
-            ]);
-
             return response()->json([
                 'mensaje' => 'Solicitud de asignatura insertada correctamente'
             ], 201);
@@ -87,7 +79,7 @@ class SolicitudAsignaturaControllerApi extends Controller
                 'solicitud_id' => 'required|integer',
                 'asignatura_id' => 'required|integer',
                 'nota_origen' => 'nullable|numeric',
-                'horas' => 'nullable|integer',
+                'horas_sena' => 'nullable|integer',
             ]);
 
             // Llamada al procedimiento almacenado para actualizar una solicitud de asignatura
@@ -96,7 +88,7 @@ class SolicitudAsignaturaControllerApi extends Controller
                 $request->solicitud_id ?? null,
                 $request->asignatura_id ?? null,
                 $request->nota_origen ?? null,
-                $request->horas ?? null
+                $request->horas_sena ?? null
             ]);
 
             return response()->json([

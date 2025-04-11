@@ -2,41 +2,43 @@
 
 namespace Database\Seeders;
 
-use App\Models\SolicitudAsignatura;
-use App\Models\SolicitudAsignaturas;
-use App\Models\Solicitudes;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Solicitud;
+use App\Models\Asignatura;
+use App\Models\SolicitudAsignatura;
 
 class SolicitudAsignaturaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run()
+    public function run(): void
     {
+        // Obtener las solicitudes recién creadas
+        $solicitudes = Solicitud::all()->keyBy('usuario_id');
 
+        // Vincular asignaturas realistas según cada institución
+        $mapa = [
+            // usuario_id => [array de códigos de asignaturas origen]
+            1 => ['FUP001', 'FUP002'],       // FUP
+            2 => ['CM001', 'CM002'],         // Colegio Mayor (extranjero)
+            3 => ['SENA001', 'SENA002'],     // SENA
+            4 => ['CM001', 'FUP002'],        // Universidad privada combinada
+            5 => ['FUP001', 'CM002'],        // Pública nacional combinada
+        ];
 
-        SolicitudAsignatura::create([
-            'solicitud_id' => 1,
-            'asignatura_id' => 1,
-            'nota_origen' => 4.5,
-            'horas' => 3,
-        ]);
+        foreach ($mapa as $usuarioId => $codigos) {
+            $solicitudId = $solicitudes[$usuarioId]->id_solicitud;
 
-        SolicitudAsignatura::create([
-            'solicitud_id' => 1,
-            'asignatura_id' => 2,
-            'nota_origen' => 3.8,
-            'horas' => 4,
-        ]);
+            foreach ($codigos as $codigo) {
+                $asignatura = Asignatura::where('codigo_asignatura', $codigo)->first();
 
-        SolicitudAsignatura::create([
-            'solicitud_id' => 2,
-            'asignatura_id' => 3,
-            'nota_origen' => 5.0,
-            'horas' => 2,
-        ]);
+                if (!$asignatura) continue;
 
-}
+                SolicitudAsignatura::create([
+                    'solicitud_id' => $solicitudId,
+                    'asignatura_id' => $asignatura->id_asignatura,
+                    'nota_origen' => $asignatura->programas_id == 3 ? null : rand(30, 50) / 10, // Solo si no es SENA
+                    'horas_sena' => $asignatura->programas_id == 3 ? $asignatura->horas_sena : null,
+                ]);
+            }
+        }
+    }
 }

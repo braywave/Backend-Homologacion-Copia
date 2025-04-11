@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('asignatura_origen_id');
             $table->unsignedSmallInteger('asignatura_destino_id');
             $table->decimal('nota_origen', 3, 1)->nullable();
-            $table->integer('hora_origen')->nullable();
+            $table->decimal('horas_sena', 3, 1)->nullable();
             $table->decimal('nota_destino', 3, 1)->nullable();
             $table->timestamp('fecha')->useCurrent();
             $table->text('comentarios')->nullable();

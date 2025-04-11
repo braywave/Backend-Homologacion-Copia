@@ -17,7 +17,7 @@ class SolicitudAsignatura extends Model
         'solicitud_id',
         'asignatura_id',
         'nota_origen',
-        'horas',
+        'horas_sena',
     ];
 
     // Definir las relaciones

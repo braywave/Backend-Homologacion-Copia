@@ -15,7 +15,7 @@ class CredencialSeeder extends Seeder
      */
     public function run()
     {
-        Credencial::create([
+        /* Credencial::create([
             'usuario_id' => 1,
             'contraseña' => bcrypt('contraseña123'),
         ]);
@@ -28,6 +28,6 @@ class CredencialSeeder extends Seeder
         Credencial::create([
             'usuario_id' => 3,
             'contraseña' => bcrypt('contraseña789'),
-        ]);
+        ]); */
     }
 }

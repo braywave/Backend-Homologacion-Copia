@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Asignatura;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class AsignaturaSeeder extends Seeder
 {
@@ -12,148 +13,164 @@ class AsignaturaSeeder extends Seeder
      */
     public function run(): void
     {
-        // Medicina
+        // FUP
         Asignatura::create([
-            'programas_id' => 1,
-            'nombre' => 'Anatomía Humana',
+            'programas_id' => 5,
+            'nombre' => 'Lógica de Programación',
             'tipo' => 'Materia',
-            'codigo_asignatura' => 'MED101',
-            'creditos' => 5,
+            'codigo_asignatura' => 'FUP001',
+            'creditos' => 3,
             'semestre' => 1,
-            'horas' => 80,
-            'tiempo_presencial' => 56,
-            'tiempo_independiente' => 24,
+            'tiempo_presencial' => 2,
+            'tiempo_independiente' => 4,
             'horas_totales_semanales' => 6,
             'modalidad' => 'Teórico-Práctico',
             'metodologia' => 'Presencial',
         ]);
 
         Asignatura::create([
-            'programas_id' => 1,
-            'nombre' => 'Fisiología',
-            'tipo' => 'Materia',
-            'codigo_asignatura' => 'MED102',
-            'creditos' => 4,
-            'semestre' => 2,
-            'horas' => 64,
-            'tiempo_presencial' => 40,
-            'tiempo_independiente' => 24,
-            'horas_totales_semanales' => 5,
-            'modalidad' => 'Teórico',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Enfermería
-        Asignatura::create([
-            'programas_id' => 2,
-            'nombre' => 'Fundamentos de Enfermería',
-            'tipo' => 'Materia',
-            'codigo_asignatura' => 'ENF101',
-            'creditos' => 3,
-            'semestre' => 1,
-            'horas' => 48,
-            'tiempo_presencial' => 32,
-            'tiempo_independiente' => 16,
-            'horas_totales_semanales' => 4,
-            'modalidad' => 'Práctico',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Derecho
-        Asignatura::create([
-            'programas_id' => 4,
-            'nombre' => 'Derecho Constitucional',
-            'tipo' => 'Materia',
-            'codigo_asignatura' => 'DER101',
-            'creditos' => 4,
-            'semestre' => 1,
-            'horas' => 64,
-            'tiempo_presencial' => 40,
-            'tiempo_independiente' => 24,
-            'horas_totales_semanales' => 5,
-            'modalidad' => 'Teórico',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Psicología
-        Asignatura::create([
-            'programas_id' => 9,
-            'nombre' => 'Psicología del Desarrollo',
-            'tipo' => 'Materia',
-            'codigo_asignatura' => 'PSI101',
-            'creditos' => 3,
-            'semestre' => 1,
-            'horas' => 48,
-            'tiempo_presencial' => 32,
-            'tiempo_independiente' => 16,
-            'horas_totales_semanales' => 4,
-            'modalidad' => 'Teórico',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Contaduría Pública
-        Asignatura::create([
             'programas_id' => 5,
-            'nombre' => 'Contabilidad Básica',
+            'nombre' => 'Fundamentos de Bases de Datos',
             'tipo' => 'Materia',
-            'codigo_asignatura' => 'CON101',
+            'codigo_asignatura' => 'FUP002',
             'creditos' => 3,
+            'semestre' => 2,
+            'tiempo_presencial' => 2,
+            'tiempo_independiente' => 4,
+            'horas_totales_semanales' => 6,
+            'modalidad' => 'Teórico',
+            'metodologia' => 'Presencial',
+        ]);
+
+
+        // COLEGIO MAYOR
+        Asignatura::create([
+            'programas_id' => 6,
+            'nombre' => 'Matemáticas Básicas',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'CM001',
+            'creditos' => 2,
             'semestre' => 1,
-            'horas' => 48,
-            'tiempo_presencial' => 32,
-            'tiempo_independiente' => 16,
+            'tiempo_presencial' => 2,
+            'tiempo_independiente' => 2,
             'horas_totales_semanales' => 4,
+            'modalidad' => 'Teórico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Asignatura::create([
+            'programas_id' => 6,
+            'nombre' => 'Contabilidad General',
+            'tipo' => 'Materia',
+            'codigo_asignatura' => 'CM002',
+            'creditos' => 3,
+            'semestre' => 2,
+            'tiempo_presencial' => 3,
+            'tiempo_independiente' => 3,
+            'horas_totales_semanales' => 6,
             'modalidad' => 'Teórico-Práctico',
             'metodologia' => 'Presencial',
         ]);
 
-        // Comunicación Social y Periodismo
+        // CAUCA
+
+
         Asignatura::create([
-            'programas_id' => 11,
-            'nombre' => 'Teoría de la Comunicación',
+            'programas_id' => 4,
+            'nombre' => 'Cálculo Diferencial',
             'tipo' => 'Materia',
-            'codigo_asignatura' => 'COM101',
+            'codigo_asignatura' => 'UC001',
             'creditos' => 4,
             'semestre' => 1,
-            'horas' => 64,
-            'tiempo_presencial' => 40,
-            'tiempo_independiente' => 24,
-            'horas_totales_semanales' => 5,
+            'tiempo_presencial' => 4,
+            'tiempo_independiente' => 4,
+            'horas_totales_semanales' => 8,
             'modalidad' => 'Teórico',
             'metodologia' => 'Presencial',
         ]);
 
-        // Administración de Empresas (Autónoma)
         Asignatura::create([
-            'programas_id' => 6,
-            'nombre' => 'Introducción a la Administración',
+            'programas_id' => 4,
+            'nombre' => 'Introducción a la Electrónica',
             'tipo' => 'Materia',
-            'codigo_asignatura' => 'ADM101',
+            'codigo_asignatura' => 'UC002',
             'creditos' => 3,
-            'semestre' => 1,
-            'horas' => 48,
-            'tiempo_presencial' => 32,
-            'tiempo_independiente' => 16,
-            'horas_totales_semanales' => 4,
-            'modalidad' => 'Teórico',
+            'semestre' => 2,
+            'tiempo_presencial' => 3,
+            'tiempo_independiente' => 3,
+            'horas_totales_semanales' => 6,
+            'modalidad' => 'Teórico-Práctico',
             'metodologia' => 'Presencial',
         ]);
 
-        // Producción Agropecuaria (SENA)
+
+
+        // SENA
         Asignatura::create([
-            'programas_id' => 18,
-            'nombre' => 'Manejo de Cultivos',
+            'programas_id' => 3,
+            'nombre' => 'Desarrollar software de acuerdo con los requerimientos',
             'tipo' => 'Competencia',
-            'codigo_asignatura' => 'AGRO101',
-            'creditos' => 2,
-            'semestre' => null,
-            'horas' => 40,
-            'tiempo_presencial' => 28,
-            'tiempo_independiente' => 12,
-            'horas_totales_semanales' => 3,
+            'codigo_asignatura' => 'SENA001',
+            'horas_sena' => 240,
+            'semestre' => 1,
+            'tiempo_presencial' => 12,
+            'tiempo_independiente' => 8,
+            'horas_totales_semanales' => 20,
+            'modalidad' => 'Teórico-Práctico',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Asignatura::create([
+            'programas_id' => 3,
+            'nombre' => 'Aplicar buenas prácticas de desarrollo',
+            'tipo' => 'Competencia',
+            'codigo_asignatura' => 'SENA002',
+            'horas_sena' => 180,
+            'semestre' => 2,
+            'tiempo_presencial' => 10,
+            'tiempo_independiente' => 5,
+            'horas_totales_semanales' => 15,
             'modalidad' => 'Práctico',
             'metodologia' => 'Presencial',
         ]);
 
+
+        // AUTÓNOMA DEL CAUCA - Ingeniería de Software
+        $programaId = 12; // ID del programa de Ingeniería de Software en la Autónoma
+
+        $codigoBase = 'IS'; // Prefijo base para Ingeniería de Software
+
+        $pensum = [
+            1 => ['Matemáticas I', 'Física I', 'Programación I', 'Comunicación Oral y Escrita', 'Fundamentos de Ingeniería de Software'],
+            2 => ['Matemáticas II', 'Física II', 'Programación II', 'Lógica y Matemática Discreta', 'Arquitectura de Computadores'],
+            3 => ['Estructuras de Datos', 'Bases de Datos I', 'Ingeniería de Requisitos', 'Probabilidad y Estadística', 'Sistemas Operativos'],
+            4 => ['Bases de Datos II', 'Diseño de Software', 'Ingeniería de Software I', 'Análisis y Diseño de Algoritmos', 'Redes de Computadores'],
+            5 => ['Lenguajes de Programación', 'Seguridad Informática', 'Gestión de Proyectos de Software', 'Desarrollo Web', 'Electiva Profesional I'],
+            6 => ['Ingeniería de Software II', 'Desarrollo de Aplicaciones Móviles', 'Computación en la Nube', 'Interacción Humano-Computador', 'Electiva Profesional II'],
+            7 => ['Inteligencia Artificial', 'Arquitectura de Software', 'Auditoría y Normatividad en Software', 'Electiva Profesional III', 'Práctica Empresarial I'],
+            8 => ['Minería de Datos', 'DevOps y Automatización', 'Ética Profesional', 'Electiva Profesional IV', 'Práctica Empresarial II'],
+            9 => ['Trabajo de Grado', 'Emprendimiento y Nuevas Tecnologías'],
+        ];
+
+        foreach ($pensum as $semestre => $asignaturas) {
+            foreach ($asignaturas as $index => $nombre) {
+                Asignatura::create([
+                    'programas_id' => $programaId,
+                    'nombre' => $nombre,
+                    'tipo' => 'Materia',
+                    'codigo_asignatura' => $codigoBase . '_S' . $semestre . '_M' . ($index + 1),
+                    'creditos' => 3,
+                    'semestre' => $semestre,
+                    'horas_sena' => null,
+                    'tiempo_presencial' => 2,
+                    'tiempo_independiente' => 4,
+                    'horas_totales_semanales' => 6,
+                    'modalidad' => 'Teórico-Práctico',
+                    'metodologia' => 'Presencial',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
     }
 }

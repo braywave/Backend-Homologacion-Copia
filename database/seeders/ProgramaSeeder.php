@@ -13,157 +13,197 @@ class ProgramaSeeder extends Seeder
      */
     public function run()
     {
-        // Universidad del Cauca - Facultad de Ciencias de la Salud
-        Programa::create([
-            'institucion_id' => 3,
-            'facultad_id' => 1,
-            'nombre' => 'Medicina',
-            'codigo_snies' => '12345',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
+        // UNICAUCA
 
         Programa::create([
-            'institucion_id' => 3,
-            'facultad_id' => 1,
-            'nombre' => 'Enfermería',
-            'codigo_snies' => '12346',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Universidad del Cauca - Facultad de Ingeniería Civil
-        Programa::create([
-            'institucion_id' => 3,
-            'facultad_id' => 2,
-            'nombre' => 'Ingeniería Civil',
-            'codigo_snies' => '12347',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Universidad del Cauca - Facultad de Derecho, Ciencias Políticas y Sociales
-        Programa::create([
-            'institucion_id' => 3,
-            'facultad_id' => 3,
+            'institucion_id' => 5,
+            'facultad_id' => 7, // Facultad de Derecho, Ciencias Políticas y Sociales
             'nombre' => 'Derecho',
-            'codigo_snies' => '12348',
+            'codigo_snies' => '1110',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // Universidad del Cauca - Facultad de Ciencias Contables, Económicas y Administrativas
         Programa::create([
-            'institucion_id' => 3,
-            'facultad_id' => 4,
-            'nombre' => 'Contaduría Pública',
-            'codigo_snies' => '12349',
+            'institucion_id' => 5,
+            'facultad_id' => 5, // Facultad de Ciencias Humanas y Sociales
+            'nombre' => 'Antropología',
+            'codigo_snies' => '1055',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // Corporación Universitaria Autónoma del Cauca - Facultad de Ciencias Administrativas, Contables y Económicas
+        Programa::create([
+            'institucion_id' => 5,
+            'facultad_id' => 1, // Facultad de Artes
+            'nombre' => 'Artes Plásticas',
+            'codigo_snies' => '1073',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 5,
+            'facultad_id' => 6, // Facultad de Ciencias Naturales, Exactas y de la Educación
+            'nombre' => 'Biología',
+            'codigo_snies' => '2849',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 5,
+            'facultad_id' => 9, // Facultad de Ingeniería Electrónica y Telecomunicaciones
+            'nombre' => 'Ingeniería Electrónica y de Telecomunicaciones',
+            'codigo_snies' => '3104',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // FUP
+        Programa::create([
+            'institucion_id' => 4,
+            'facultad_id' => 10, // Facultad de Ingeniería y Arquitectura
+            'nombre' => 'Ingeniería de Sistemas',
+            'codigo_snies' => '2612',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 4,
+            'facultad_id' => 10, // Facultad de Ingeniería y Arquitectura
+            'nombre' => 'Ingeniería Industrial',
+            'codigo_snies' => '2555',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 4,
+            'facultad_id' => 10, // Facultad de Ingeniería y Arquitectura
+            'nombre' => 'Arquitectura',
+            'codigo_snies' => '3615',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 4,
+            'facultad_id' => 12, // Facultad de Ciencias Económicas, Contables y Administrativas
+            'nombre' => 'Contaduría Pública',
+            'codigo_snies' => '54462',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 4,
+            'facultad_id' => 12, // Facultad de Ciencias Económicas, Contables y Administrativas
+            'nombre' => 'Administración de Empresas',
+            'codigo_snies' => '105530',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        // AUTONOMA
         Programa::create([
             'institucion_id' => 1,
-            'facultad_id' => 5,
+            'facultad_id' => 16, // Facultad de Ciencias Sociales y Humanas
+            'nombre' => 'Derecho',
+            'codigo_snies' => '20434',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 1,
+            'facultad_id' => 15, // Facultad de Ingeniería
+            'nombre' => 'Ingeniería de Software y Computación',
+            'codigo_snies' => '110398',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 1,
+            'facultad_id' => 15, // Facultad de Ingeniería
+            'nombre' => 'Ingeniería Electrónica',
+            'codigo_snies' => '20415',
+            'tipo_formacion' => 'Profesional',
+            'metodologia' => 'Presencial',
+        ]);
+
+        Programa::create([
+            'institucion_id' => 1,
+            'facultad_id' => 14, // Facultad de Ciencias Administrativas y Contables
             'nombre' => 'Administración de Empresas',
-            'codigo_snies' => '12350',
+            'codigo_snies' => '19828',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // Institución Universitaria Colegio Mayor del Cauca - Facultad de Arte y Diseño
         Programa::create([
-            'institucion_id' => 4,
-            'facultad_id' => 6,
-            'nombre' => 'Diseño Visual',
-            'codigo_snies' => '12351',
+            'institucion_id' => 1,
+            'facultad_id' => 14, // Facultad de Ciencias Administrativas y Contables
+            'nombre' => 'Contaduría Pública',
+            'codigo_snies' => '103461',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // Institución Universitaria Colegio Mayor del Cauca - Facultad de Ingeniería
+        // Colegio Mayor
         Programa::create([
-            'institucion_id' => 4,
-            'facultad_id' => 7,
-            'nombre' => 'Ingeniería de Software',
-            'codigo_snies' => '12352',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Fundación Universitaria de Popayán - Facultad de Ciencias Sociales y Humanas
-        Programa::create([
-            'institucion_id' => 5,
-            'facultad_id' => 8,
-            'nombre' => 'Psicología',
-            'codigo_snies' => '3087',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Fundación Universitaria de Popayán - Facultad de Ciencias Económicas, Contables y Administrativas
-        Programa::create([
-            'institucion_id' => 5,
-            'facultad_id' => 9,
+            'institucion_id' => 3,
+            'facultad_id' => 13, // Ciencias Empresariales
             'nombre' => 'Administración de Empresas',
-            'codigo_snies' => '12353',
-            'tipo_formacion' => 'Profesional',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // Corporación Universitaria Comfacauca - UNICOMFACAUCA - Facultad de Humanidades, Artes, Ciencias Sociales y de Educación
-        Programa::create([
-            'institucion_id' => 6,
-            'facultad_id' => 10,
-            'nombre' => 'Comunicación Social y Periodismo',
-            'codigo_snies' => '101439',
+            'codigo_snies' => '54560',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
         Programa::create([
-            'institucion_id' => 6,
-            'facultad_id' => 10,
-            'nombre' => 'Trabajo Social',
-            'codigo_snies' => '110464',
+            'institucion_id' => 3,
+            'facultad_id' => 13, // Ciencias Empresariales
+            'nombre' => 'Contaduría Pública',
+            'codigo_snies' => '109053',
             'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // SENA - Centro de Teleinformática y Producción Industrial
         Programa::create([
-            'institucion_id' => 2, // ID correspondiente al SENA en tu base de datos
-            'facultad_id' => null, // El SENA no maneja facultades como las universidades
-            'nombre' => 'Análisis y Desarrollo de Sistemas de Información',
-            'codigo_snies' => null, // El SENA no utiliza códigos SNIES
-            'tipo_formacion' => 'Tecnólogo',
+            'institucion_id' => 3,
+            'facultad_id' => 14, // Ingeniería
+            'nombre' => 'Ingeniería en Sistemas',
+            'codigo_snies' => '106716',
+            'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
         Programa::create([
-            'institucion_id' => 2,
-            'facultad_id' => null,
-            'nombre' => 'Gestión de Redes de Datos',
-            'codigo_snies' => null,
-            'tipo_formacion' => 'Tecnólogo',
+            'institucion_id' => 3,
+            'facultad_id' => 14, // Ingeniería
+            'nombre' => 'Ingeniería Electrónica',
+            'codigo_snies' => '54559',
+            'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
         Programa::create([
-            'institucion_id' => 2,
-            'facultad_id' => null,
-            'nombre' => 'Mantenimiento de Equipos de Cómputo',
-            'codigo_snies' => null,
-            'tipo_formacion' => 'Técnico',
+            'institucion_id' => 3,
+            'facultad_id' => 15, // Ciencias Sociales y de la Educación
+            'nombre' => 'Licenciatura en Educación Infantil',
+            'codigo_snies' => '106715',
+            'tipo_formacion' => 'Profesional',
             'metodologia' => 'Presencial',
         ]);
 
-        // SENA - Centro de Comercio y Servicios
+
+        // SENA
         Programa::create([
             'institucion_id' => 2,
-            'facultad_id' => null,
-            'nombre' => 'Gestión Empresarial',
+            'facultad_id' => null, // No aplica para SENA
+            'nombre' => 'Tecnólogo en Análisis y Desarrollo de Software',
             'codigo_snies' => null,
             'tipo_formacion' => 'Tecnólogo',
             'metodologia' => 'Presencial',
@@ -172,17 +212,7 @@ class ProgramaSeeder extends Seeder
         Programa::create([
             'institucion_id' => 2,
             'facultad_id' => null,
-            'nombre' => 'Contabilización de Operaciones Comerciales y Financieras',
-            'codigo_snies' => null,
-            'tipo_formacion' => 'Técnico',
-            'metodologia' => 'Presencial',
-        ]);
-
-        // SENA - Centro Agropecuario
-        Programa::create([
-            'institucion_id' => 2,
-            'facultad_id' => null,
-            'nombre' => 'Producción Agropecuaria',
+            'nombre' => 'Técnico en Asistencia Administrativa',
             'codigo_snies' => null,
             'tipo_formacion' => 'Técnico',
             'metodologia' => 'Presencial',
@@ -191,11 +221,12 @@ class ProgramaSeeder extends Seeder
         Programa::create([
             'institucion_id' => 2,
             'facultad_id' => null,
-            'nombre' => 'Agricultura de Precisión',
+            'nombre' => 'Tecnólogo en Gestión Contable y Financiera',
             'codigo_snies' => null,
             'tipo_formacion' => 'Tecnólogo',
             'metodologia' => 'Presencial',
         ]);
+
 
     }
 }

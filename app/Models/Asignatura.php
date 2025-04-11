@@ -21,7 +21,7 @@ class Asignatura extends Model
         'codigo_asignatura',
         'creditos',
         'semestre',
-        'horas',
+        'horas_sena',
         'tiempo_presencial',
         'tiempo_independiente',
         'horas_totales_semanales',

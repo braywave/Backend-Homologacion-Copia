@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('solicitud_id');
             $table->unsignedSmallInteger('asignatura_id');
             $table->decimal('nota_origen', 3, 1)->nullable();
-            $table->integer('horas')->nullable();
+            $table->integer('horas_sena')->nullable();
             $table->timestamps();
 
             $table->foreign('solicitud_id')->references('id_solicitud')->on('solicitudes');

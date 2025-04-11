@@ -12,10 +12,6 @@ return new class extends Migration {
     {
         Schema::create('usuarios', function (Blueprint $table) {
 
-
-            //$table->id('id_credencial');
-            // $table->string('contraseña',255);
-
             $table->smallIncrements('id_usuario');
             $table->string('primer_nombre', 50);
             $table->string('segundo_nombre', 50)->nullable();
