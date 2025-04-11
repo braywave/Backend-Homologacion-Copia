@@ -1685,8 +1685,7 @@ BEGIN
     JOIN asignaturas ad ON ha.asignatura_destino_id = ad.id_asignatura
     JOIN solicitudes s ON ha.solicitud_id = s.id_solicitud
     JOIN usuarios u ON s.usuario_id = u.id_usuario
-    JOIN solicitud_asignaturas sa ON sa.solicitud_id = ha.solicitud_id AND sa.asignatura_id = ha.asignatura_origen_id
-
+   LEFT JOIN solicitud_asignaturas sa ON sa.solicitud_id = ha.solicitud_id AND sa.asignatura_id = ha.asignatura_origen_id
     WHERE ha.id_homologacion = homologacionId;
 END$$
 
