@@ -28,7 +28,7 @@ class Solicitud extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id', 'id_usuario');
+        return $this->belongsTo(User::class, 'usuario_id', 'id');
     }
 
     public function programaDestino()
@@ -37,19 +37,32 @@ class Solicitud extends Model
     }
 
     protected static function boot()
-    {
-        parent::boot();
+{
+    parent::boot();
 
-        static::created(function ($solicitud) {
-            // Crear historial automáticamente cuando se crea la solicitud
-            HistorialHomologacion::create([
-                'usuario_id' => $solicitud->usuario_id,
-                'solicitud_id' => $solicitud->id_solicitud,
-                'estado' => $solicitud->estado,
-                'observaciones' => 'Solicitud creada automáticamente',
-                'fecha' => now(),
-            ]);
-        });
+    static::created(function ($solicitud) {
+        // Generar el radicado
+        $year = now()->year; // Obtener el año actual
+        $ultimoRadicado = Solicitud::whereYear('created_at', $year) // Buscar las solicitudes del mismo año
+                                  ->orderBy('id_solicitud', 'desc') // Ordenar por ID de solicitud (el mayor al principio)
+                                  ->first(); // Obtener la última solicitud
+
+        $consecutivo = $ultimoRadicado ? (int) substr($ultimoRadicado->numero_radicado, -4) + 1 : 1; // Obtener el número consecutivo
+        $radicado = "HOM-{$year}-" . str_pad($consecutivo, 4, '0', STR_PAD_LEFT); // Formato HOM-AÑO-NUMERO
+
+        // Asignar el radicado a la solicitud
+        $solicitud->numero_radicado = $radicado;
+        $solicitud->save(); // Guardar la solicitud con el número de radicado
+
+        // Crear historial automáticamente cuando se crea la solicitud
+        HistorialHomologacion::create([
+            'usuario_id' => $solicitud->usuario_id,
+            'solicitud_id' => $solicitud->id_solicitud,
+            'estado' => $solicitud->estado,
+            'observaciones' => 'Solicitud creada automáticamente',
+            'fecha' => now(),
+        ]);
+    });
 
         static::updated(function ($solicitud) {
             // Solo crear un nuevo historial si cambió el estado o se subió un PDF
@@ -74,6 +87,8 @@ class Solicitud extends Model
                 ]);
             }
         });
+
+
     }
 
 }

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class UsuarioControllerApi extends Controller
+class UserControllerApi extends Controller
 {
     // Método para obtener todos los usuarios
     public function traerUsuarios()
@@ -51,13 +52,17 @@ class UsuarioControllerApi extends Controller
     public function insertarUsuario(Request $request)
     {
         try {
+            // Generar hash para la contraseña si está presente
+            $password = $request->password ? Hash::make($request->password) : null;
+
             // Llamada al procedimiento almacenado para insertar un nuevo usuario
-            DB::statement('CALL InsertarUsuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL InsertarUsuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $request->primer_nombre,
                 $request->segundo_nombre,
                 $request->primer_apellido,
                 $request->segundo_apellido,
-                $request->correo,
+                $request->email, // Cambiado de correo a email
+                $password,
                 $request->tipo_identificacion,
                 $request->numero_identificacion,
                 $request->institucion_origen_id,
@@ -67,7 +72,8 @@ class UsuarioControllerApi extends Controller
                 $request->pais_id,
                 $request->departamento_id,
                 $request->municipio_id,
-                $request->rol_id
+                $request->rol_id,
+                $request->activo ?? true // Nuevo campo activo
             ]);
 
             return response()->json([
@@ -85,14 +91,21 @@ class UsuarioControllerApi extends Controller
     public function actualizarUsuario(Request $request, $id)
     {
         try {
+            // Generar hash para la contraseña si está presente
+            $password = null;
+            if ($request->has('password') && !empty($request->password)) {
+                $password = Hash::make($request->password);
+            }
+
             // Llamada al procedimiento almacenado para actualizar un usuario
-            DB::statement('CALL ActualizarUsuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL ActualizarUsuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $id,
                 $request->primer_nombre,
                 $request->segundo_nombre,
                 $request->primer_apellido,
                 $request->segundo_apellido,
-                $request->correo,
+                $request->email, // Cambiado de correo a email
+                $password,
                 $request->tipo_identificacion,
                 $request->numero_identificacion,
                 $request->institucion_origen_id,
@@ -102,7 +115,8 @@ class UsuarioControllerApi extends Controller
                 $request->pais_id,
                 $request->departamento_id,
                 $request->municipio_id,
-                $request->rol_id
+                $request->rol_id,
+                $request->activo // Nuevo campo activo
             ]);
 
             return response()->json([

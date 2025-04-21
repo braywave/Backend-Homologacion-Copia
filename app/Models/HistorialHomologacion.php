@@ -31,6 +31,6 @@ class HistorialHomologacion extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id', 'id_usuario');
+        return $this->belongsTo(User::class, 'usuario_id', 'id_usuario');
     }
 }

@@ -37,9 +37,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RolSeeder::class);
 
-        $this->call(UsuarioSeeder::class);
-
-        $this->call(CredencialSeeder::class);
+        $this->call(UserSeeder::class);
 
         $this->call(AsignaturaSeeder::class);
 

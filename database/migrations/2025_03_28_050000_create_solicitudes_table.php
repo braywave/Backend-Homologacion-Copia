@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('ruta_pdf_resolucion', 255)->nullable();
 
             // llaves foráneas
-            $table->foreign('usuario_id')->references('id_usuario')->on('usuarios');
+            $table->foreign('usuario_id')->references('id_usuario')->on('users');
             $table->foreign('programa_destino_id')->references('id_programa')->on('programas');
 
             $table->timestamps();

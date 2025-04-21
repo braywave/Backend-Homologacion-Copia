@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AsignaturaControllerApi;
 use App\Http\Controllers\ContenidoProgramaticoControllerApi;
-use App\Http\Controllers\CredencialControllerApi;
 use App\Http\Controllers\DocumentoControllerApi;
 use App\Http\Controllers\FacultadControllerApi;
 use App\Http\Controllers\HistorialHomologacionControllerApi;
@@ -15,7 +14,7 @@ use App\Http\Controllers\ProgramaControllerApi;
 use App\Http\Controllers\RolControllerApi;
 use App\Http\Controllers\SolicitudAsignaturaControllerApi;
 use App\Http\Controllers\SolicitudControllerApi;
-use App\Http\Controllers\UsuarioControllerApi;
+use App\Http\Controllers\UserControllerApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -85,14 +84,6 @@ Route::put('/asignaturas/{id}', [AsignaturaControllerApi::class, 'actualizarAsig
 Route::delete('/asignaturas/{id}', [AsignaturaControllerApi::class, 'eliminarAsignatura'])->name('asignaturas.delete');
 
 
-// Rutas para credenciales
-Route::get('/credenciales', [CredencialControllerApi::class, 'traerCredenciales'])->name('credenciales.get');
-Route::get('/credenciales/{id}', [CredencialControllerApi::class, 'llevarCredencial'])->name('credenciales.getById');
-Route::post('/credenciales', [CredencialControllerApi::class, 'insertarCredencial'])->name('credenciales.insert');
-Route::put('/credenciales/{id}', action: [CredencialControllerApi::class, 'actualizarCredencial'])->name('credenciales.update');
-Route::delete('/credenciales/{id}', [CredencialControllerApi::class, 'eliminarCredencial'])->name('credenciales.delete');
-
-
 // Rutas para solicitudes
 Route::get('/solicitudes', [SolicitudControllerApi::class, 'traerSolicitudes'])->name('solicitudes.get');
 Route::get('/solicitudes/{id}', [SolicitudControllerApi::class, 'llevarSolicitud'])->name('solicitudes.getById');
@@ -102,11 +93,11 @@ Route::delete('/solicitudes/{id}', [SolicitudControllerApi::class, 'eliminarSoli
 
 
 // Rutas para usuarios
-Route::get('/usuarios', [UsuarioControllerApi::class, 'traerUsuarios'])->name('usuarios.get');
-Route::get('/usuarios/{id}', [UsuarioControllerApi::class, 'llevarUsuario'])->name('usuarios.getById');
-Route::post('/usuarios', [UsuarioControllerApi::class, 'insertarUsuario'])->name('usuarios.insert');
-Route::put('/usuarios/{id}', [UsuarioControllerApi::class, 'actualizarUsuario'])->name('usuarios.update');
-Route::delete('/usuarios/{id}', [UsuarioControllerApi::class, 'eliminarUsuario'])->name('usuarios.delete');
+Route::get('/usuarios', [UserControllerApi::class, 'traerUsuarios'])->name('usuarios.get');
+Route::get('/usuarios/{id}', [UserControllerApi::class, 'llevarUsuario'])->name('usuarios.getById');
+Route::post('/usuarios', [UserControllerApi::class, 'insertarUsuario'])->name('usuarios.insert');
+Route::put('/usuarios/{id}', [UserControllerApi::class, 'actualizarUsuario'])->name('usuarios.update');
+Route::delete('/usuarios/{id}', [UserControllerApi::class, 'eliminarUsuario'])->name('usuarios.delete');
 
 
 // Rutas para documentos

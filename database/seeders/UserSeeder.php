@@ -2,26 +2,25 @@
 
 namespace Database\Seeders;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
-class UsuarioSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-
     public function run()
     {
-
-
         // Aspirante 1 - Colombiano - Autónoma del Cauca
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Laura',
             'segundo_nombre' => 'Isabel',
             'primer_apellido' => 'Martínez',
             'segundo_apellido' => 'Gómez',
-            'correo' => 'laura.martinez@example.com',
+            'email' => 'laura.martinez@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '1122334455',
             'institucion_origen_id' => 1,
@@ -32,15 +31,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Aspirante 2 - Colombiano - FUP
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Carlos',
             'segundo_nombre' => 'Eduardo',
             'primer_apellido' => 'López',
             'segundo_apellido' => 'Ruiz',
-            'correo' => 'carlos.lopez@example.com',
+            'email' => 'carlos.lopez@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '2233445566',
             'institucion_origen_id' => 4,
@@ -51,15 +52,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Aspirante 3 - Colombiano - Colegio Mayor del Cauca
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Andrea',
             'segundo_nombre' => null,
             'primer_apellido' => 'Sánchez',
             'segundo_apellido' => 'Valencia',
-            'correo' => 'andrea.sanchez@example.com',
+            'email' => 'andrea.sanchez@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '3344556677',
             'institucion_origen_id' => 3,
@@ -70,15 +73,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Aspirante 4 - Colombiano - Unicauca
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Luis',
             'segundo_nombre' => 'Fernando',
             'primer_apellido' => 'Rodríguez',
             'segundo_apellido' => 'Mora',
-            'correo' => 'luis.rodriguez@example.com',
+            'email' => 'luis.rodriguez@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '4455667788',
             'institucion_origen_id' => 5,
@@ -89,15 +94,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Aspirante 5 - Extranjero - Universidad de Quito (ficticia, extranjero)
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Miguel',
             'segundo_nombre' => 'Andrés',
             'primer_apellido' => 'Herrera',
             'segundo_apellido' => 'Pérez',
-            'correo' => 'miguel.herrera@example.com',
+            'email' => 'miguel.herrera@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Extranjería',
             'numero_identificacion' => 'EX12345678',
             'institucion_origen_id' => 2, // Consideramos aquí el ID genérico de extranjería
@@ -108,15 +115,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => null,
             'municipio_id' => null,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Aspirante 6 - Del SENA (finalizó estudios)
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Juliana',
             'segundo_nombre' => null,
             'primer_apellido' => 'Patiño',
             'segundo_apellido' => 'Córdoba',
-            'correo' => 'juliana.patino@example.com',
+            'email' => 'juliana.patino@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '5566778899',
             'institucion_origen_id' => 2, // SENA
@@ -127,15 +136,17 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 1,
+            'activo' => true,
         ]);
 
         // Coordinador - Autónoma del Cauca - Ingeniería de Software
-        Usuario::create([
+        User::create([
             'primer_nombre' => 'Sebastián',
             'segundo_nombre' => 'David',
             'primer_apellido' => 'Cano',
             'segundo_apellido' => 'Velasco',
-            'correo' => 'sebastian.cano@example.com',
+            'email' => 'sebastian.cano@example.com',
+            'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '6677889900',
             'institucion_origen_id' => 1,
@@ -146,9 +157,7 @@ class UsuarioSeeder extends Seeder
             'departamento_id' => 12,
             'municipio_id' => 703,
             'rol_id' => 2,
+            'activo' => true,
         ]);
-
-
-
     }
 }
