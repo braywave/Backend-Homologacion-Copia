@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '1122334455',
             'institucion_origen_id' => 1,
-            'facultad_id' => 15, // Facultad de Ingeniería
+            'facultad_id' => 5, // Facultad de Ingeniería
             'telefono' => '3123456789',
             'direccion' => 'Calle 10 #5-45',
             'pais_id' => 1,
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '2233445566',
             'institucion_origen_id' => 4,
-            'facultad_id' => 10, // Ingeniería y Arquitectura
+            'facultad_id' => 3, // Ingeniería y Arquitectura
             'telefono' => '3114567890',
             'direccion' => 'Carrera 15 #6-30',
             'pais_id' => 1,
@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '3344556677',
             'institucion_origen_id' => 3,
-            'facultad_id' => 13, // Ciencias Empresariales
+            'facultad_id' => 4, // Ciencias Empresariales
             'telefono' => null,
             'direccion' => 'Av. Panamericana #12-34',
             'pais_id' => 1,
@@ -87,7 +87,7 @@ class UserSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '4455667788',
             'institucion_origen_id' => 5,
-            'facultad_id' => 9, // Ingeniería Electrónica y Telecomunicaciones
+            'facultad_id' => 2, // Ingeniería Electrónica y Telecomunicaciones
             'telefono' => null,
             'direccion' => 'Cra 3 #20-60',
             'pais_id' => 1,
@@ -107,8 +107,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password123'),
             'tipo_identificacion' => 'Cédula de Extranjería',
             'numero_identificacion' => 'EX12345678',
-            'institucion_origen_id' => 2, // Consideramos aquí el ID genérico de extranjería
-            'facultad_id' => null,
+            'institucion_origen_id' => 5, // Consideramos aquí el ID genérico de extranjería
+            'facultad_id' => 1,
             'telefono' => '3007894561',
             'direccion' => 'Calle Internacional #99',
             'pais_id' => 2, // País extranjero
@@ -150,7 +150,7 @@ class UserSeeder extends Seeder
             'tipo_identificacion' => 'Cédula de Ciudadanía',
             'numero_identificacion' => '6677889900',
             'institucion_origen_id' => 1,
-            'facultad_id' => 15, // Facultad de Ingeniería
+            'facultad_id' => 5, // Facultad de Ingeniería
             'telefono' => '3101122334',
             'direccion' => 'Calle 21 #7-12',
             'pais_id' => 1,

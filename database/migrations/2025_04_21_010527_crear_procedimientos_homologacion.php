@@ -152,8 +152,7 @@ return new class extends Migration {
             END;
 
 
-
-                        -- ELIMINAR PROCEDIMIENTOS SI EXISTEN (INSTITUCIONES)
+            -- ELIMINAR PROCEDIMIENTOS SI EXISTEN (INSTITUCIONES)
             DROP PROCEDURE IF EXISTS ActualizarInstitucion;
             DROP PROCEDURE IF EXISTS EliminarInstitucion;
             DROP PROCEDURE IF EXISTS InsertarInstitucion;
@@ -1179,9 +1178,9 @@ END;
                     CONCAT(u.primer_nombre, ' ', u.primer_apellido)       AS estudiante,
                     i.nombre                                              AS institucion,
                     a.nombre                                              AS asignatura,
-                    a.codigo_materia         AS codigo_asignatura,
+                    a.codigo_asignatura         AS codigo_asignatura,
                     sa.nota_origen,
-                    sa.horas                  AS horas_sena,
+                    sa.horas_sena                  AS horas_sena,
                     sa.created_at,
                     sa.updated_at
                 FROM solicitud_asignaturas sa
@@ -1202,9 +1201,9 @@ END;
                     CONCAT(u.primer_nombre, ' ', u.primer_apellido)       AS estudiante,
                     i.nombre                                              AS institucion,
                     a.nombre                                              AS asignatura,
-                    a.codigo_materia         AS codigo_asignatura,
+                    a.codigo_asignatura         AS codigo_asignatura,
                     sa.nota_origen,
-                    sa.horas                  AS horas_sena,
+                    sa.horas_sena                  AS horas_sena,
                     sa.created_at,
                     sa.updated_at
                 FROM solicitud_asignaturas sa

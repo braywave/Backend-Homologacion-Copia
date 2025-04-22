@@ -37,35 +37,33 @@ class Solicitud extends Model
     }
 
     protected static function boot()
-{
-    parent::boot();
+    {
+        parent::boot();
 
-    static::created(function ($solicitud) {
-        // Generar el radicado
-        $year = now()->year; // Obtener el año actual
-        $ultimoRadicado = Solicitud::whereYear('created_at', $year) // Buscar las solicitudes del mismo año
-                                  ->orderBy('id_solicitud', 'desc') // Ordenar por ID de solicitud (el mayor al principio)
-                                  ->first(); // Obtener la última solicitud
+        static::creating(function ($solicitud) {
+            $year = now()->year;
 
-        $consecutivo = $ultimoRadicado ? (int) substr($ultimoRadicado->numero_radicado, -4) + 1 : 1; // Obtener el número consecutivo
-        $radicado = "HOM-{$year}-" . str_pad($consecutivo, 4, '0', STR_PAD_LEFT); // Formato HOM-AÑO-NUMERO
+            $ultimoRadicado = Solicitud::whereYear('created_at', $year)
+                ->orderBy('id_solicitud', 'desc')
+                ->lockForUpdate() // Previene condiciones de carrera
+                ->first();
 
-        // Asignar el radicado a la solicitud
-        $solicitud->numero_radicado = $radicado;
-        $solicitud->save(); // Guardar la solicitud con el número de radicado
+            $consecutivo = $ultimoRadicado ? (int) substr($ultimoRadicado->numero_radicado, -4) + 1 : 1;
+            $solicitud->numero_radicado = "HOM-{$year}-" . str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
+        });
 
-        // Crear historial automáticamente cuando se crea la solicitud
-        HistorialHomologacion::create([
-            'usuario_id' => $solicitud->usuario_id,
-            'solicitud_id' => $solicitud->id_solicitud,
-            'estado' => $solicitud->estado,
-            'observaciones' => 'Solicitud creada automáticamente',
-            'fecha' => now(),
-        ]);
-    });
+        static::created(function ($solicitud) {
+            // Crear historial automáticamente cuando se crea la solicitud
+            HistorialHomologacion::create([
+                'usuario_id' => $solicitud->usuario_id,
+                'solicitud_id' => $solicitud->id_solicitud,
+                'estado' => $solicitud->estado,
+                'observaciones' => 'Solicitud creada automáticamente',
+                'fecha' => now(),
+            ]);
+        });
 
         static::updated(function ($solicitud) {
-            // Solo crear un nuevo historial si cambió el estado o se subió un PDF
             if ($solicitud->isDirty('estado') || $solicitud->isDirty('ruta_pdf_resolucion')) {
                 $observaciones = [];
 
@@ -87,9 +85,8 @@ class Solicitud extends Model
                 ]);
             }
         });
-
-
     }
+
 
 }
 

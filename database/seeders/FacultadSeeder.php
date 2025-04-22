@@ -15,41 +15,6 @@ class FacultadSeeder extends Seeder
         /* Facultad de universidad del cauca */
         Facultad::create([
             'institucion_id' => 5,
-            'nombre' => 'Facultad de Artes',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Ciencias Agrarias',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Ciencias de la Salud',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Ciencias Contables, Económicas y Administrativas',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Ciencias Humanas y Sociales',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Ciencias Naturales, Exactas y de la Educación',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
-            'nombre' => 'Facultad de Derecho, Ciencias Políticas y Sociales',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 5,
             'nombre' => 'Facultad de Ingeniería Civil',
         ]);
 
@@ -64,57 +29,18 @@ class FacultadSeeder extends Seeder
             'nombre' => 'Facultad de Ingeniería y Arquitectura',
         ]);
 
-        Facultad::create([
-            'institucion_id' => 4,
-            'nombre' => 'Facultad de Educación',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 4,
-            'nombre' => 'Facultad de Ciencias Sociales y Humanas',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 4,
-            'nombre' => 'Facultad de Ciencias Económicas, Contables y Administrativas',
-        ]);
-
         /* Colegio mayor */
 
         Facultad::create([
             'institucion_id' => 3,
-            'nombre' => 'Facultad de Ciencias Empresariales',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 3,
             'nombre' => 'Facultad de Ingeniería',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 3,
-            'nombre' => 'Facultad de Ciencias Sociales y de la Educación',
         ]);
 
         /* Uniautonoma */
-        Facultad::create([
-            'institucion_id' => 1,
-            'nombre' => 'Facultad de Ciencias Administrativas y Contables',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 1,
-            'nombre' => 'Facultad de Ciencias Sociales y Humanas',
-        ]);
 
         Facultad::create([
             'institucion_id' => 1,
             'nombre' => 'Facultad de Ingeniería',
-        ]);
-
-        Facultad::create([
-            'institucion_id' => 1,
-            'nombre' => 'Facultad de Ciencias de la Salud',
         ]);
 
 
