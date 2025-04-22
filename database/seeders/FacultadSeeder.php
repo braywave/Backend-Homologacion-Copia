@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Facultad;
-use App\Models\Facultades;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FacultadSeeder extends Seeder
@@ -15,7 +13,6 @@ class FacultadSeeder extends Seeder
     public function run()
     {
         /* Facultad de universidad del cauca */
-
         Facultad::create([
             'institucion_id' => 5,
             'nombre' => 'Facultad de Artes',

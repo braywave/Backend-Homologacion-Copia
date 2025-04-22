@@ -14,7 +14,6 @@ class ProgramaSeeder extends Seeder
     public function run()
     {
         // UNICAUCA
-
         Programa::create([
             'institucion_id' => 5,
             'facultad_id' => 7, // Facultad de Derecho, Ciencias Políticas y Sociales

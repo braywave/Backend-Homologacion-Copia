@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->smallIncrements('id_usuario');
-            $table->string('primer_nombre', 50);
+            $table->string('primer_nombre', 50)->nullable();
             $table->string('segundo_nombre', 50)->nullable();
-            $table->string('primer_apellido', 50);
+            $table->string('primer_apellido', 50)->nullable();
             $table->string('segundo_apellido', 50)->nullable();
             $table->string('email', 100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('tipo_identificacion', ['Tarjeta de Identidad', 'Cédula de Ciudadanía', 'Cédula de Extranjería']);
-            $table->string('numero_identificacion', 20)->unique();
+            $table->string('numero_identificacion', 20)->unique()->nullable();
 
             $table->unsignedSmallInteger('institucion_origen_id')->nullable();
             $table->unsignedSmallInteger('facultad_id')->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('pais_id')->nullable();
             $table->unsignedSmallInteger('departamento_id')->nullable();
             $table->unsignedSmallInteger('municipio_id')->nullable();
-            $table->unsignedSmallInteger('rol_id');
+            $table->unsignedSmallInteger('rol_id')->default(1);
 
             $table->boolean('activo')->default(true);
             $table->rememberToken();

@@ -391,49 +391,54 @@ return new class extends Migration {
                 );
             END;
 
-            CREATE PROCEDURE ObtenerAsignaturas()
-            BEGIN
-                SELECT a.id_asignatura,
-                       a.nombre,
-                       a.tipo,
-                       a.codigo_asignatura,
-                       a.creditos,
-                       a.semestre,
-                       a.horas_sena,
-                       a.tiempo_presencial,
-                       a.tiempo_independiente,
-                       a.horas_totales_semanales,
-                       a.modalidad,
-                       a.metodologia,
-                       a.created_at,
-                       a.updated_at,
-                       p.nombre AS programa
-                FROM asignaturas a
-                JOIN programas p ON a.programa_id = p.id_programa
-                ORDER BY a.nombre ASC;
-            END;
 
-            CREATE PROCEDURE ObtenerAsignaturaPorId(IN asignaturaId INT)
-            BEGIN
-                SELECT a.id_asignatura,
-                       a.nombre,
-                       a.tipo,
-                       a.codigo_asignatura,
-                       a.creditos,
-                       a.semestre,
-                       a.horas_sena,
-                       a.tiempo_presencial,
-                       a.tiempo_independiente,
-                       a.horas_totales_semanales,
-                       a.modalidad,
-                       a.metodologia,
-                       a.created_at,
-                       a.updated_at,
-                       p.nombre AS programa
-                FROM asignaturas a
-                JOIN programas p ON a.programa_id = p.id_programa
-                WHERE a.id_asignatura = asignaturaId;
-            END;
+            CREATE PROCEDURE ObtenerAsignaturas()
+BEGIN
+    SELECT a.id_asignatura,
+           a.nombre,
+           a.tipo,
+           a.codigo_asignatura,
+           a.creditos,
+           a.semestre,
+           a.horas_sena,
+           a.tiempo_presencial,
+           a.tiempo_independiente,
+           a.horas_totales_semanales,
+           a.modalidad,
+           a.metodologia,
+           a.created_at,
+           a.updated_at,
+           p.nombre AS programa,
+           i.nombre AS institucion
+    FROM asignaturas a
+    JOIN programas p ON a.programa_id = p.id_programa
+    JOIN instituciones i ON p.institucion_id = i.id_institucion
+    ORDER BY a.nombre ASC;
+END;
+
+CREATE PROCEDURE ObtenerAsignaturaPorId(IN asignaturaId INT)
+BEGIN
+    SELECT a.id_asignatura,
+           a.nombre,
+           a.tipo,
+           a.codigo_asignatura,
+           a.creditos,
+           a.semestre,
+           a.horas_sena,
+           a.tiempo_presencial,
+           a.tiempo_independiente,
+           a.horas_totales_semanales,
+           a.modalidad,
+           a.metodologia,
+           a.created_at,
+           a.updated_at,
+           p.nombre AS programa,
+           i.nombre AS institucion
+    FROM asignaturas a
+    JOIN programas p ON a.programa_id = p.id_programa
+    JOIN instituciones i ON p.institucion_id = i.id_institucion
+    WHERE a.id_asignatura = asignaturaId;
+END;
 
 
 
@@ -603,7 +608,7 @@ return new class extends Migration {
 
 
 
-                        -- ELIMINAR PROCEDIMIENTOS SI EXISTEN (USERS)
+            -- ELIMINAR PROCEDIMIENTOS SI EXISTEN (USERS)
             DROP PROCEDURE IF EXISTS ObtenerUsuarios;
             DROP PROCEDURE IF EXISTS ObtenerUsuarioPorId;
             DROP PROCEDURE IF EXISTS InsertarUsuario;
@@ -669,12 +674,14 @@ return new class extends Migration {
                 WHERE u.id_usuario = usuarioId;
             END;
 
+           DROP PROCEDURE IF EXISTS InsertarUsuario;
             CREATE PROCEDURE InsertarUsuario(
                 IN p_primer_nombre VARCHAR(50),
                 IN p_segundo_nombre VARCHAR(50),
                 IN p_primer_apellido VARCHAR(50),
                 IN p_segundo_apellido VARCHAR(50),
                 IN p_email VARCHAR(100),
+                IN p_password VARCHAR(255), -- AÑADIDO
                 IN p_tipo_identificacion ENUM('Tarjeta de Identidad', 'Cédula de Ciudadanía', 'Cédula de Extranjería'),
                 IN p_numero_identificacion VARCHAR(20),
                 IN p_institucion_origen_id INT,
@@ -684,25 +691,28 @@ return new class extends Migration {
                 IN p_pais_id INT,
                 IN p_departamento_id INT,
                 IN p_municipio_id INT,
-                IN p_rol_id INT
+                IN p_rol_id INT,
+                IN p_activo BOOLEAN -- AÑADIDO
             )
             BEGIN
                 INSERT INTO users (
                     primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
-                    email, tipo_identificacion, numero_identificacion,
+                    email, password, tipo_identificacion, numero_identificacion,
                     institucion_origen_id, facultad_id, telefono, direccion,
                     pais_id, departamento_id, municipio_id, rol_id,
-                    created_at, updated_at
+                    activo, created_at, updated_at
                 )
                 VALUES (
                     p_primer_nombre, p_segundo_nombre, p_primer_apellido, p_segundo_apellido,
-                    p_email, p_tipo_identificacion, p_numero_identificacion,
+                    p_email, p_password, p_tipo_identificacion, p_numero_identificacion,
                     p_institucion_origen_id, p_facultad_id, p_telefono, p_direccion,
                     p_pais_id, p_departamento_id, p_municipio_id, p_rol_id,
-                    NOW(), NOW()
+                    p_activo, NOW(), NOW()
                 );
             END;
 
+
+            DROP PROCEDURE IF EXISTS ActualizarUsuario;
             CREATE PROCEDURE ActualizarUsuario(
                 IN usuarioId INT,
                 IN p_primer_nombre VARCHAR(50),
@@ -710,6 +720,7 @@ return new class extends Migration {
                 IN p_primer_apellido VARCHAR(50),
                 IN p_segundo_apellido VARCHAR(50),
                 IN p_email VARCHAR(100),
+                IN p_password VARCHAR(255),
                 IN p_tipo_identificacion ENUM('Tarjeta de Identidad', 'Cédula de Ciudadanía', 'Cédula de Extranjería'),
                 IN p_numero_identificacion VARCHAR(20),
                 IN p_institucion_origen_id INT,
@@ -719,7 +730,8 @@ return new class extends Migration {
                 IN p_pais_id INT,
                 IN p_departamento_id INT,
                 IN p_municipio_id INT,
-                IN p_rol_id INT
+                IN p_rol_id INT,
+                IN p_activo BOOLEAN
             )
             BEGIN
                 UPDATE users
@@ -728,6 +740,7 @@ return new class extends Migration {
                     primer_apellido = p_primer_apellido,
                     segundo_apellido = p_segundo_apellido,
                     email = p_email,
+                    password = IFNULL(p_password, password), -- solo se actualiza si viene valor
                     tipo_identificacion = p_tipo_identificacion,
                     numero_identificacion = p_numero_identificacion,
                     institucion_origen_id = p_institucion_origen_id,
@@ -738,6 +751,7 @@ return new class extends Migration {
                     departamento_id = p_departamento_id,
                     municipio_id = p_municipio_id,
                     rol_id = p_rol_id,
+                    activo = p_activo,
                     updated_at = NOW()
                 WHERE id_usuario = usuarioId;
             END;
@@ -1157,22 +1171,25 @@ return new class extends Migration {
             DROP PROCEDURE IF EXISTS EliminarSolicitudAsignatura;
 
             -- OBTENER TODAS LAS SOLICITUDES DE ASIGNATURAS
-            CREATE PROCEDURE ObtenerSolicitudAsignaturas()
+           CREATE PROCEDURE ObtenerSolicitudAsignaturas()
             BEGIN
                 SELECT
                     sa.id_solicitud_asignatura,
                     s.id_solicitud,
-                    CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
-                    a.nombre AS asignatura,
-                    a.codigo_asignatura,
+                    CONCAT(u.primer_nombre, ' ', u.primer_apellido)       AS estudiante,
+                    i.nombre                                              AS institucion,
+                    a.nombre                                              AS asignatura,
+                    a.codigo_materia         AS codigo_asignatura,
                     sa.nota_origen,
-                    sa.horas_sena,
+                    sa.horas                  AS horas_sena,
                     sa.created_at,
                     sa.updated_at
                 FROM solicitud_asignaturas sa
-                LEFT JOIN solicitudes s ON sa.solicitud_id = s.id_solicitud
-                LEFT JOIN users u ON s.usuario_id = u.id_usuario
-                LEFT JOIN asignaturas a ON sa.asignatura_id = a.id_asignatura
+                LEFT JOIN solicitudes       s ON sa.solicitud_id        = s.id_solicitud
+                LEFT JOIN users          u ON s.usuario_id           = u.id_usuario
+                LEFT JOIN asignaturas       a ON sa.asignatura_id       = a.id_asignatura
+                LEFT JOIN programas         p ON a.programa_id          = p.id_programa
+                LEFT JOIN instituciones     i ON p.institucion_id       = i.id_institucion
                 ORDER BY sa.id_solicitud_asignatura ASC;
             END;
 
@@ -1182,17 +1199,20 @@ return new class extends Migration {
                 SELECT
                     sa.id_solicitud_asignatura,
                     s.id_solicitud,
-                    CONCAT(u.primer_nombre, ' ', u.primer_apellido) AS estudiante,
-                    a.nombre AS asignatura,
-                    a.codigo_asignatura,
+                    CONCAT(u.primer_nombre, ' ', u.primer_apellido)       AS estudiante,
+                    i.nombre                                              AS institucion,
+                    a.nombre                                              AS asignatura,
+                    a.codigo_materia         AS codigo_asignatura,
                     sa.nota_origen,
-                    sa.horas_sena,
+                    sa.horas                  AS horas_sena,
                     sa.created_at,
                     sa.updated_at
                 FROM solicitud_asignaturas sa
-                LEFT JOIN solicitudes s ON sa.solicitud_id = s.id_solicitud
-                LEFT JOIN users u ON s.usuario_id = u.id_usuario
-                LEFT JOIN asignaturas a ON sa.asignatura_id = a.id_asignatura
+                LEFT JOIN solicitudes       s ON sa.solicitud_id        = s.id_solicitud
+                LEFT JOIN users          u ON s.usuario_id           = u.id_usuario
+                LEFT JOIN asignaturas       a ON sa.asignatura_id       = a.id_asignatura
+                LEFT JOIN programas         p ON a.programa_id          = p.id_programa
+                LEFT JOIN instituciones     i ON p.institucion_id       = i.id_institucion
                 WHERE sa.id_solicitud_asignatura = solicitudAsignaturaId;
             END;
 

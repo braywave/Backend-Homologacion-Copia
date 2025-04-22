@@ -42,7 +42,6 @@ class AsignaturaSeeder extends Seeder
             'metodologia' => 'Presencial',
         ]);
 
-
         // COLEGIO MAYOR
         Asignatura::create([
             'programa_id' => 6,

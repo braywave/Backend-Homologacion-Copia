@@ -72,7 +72,7 @@ class UserControllerApi extends Controller
                 $request->pais_id,
                 $request->departamento_id,
                 $request->municipio_id,
-                $request->rol_id,
+                $request->rol_id ?? 1,
                 $request->activo ?? true // Nuevo campo activo
             ]);
 
@@ -115,8 +115,8 @@ class UserControllerApi extends Controller
                 $request->pais_id,
                 $request->departamento_id,
                 $request->municipio_id,
-                $request->rol_id,
-                $request->activo // Nuevo campo activo
+                $request->rol_id ?? 1,
+                $request->activo ?? true // Nuevo campo activo
             ]);
 
             return response()->json([
